@@ -3,6 +3,7 @@ package lesson6;
 public class Car {
 
     //test git
+    //test2
 
     int price;
     int yearOfManufacturing;
@@ -17,9 +18,9 @@ public class Car {
         this.ownerName = ownerName;
     }
 
-    void startRun(){
+/*    void startRun(){
         System.out.println("I am running....");
-    }
+    }*/
 
     void stopRun(){
         System.out.println("I am stopping....");
