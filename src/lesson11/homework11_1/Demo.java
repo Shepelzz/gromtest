@@ -1,5 +1,6 @@
 package lesson11.homework11_1;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class Demo {
@@ -44,6 +45,30 @@ public class Demo {
         }
 
 
+        //-----------------------------------------------------------------------
+        //testing requestRooms(int price, int persons, String city, String hotel)
+        System.out.println();
+        //1. nullable city/hotel
+        System.out.println(Arrays.toString(controller.requestRooms(550, 4, null, null)));
+        //2. city/hotel not in list
+        System.out.println(Arrays.toString(controller.requestRooms(550, 4, "Magadan", "Hotel15")));
+
+        //testing check(API api1, API api2)
+        System.out.println();
+        //1. apis == null
+        System.out.println(Arrays.toString(controller.check(null, null)));
+        //2. check algorithm
+        Room r101 = new Room(101, 123, 2, new Date(), "Hotel1", "Kyiv");
+        Room r102 = new Room(102, 55, 1, new Date(), "Hotel1", "Kyiv");
+        Room r201 = new Room(101, 123, 2, new Date(), "Hotel1", "Kyiv");
+
+        API bookingComAPI_test = new BookingComAPI(new Room[]{r101, r102});
+        API tripAdvisorAPI_test = new TripAdvisorAPI(new Room[]{r201});
+        API googleAPI_test = new GoogleAPI(new Room[]{r102, r201});
+
+        Controller controller_test = new Controller(new API[]{bookingComAPI_test, tripAdvisorAPI_test, googleAPI_test});
+
+        System.out.println(Arrays.toString(controller_test.check(bookingComAPI_test, googleAPI_test)));
     }
 
     static int uniqueCount(int[] array){

@@ -23,6 +23,32 @@ public class Controller {
         return distinctRooms(validRooms);
     }
 
+    public Room[] check(API api1, API api2){
+        if(api1 == null || api2 == null)
+            return null;
+
+        int countRooms = 0;
+        for(Room roomAPI1 : api1.getAll()){
+            for(Room roomAPI2 : api2.getAll()){
+                if(compareTwoRooms(roomAPI1, roomAPI2)){
+                    countRooms++;
+                }
+            }
+        }
+        Room[] similarRooms = new Room[countRooms];
+        int similarRoomsIndex = 0;
+        for(Room roomAPI1 : api1.getAll()){
+            for(Room roomAPI2 : api2.getAll()){
+                if(compareTwoRooms(roomAPI1, roomAPI2)){
+                    similarRooms[similarRoomsIndex] = roomAPI1;
+                    similarRoomsIndex++;
+                }
+            }
+        }
+
+        return similarRooms;
+    }
+
     private Room[] distinctRooms(Room[] rooms){
         Room[] sourceList = rooms;
         for(int i = 0; i < rooms.length; i++){
@@ -49,29 +75,6 @@ public class Controller {
             }
         }
         return resultList;
-    }
-
-    public Room[] check(API api1, API api2){
-        int countRooms = 0;
-        for(Room roomAPI1 : api1.getAll()){
-            for(Room roomAPI2 : api2.getAll()){
-                if(compareTwoRooms(roomAPI1, roomAPI2)){
-                    countRooms++;
-                }
-            }
-        }
-        Room[] similarRooms = new Room[countRooms];
-        int similarRoomsIndex = 0;
-        for(Room roomAPI1 : api1.getAll()){
-            for(Room roomAPI2 : api2.getAll()){
-                if(compareTwoRooms(roomAPI1, roomAPI2)){
-                    similarRooms[similarRoomsIndex] = roomAPI1;
-                    similarRoomsIndex++;
-                }
-            }
-        }
-
-        return similarRooms;
     }
 
     private boolean compareTwoRooms(Room r1, Room r2){
