@@ -17,9 +17,11 @@ public class Demo {
 
         BankSystem bankSystem = new UkrainianBankSystem();
 
+        //--------------------------------------------------------------------------------------------------------------------------
         //UkrainianBankSystem Test
 
         //method withdraw(User user, int amount)
+        System.out.println();
         //1.user == null
         bankSystem.withdraw(null, 20);
         //2.amount <= 0
@@ -27,35 +29,38 @@ public class Demo {
         bankSystem.withdraw(user1, -89);
         System.out.println(user1.toString());
         //3.balance < amount+commission
-        bankSystem.withdraw(user1, 105110);
+        bankSystem.withdraw(user1, (int) user1.getBalance()+100);
         System.out.println(user1.toString());
         //4.amount+commission > limit
-        user1.setBalance(5000);
+        user1.setBalance(user1.getBank().getLimitOfWithdrawal()+100);
         bankSystem.withdraw(user1, 1000);
 
         //method fund(User user, int amount)
+        System.out.println();
         //1.user == null
         bankSystem.fund(null, 600);
         //2.amount <= 0
         bankSystem.fund(user1, -200);
         //3.amount > limit
-        bankSystem.fund(user3, 40000); //EUR
-        bankSystem.fund(user1, 40000); //USD
+        bankSystem.fund(user3, user3.getBank().getLimitOfFunding()+100); //EUR
+        bankSystem.fund(user1, user1.getBank().getLimitOfFunding()+100); //USD
         System.out.println(user3.toString());
         System.out.println(user1.toString());
 
         //method transferMoney(User fromUser, User toUser, int amount)
+        System.out.println();
         //1.users == null
         bankSystem.transferMoney(null, user1, 200);
         bankSystem.transferMoney(user1, null, 200);
         //2.amount <= 0
         bankSystem.transferMoney(user1, user2, -90);
         //3.amount > limit
-        bankSystem.transferMoney(user3, user5, 40000);
+        bankSystem.transferMoney(user3, user5, user3.getBank().getLimitOfWithdrawal()+500);
         //4. different currencies
         bankSystem.transferMoney(user1, user5, 500);
 
         //method paySalary(User user)
+        System.out.println();
         //1.user == null
         bankSystem.paySalary(null);
         //2. salary < 0
