@@ -1,7 +1,5 @@
 package lesson15.equals;
 
-import java.util.Objects;
-
 public class File {
     private int size;
     private String path;
@@ -13,7 +11,21 @@ public class File {
         this.extension = extension;
     }
 
-/*    @Override
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        File file = (File) o;
+        return path.equals(file.path);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return path.hashCode();
+    }
+
+    /*    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -27,18 +39,4 @@ public class File {
     public int hashCode() {
         return Objects.hash(size, path, extension);
     }*/
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        File file = (File) o;
-        return Objects.equals(path, file.path);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(path);
-    }
 }
