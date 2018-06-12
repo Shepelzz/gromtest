@@ -6,7 +6,7 @@ public class UkrainianBankSystem implements BankSystem {
     public void withdraw(User user, int amount) {
         //проверить лимит
         //проверить достаточно ли денег
-        if(user == null || !checkWithdraw(user, amount))
+        if(!checkUser(user) || !checkWithdraw(user, amount))
             return;
         user.setBalance(user.getBalance() - amount - amount * user.getBank().getCommission(amount));
     }
@@ -15,7 +15,7 @@ public class UkrainianBankSystem implements BankSystem {
     public void fund(User user, int amount) {
         //проверить amount >= 0
         //проверить лимит
-        if(user == null || !checkFundLimits(user, amount))
+        if(!checkUser(user) || !checkFundLimits(user, amount))
             return;
         user.setBalance(user.getBalance() + amount);
     }
@@ -24,9 +24,9 @@ public class UkrainianBankSystem implements BankSystem {
     public void transferMoney(User fromUser, User toUser, int amount) {
         //снимаем деньги
         //пополняем с fromUser - ToUser
-        if(fromUser == null || !checkWithdraw(fromUser, amount))
+        if(!checkUser(fromUser) || !checkWithdraw(fromUser, amount))
             return;
-        if(toUser == null || !checkFundLimits(toUser, amount))
+        if(!checkUser(toUser) || !checkFundLimits(toUser, amount))
             return;
         if(fromUser.getBank().getCurrency() != toUser.getBank().getCurrency()){
             System.err.println("Cant send money "+ amount + " from user: different currency");
@@ -40,7 +40,7 @@ public class UkrainianBankSystem implements BankSystem {
 
     @Override
     public void paySalary(User user) {
-        if(user == null){
+        if(!checkUser(user)){
             paySallaryErrorMsg();
             return;
         }
@@ -80,6 +80,12 @@ public class UkrainianBankSystem implements BankSystem {
             fundingErrorMsg(user, amount);
             return false;
         }
+        return true;
+    }
+
+    private boolean checkUser(User user){
+        if(user == null || user.getBank() == null)
+            return false;
         return true;
     }
 }

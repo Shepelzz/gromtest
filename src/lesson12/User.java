@@ -16,7 +16,10 @@ public class User {
         this.monthsOfEmployment = monthsOfEmployment;
         this.companyName = companyName;
         this.salary = salary;
-        this.bank = bank;
+        if(bank == null)
+            return;
+        else
+            this.bank = bank;
     }
 
     public long getId() {

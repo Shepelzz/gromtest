@@ -6,7 +6,8 @@ public class FileReader implements Readable {
     public void readFileFromStorage(Storage storage) {
         //найти файл макс размера
         //вывести всю инфо о нем
-
+        if (storage == null)
+            return;
         printFile(findMaxSizeFile(storage.getFiles()));
     }
 
@@ -21,6 +22,8 @@ public class FileReader implements Readable {
     }
 
     private void printFile(File file){
+        if (file == null)
+            return;
         System.out.println("max file will be printed now...");
         System.out.println(file.getName());
         System.out.println(file.getExtension());

@@ -10,14 +10,17 @@ public class Controller {
     public Room[] requestRooms(int price, int persons, String city, String hotel){
         int countRooms = 0;
         for(API api : apis) {
-            countRooms += api.findRooms(price, persons, city, hotel).length;
+            if(api != null)
+                countRooms += api.findRooms(price, persons, city, hotel).length;
         }
         Room[] validRooms = new Room[countRooms];
         int validRoomsIndex = 0;
         for(API api : apis){
-            for(Room room : api.findRooms(price, persons, city, hotel)) {
-                validRooms[validRoomsIndex] = room;
-                validRoomsIndex++;
+            if(api != null){
+                for(Room room : api.findRooms(price, persons, city, hotel)) {
+                    validRooms[validRoomsIndex] = room;
+                    validRoomsIndex++;
+                }
             }
         }
         return distinctRooms(validRooms);
