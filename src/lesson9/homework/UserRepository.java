@@ -99,8 +99,10 @@ public class UserRepository {
     }
 
     public User save(User user){
-        User result = null;
+        if(user == null)
+            return null;
 
+        User result = null;
         if(findById(user.getId()) == null){
             for(int i = 0; i < users.length; i++){
                 if(users[i] == null) {
@@ -110,13 +112,14 @@ public class UserRepository {
                 }
             }
         }
-
         return result;
     }
 
     public User update(User user){
-        User result = null;
+        if(user == null)
+            return null;
 
+        User result = null;
         for(int i = 0; i < users.length; i++){
             if(findById(user.getId()) != null && users[i].getId() == findById(user.getId()).getId()){
                 users[i] = user;
@@ -124,7 +127,6 @@ public class UserRepository {
                 break;
             }
         }
-
         return result;
     }
 
@@ -136,5 +138,4 @@ public class UserRepository {
             }
         }
     }
-
 }
