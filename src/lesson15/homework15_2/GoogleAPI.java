@@ -33,11 +33,9 @@ public class GoogleAPI implements API {
     }
 
     private boolean checkingGoogleRoomSearchCondition(Room room, int price, int persons, String city, String hotel){
-        if(     room != null
-                && room.getPersons() == persons
-                && room.getPrice() == price
-                && room.getCityName() == city
-                && room.getHotelName() == hotel){
+        Room checkedRoom = new Room(0001, price, persons, null, hotel, city);
+
+        if(room.equals(checkedRoom) && room.hashCode() == checkedRoom.hashCode()){
             return true;
         }
         return false;

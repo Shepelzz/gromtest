@@ -36,7 +36,6 @@ public class Demo {
         Room[] requestrooms = controller.requestRooms(550, 4, "Kyiv", "Hotel1");
         Room[] similarRooms = controller.check(bookingComAPI, tripAdvisorAPI);
 
-
         System.out.println("Кол-во комнат: "+requestrooms.length);
         for(Room room : requestrooms){
             System.out.print("["+(room == null ? room : room.getId())+"]");
