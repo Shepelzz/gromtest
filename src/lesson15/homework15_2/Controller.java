@@ -33,7 +33,7 @@ public class Controller {
         int countRooms = 0;
         for(Room roomAPI1 : api1.getAll()){
             for(Room roomAPI2 : api2.getAll()){
-                if(roomAPI1.equals(roomAPI2)){
+                if(roomAPI1.equals(roomAPI2) && roomAPI1.hashCode() == roomAPI2.hashCode()){
                     countRooms++;
                 }
             }
@@ -42,7 +42,7 @@ public class Controller {
         int similarRoomsIndex = 0;
         for(Room roomAPI1 : api1.getAll()){
             for(Room roomAPI2 : api2.getAll()){
-                if(roomAPI1.equals(roomAPI2)){
+                if(roomAPI1.equals(roomAPI2) && roomAPI1.hashCode() == roomAPI2.hashCode()){
                     similarRooms[similarRoomsIndex] = roomAPI1;
                     similarRoomsIndex++;
                 }
@@ -55,7 +55,7 @@ public class Controller {
         Room[] sourceList = rooms;
         for(int i = 0; i < rooms.length; i++){
             for(int j = i-1; j >= 0 && j < i; j--){
-                if(rooms[i] == rooms[j]){
+                if(rooms[i].equals(rooms[j]) && rooms[i].hashCode() == rooms[j].hashCode()){
                     rooms[i] = null;
                     break;
                 }
