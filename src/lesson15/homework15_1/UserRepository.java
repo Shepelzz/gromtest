@@ -11,37 +11,54 @@ public class UserRepository {
         if(user == null)
             return null;
 
-        if(findUser(user.getId()) == null){
+        User result = null;
+        if(getUserById(user.getId()) == null){
             for(int i = 0; i < users.length; i++){
-                if( users[i] == null) {
+                if(users[i] == null) {
                     users[i] = user;
-                    return user;
+                    result = user;
+                    break;
                 }
             }
         }
-        return null;
+        return result;
     }
 
     public User update(User user){
+        if(user == null)
+            return null;
+
+        User result = null;
         for(int i = 0; i < users.length; i++){
-            if(users[i].equals(user)){
+            if(getUserById(user.getId()) != null && users[i].getId() == getUserById(user.getId()).getId()){
                 users[i] = user;
-                return user;
+                result = user;
+                break;
             }
         }
-        return null;
+        return result;
     }
 
     public void delete(long id){
         for(int i = 0; i < users.length; i++){
-            if(!users[i].equals(null) && users[i].getId() == id){
+            if(users[i] != null && users[i].getId() == id){
                 users[i] = null;
                 break;
             }
         }
     }
 
-    public User findUser(long id){
+
+    public User findUser(User user){
+        for(User u : users){
+            if( u != null && u.equals(user)){
+                return u;
+            }
+        }
+        return null;
+    }
+
+    private User getUserById(long id){
         User result = null;
 
         for(User user : users){

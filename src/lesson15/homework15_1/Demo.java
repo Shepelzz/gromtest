@@ -9,11 +9,11 @@ public class Demo {
         User u3 = new User(34, "User3", "1rfd21212");
         User u4 = new User(3, "User4", "121235h212");
 
-        User[] userList = {u1, u2, null, u4};
+        User[] userList = {u1, u2, u3, u4};
 
         UserRepository rep = new UserRepository(userList);
 
-        System.out.println(Arrays.toString(rep.getUserNames()));
+        /*System.out.println(Arrays.toString(rep.getUserNames()));
         System.out.println(Arrays.toString(rep.getUserIds()));
         System.out.println(rep.getUserNameById(3));
 
@@ -31,10 +31,10 @@ public class Demo {
         rep.delete(4);
         System.out.println(Arrays.toString(rep.getUserNames()));
 
-        System.out.println("find");
+        System.out.println("find");*/
 
 
-        //--------------------------------------------------------------------------------------
+/*        //--------------------------------------------------------------------------------------
         System.out.println("\n\n-------------------------------------------------------------------------------------");
         //UserRepository test
         System.out.println("UserRepository test");
@@ -76,15 +76,20 @@ public class Demo {
         System.out.println(rep.getUserByName("User22"));
         //2.name is null
         System.out.println("2.name is null");
-        System.out.println(new UserRepository(new User[]{u1,u2, u3}).getUserByName(null));
+        System.out.println(new UserRepository(new User[]{u1,u2, u3}).getUserByName(null));*/
 
-        //method User getUserById(long id)
-        System.out.println("\nmethod User getUserById(long id)");
-        //1. id not exists
-        System.out.println("1. id not exists");
-        System.out.println(rep.findUser(2222));
+        //method User findUser(User user)
+        System.out.println("\nmethod User findUser(User user)");
+        //1. user not exists
+        System.out.println("1. user not exists");
+        System.out.println(Arrays.toString(rep.getUserNames()));
+        User uNew = new User(1, "User1", "121212");
+        System.out.println(rep.findUser(u1));
+        //2. user is null
+        System.out.println("2. user is null");
+        System.out.println(rep.findUser(null));
 
-        //method User getUserBySessionId(String session)
+        /*//method User getUserBySessionId(String session)
         System.out.println("\nUser getUserBySessionId(String session)");
         //1.session not exists
         System.out.println("1.session not exists");
@@ -121,7 +126,7 @@ public class Demo {
         System.out.println("\nmethod delete(long id)");
         //1. id not exists
         rep.delete(416);
-        System.out.println(Arrays.toString(rep.getUserNames()));
+        System.out.println(Arrays.toString(rep.getUserNames()));*/
 
     }
 }
