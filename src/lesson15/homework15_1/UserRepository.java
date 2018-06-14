@@ -10,6 +10,8 @@ public class UserRepository {
     public User save(User user){
         if(user == null)
             return null;
+        if(findUser(user) != null)
+            return null;
 
         User result = null;
         if(getUserById(user.getId()) == null){
