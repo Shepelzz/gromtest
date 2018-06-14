@@ -5,7 +5,7 @@ public class File {
     private String path;
     private String extension;
 
-    public File(int size, String path, String extention) {
+    public File(int size, String path, String extension) {
         this.size = size;
         this.path = path;
         this.extension = extension;

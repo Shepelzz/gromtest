@@ -1,4 +1,4 @@
-package lesson9.homework;
+package lesson15.homework15_1;
 
 import java.util.Arrays;
 
@@ -9,27 +9,30 @@ public class Demo {
         User u3 = new User(34, "User3", "1rfd21212");
         User u4 = new User(3, "User4", "121235h212");
 
-        User[] userList = {null, u2, null, u4};
+        User[] userList = {u1, u2, null, u4};
 
         UserRepository rep = new UserRepository(userList);
 
         System.out.println(Arrays.toString(rep.getUserNames()));
         System.out.println(Arrays.toString(rep.getUserIds()));
-        System.out.println(rep.getUserNameById(67));
+        System.out.println(rep.getUserNameById(3));
 
+        System.out.println("save");
         User u5 = new User(9, "User5", "15212");
         rep.save(u5);
         System.out.println(Arrays.toString(rep.getUserNames()));
 
-        User u6 = new User(9, "User9", "9999");
-        rep.update(u6);
+        System.out.println("update");
+        User u6 = new User(4, "Updated user", "0000");
+        System.out.println(rep.update(u6));
         System.out.println(Arrays.toString(rep.getUserNames()));
 
+        System.out.println("delete");
         rep.delete(4);
         System.out.println(Arrays.toString(rep.getUserNames()));
 
-        rep.delete(4);
-        System.out.println(Arrays.toString(rep.getUserNames()));
+        System.out.println("find");
+
 
         //--------------------------------------------------------------------------------------
         System.out.println("\n\n-------------------------------------------------------------------------------------");
@@ -79,7 +82,7 @@ public class Demo {
         System.out.println("\nmethod User getUserById(long id)");
         //1. id not exists
         System.out.println("1. id not exists");
-        System.out.println(rep.getUserById(2222));
+        System.out.println(rep.findUser(2222));
 
         //method User getUserBySessionId(String session)
         System.out.println("\nUser getUserBySessionId(String session)");
@@ -119,5 +122,6 @@ public class Demo {
         //1. id not exists
         rep.delete(416);
         System.out.println(Arrays.toString(rep.getUserNames()));
+
     }
 }
