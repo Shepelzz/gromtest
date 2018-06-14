@@ -9,17 +9,18 @@ public class GoogleAPI implements API {
 
     @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
+        Room checkedRoom = new Room(0001, price, persons, null, hotel, city);
         int roomsCount = 0;
         Room[] roomsFound;
         for(Room room : rooms) {
-            if (checkingGoogleRoomSearchCondition(room, price, persons, city, hotel))
+            if (room.equals(checkedRoom) && room.hashCode() == checkedRoom.hashCode())
                 roomsCount++;
         }
         roomsFound = new Room[roomsCount];
 
         int index = 0;
         for(Room room : rooms) {
-            if (checkingGoogleRoomSearchCondition(room, price, persons, city, hotel)) {
+            if (room.equals(checkedRoom) && room.hashCode() == checkedRoom.hashCode()) {
                 roomsFound[index] = room;
                 index++;
             }
@@ -30,14 +31,5 @@ public class GoogleAPI implements API {
     @Override
     public Room[] getAll() {
         return rooms;
-    }
-
-    private boolean checkingGoogleRoomSearchCondition(Room room, int price, int persons, String city, String hotel){
-        Room checkedRoom = new Room(0001, price, persons, null, hotel, city);
-
-        if(room.equals(checkedRoom) && room.hashCode() == checkedRoom.hashCode()){
-            return true;
-        }
-        return false;
     }
 }
