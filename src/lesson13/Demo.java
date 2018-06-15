@@ -56,25 +56,25 @@ public class Demo {
     }
 
 
-    private static void testUserSave(){
+    static void testUserSave(){
         for(int i = 1; i <= 4; i++) {
             userSaveCases(i);
         }
     }
 
-    private static void testUserUpdate(){
+    static void testUserUpdate(){
         for(int i = 1; i <= 3; i++) {
             userUpdateCases(i);
         }
     }
 
-    private static void testUserDelete(){
+    static void testUserDelete(){
         for(int i = 1; i <= 2; i++) {
             userDeleteCases(i);
         }
     }
 
-    private static void userSaveCases(int caseId) {
+    static void userSaveCases(int caseId) {
         switch (caseId) {
             case 1: {
                 //save new user
@@ -111,7 +111,7 @@ public class Demo {
         }
     }
 
-    private static void userUpdateCases(int caseId) {
+    static void userUpdateCases(int caseId) {
         switch (caseId) {
             case 1: {
                 //update user
@@ -145,7 +145,7 @@ public class Demo {
         }
     }
 
-    private static void userDeleteCases(int caseId){
+    static void userDeleteCases(int caseId){
         switch (caseId) {
             case 1: {
                 //delete user
