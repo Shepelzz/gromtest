@@ -1,11 +1,11 @@
 package lesson13;
 
 public class UserRepository {
-    private User[] users = new User[10];
+    private User[] users;
 
-    /*public UserRepository(User[] users) {
+    public UserRepository(User[] users) {
         this.users = users;
-    }*/
+    }
 
     public User[] getUsers() {
         return users;
@@ -90,7 +90,7 @@ public class UserRepository {
         User result = null;
 
         for(User user : users){
-            if(  user.getId() == id){  //user != null &&
+            if(user != null && user.getId() == id){  //
                 result = user;
                 break;
             }
