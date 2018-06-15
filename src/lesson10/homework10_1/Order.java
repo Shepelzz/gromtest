@@ -33,7 +33,7 @@ public abstract class Order {
     }
 
     protected boolean checkCity(String[] cities, String city){
-                for(String c : cities){
+        for(String c : cities){
             if(c == city) {
                 return true;
             }

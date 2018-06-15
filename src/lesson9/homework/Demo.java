@@ -4,7 +4,18 @@ import java.util.Arrays;
 
 public class Demo {
     public static void main(String[] args) {
-        User u1 = new User(1, "User1", "121212");
+
+        testUserSave();
+        testUserUpdate();
+        testUserDelete();
+        testGetUserNames();
+        testGetUserIds();
+        testGetUserNameById();
+        testGetUserByName();
+        testGetUserById();
+        testGetUserBySessionId();
+
+        /*User u1 = new User(1, "User1", "121212");
         User u2 = new User(4, "User2", "12143212");
         User u3 = new User(34, "User3", "1rfd21212");
         User u4 = new User(3, "User4", "121235h212");
@@ -29,95 +40,182 @@ public class Demo {
         System.out.println(Arrays.toString(rep.getUserNames()));
 
         rep.delete(4);
-        System.out.println(Arrays.toString(rep.getUserNames()));
+        System.out.println(Arrays.toString(rep.getUserNames()));*/
 
         //--------------------------------------------------------------------------------------
-        System.out.println("\n\n-------------------------------------------------------------------------------------");
-        //UserRepository test
-        System.out.println("UserRepository test");
-        //method String[] getUserNames()
-        System.out.println("\nmethod String[] getUserNames()");
-        //1.nullable users
-        System.out.println("1. nullable users");
-        System.out.println(Arrays.toString(new UserRepository(new User[]{null, null}).getUserNames()));
-        //2.user name == null
-        System.out.println(Arrays.toString(new UserRepository(new User[]{new User(7, null, "121235h212")}).getUserNames()));
-        //3.similar user names
-        System.out.println(Arrays.toString(new UserRepository(new User[]{
-                new User(7, "A", "121235h212"),
-                new User(7, "A", "121235h212")
-        }).getUserNames()));
 
-        //method long[] getUserIds()
-        System.out.println("\nmethod long[] getUserIds()");
-        //1.nullable users
-        System.out.println("1. nullable users");
-        System.out.println(Arrays.toString(new UserRepository(new User[]{null, null}).getUserIds()));
+    }
 
-        //method String getUserNameById(long id)
-        System.out.println("\nmethod String getUserNameById(long id)");
-        //1.id not exists
-        System.out.println("1.id not exists");
-        System.out.println(rep.getUserNameById(67));
-        //2.user name is null
-        System.out.println("2.user name is null");
-        u4 = new User(3, null, "121235h212");
-        userList = new User[]{null, u2, null, u4};
-        rep = new UserRepository(userList);
-        System.out.println(rep.getUserNameById(3));
+    static void testUserSave() {
+        {
+            //save new user
+            System.out.print("testUserSave - save new user:");
+            UserRepository userRepository = new UserRepository(new User[]{
+                    new User(1, "User1", "1111"),
+                    new User(2, "User2", "2222"),
+                    null
+            });
+            System.out.println(userRepository.save(new User(3, "User3", "3333")) != null ? " -Ok" : "FAIL!");
+        }
+        {
+            //save null
+            System.out.print("testUserSave - save null:");
+            UserRepository userRepository = new UserRepository(new User[]{null});
+            System.out.println(userRepository.save(null) == null ? " -Ok" : "FAIL!");
+        }
+        {
+            //save user with existing id
+            System.out.print("testUserSave - save user with existing id:");
+            UserRepository userRepository = new UserRepository(new User[]{new User(1, "User1", "1111"), null});
+            System.out.println(userRepository.save(new User(1, "User1", "1111")) == null ? " -Ok" : "FAIL!");
+        }
+        {
+            //overflow array
+            System.out.print("testUserSave - overflow array:");
+            UserRepository userRepository = new UserRepository(new User[]{new User(1, "User1", "1111")});
+            System.out.println(userRepository.save(new User(2, "User2", "2222")) == null ? " -Ok" : "FAIL!");
+        }
+    }
 
-        //method User getUserByName(String name)
-        System.out.println("\nmethod User getUserByName(String name)");
-        //1.user not exists
-        System.out.println("1.user not exists");
-        System.out.println(rep.getUserByName("User22"));
-        //2.name is null
-        System.out.println("2.name is null");
-        System.out.println(new UserRepository(new User[]{u1,u2, u3}).getUserByName(null));
+    static void testUserUpdate() {
+        {
+            //update user
+            System.out.print("testUserUpdate - update user:");
+            UserRepository userRepository = new UserRepository(new User[]{
+                    new User(1, "User1", "1111"),
+                    new User(2, "User2", "2222")
+            });
+            System.out.println(userRepository.update(new User(1, "User3", "3333")).getName() == "User3" ? " -Ok" : "FAIL!");
+        }
+        {
+            //update null
+            System.out.print("testUserUpdate - update null:");
+            UserRepository userRepository = new UserRepository(new User[]{
+                    new User(1, "User1", "1111")
+            });
+            System.out.println(userRepository.update(null) == null ? " -Ok" : "FAIL!");
+        }
+        {
+            //update user not exists
+            System.out.print("testUserUpdate - user not exists:");
+            UserRepository userRepository = new UserRepository(new User[]{
+                    new User(1, "User1", "1111")
+            });
+            System.out.println(userRepository.update(new User(3, "User1", "1111")) == null ? " -Ok" : "FAIL!");
+        }
+    }
 
-        //method User getUserById(long id)
-        System.out.println("\nmethod User getUserById(long id)");
-        //1. id not exists
-        System.out.println("1. id not exists");
-        System.out.println(rep.getUserById(2222));
+    static void testUserDelete(){
+        {
+            //delete user
+            System.out.print("testUserUpdate - delete user:");
+            UserRepository userRepository = new UserRepository(new User[]{
+                    new User(1, "User1", "1111"),
+                    new User(2, "User2", "2222")
+            });
+            userRepository.delete(1);
+            System.out.println(userRepository.getUserById(1) == null ? " -Ok" : "FAIL!");
+        }
+        {
+            //delete ot existing id
+            System.out.print("testUserUpdate - delete not existing id:");
+            UserRepository userRepository = new UserRepository(new User[]{
+                    new User(1, "User1", "1111")
+            });
+            System.out.println(userRepository.getUserById(1) != null ? " -Ok" : "FAIL!");
+        }
+    }
 
-        //method User getUserBySessionId(String session)
-        System.out.println("\nUser getUserBySessionId(String session)");
-        //1.session not exists
-        System.out.println("1.session not exists");
-        System.out.println(rep.getUserBySessionId("345dfg"));
-        //2. session null
-        System.out.println("2. session null");
-        System.out.println(rep.getUserBySessionId(null));
+    static void testGetUserNames(){
+        {
+            //1.nullable users
+            System.out.print("testGetUserNames - nullable users: ");
+            System.out.println(Arrays.toString(new UserRepository(new User[]{null, null}).getUserNames()));
+        }
+        {
+            //2.user name == null
+            System.out.print("testGetUserNames - user name == null: ");
+            System.out.println(Arrays.toString(new UserRepository(new User[]{new User(7, null, "121235h212")}).getUserNames()));
+        }
+        {
+            //3.similar user names
+            System.out.print("testGetUserNames - similar user names: ");
+            System.out.println(Arrays.toString(new UserRepository(new User[]{
+                    new User(7, "A", "121235h212"),
+                    new User(7, "A", "121235h212")
+            }).getUserNames()));
+        }
+    }
 
+    static void testGetUserIds(){
+        {
+            //1.nullable users
+            System.out.print("testGetUserIds - nullable users: ");
+            System.out.println(Arrays.toString(new UserRepository(new User[]{null, null}).getUserIds()));
+        }
+    }
 
-        //method User save(User user)
-        System.out.println("\nmethod User save(User user)");
-        //1. save null
-        System.out.println("1. save null");
-        System.out.println(Arrays.toString(rep.getUserNames()));
-        System.out.println(rep.save(null));
-        System.out.println(Arrays.toString(rep.getUserNames()));
-        //2. save user with existing id
-        System.out.println("2. save user with existing id");
-        System.out.println(rep.save(new User(4, "User2", "12143212")));
-        //3. overflow array
-        System.out.println("3. overflow array");
-        System.out.println(rep.save(new User(41, "User41", "1")));
-        System.out.println(rep.save(new User(42, "User42", "2")));
-        System.out.println(rep.save(new User(56, "User56", "3")));
-        System.out.println(rep.save(new User(77, "User77", "4")));
-        System.out.println(Arrays.toString(rep.getUserNames()));
+    static void testGetUserNameById(){
+        {
+            //1.id not exists
+            System.out.print("testGetUserNameById - id not exists: ");
+            System.out.println(new UserRepository(new User[]{
+                    new User(2, "User2", "121235h212")
+            }).getUserNameById(2));
+        }
+        {
+            //2.user name is null
+            System.out.print("testGetUserNameById - user name is null: ");
+            System.out.println(new UserRepository(new User[]{
+                    new User(2, "User2", "121235h212"),
+                    null,
+                    new User(4, null, "121235h212")
+            }).getUserNameById(4));
+        }
+    }
 
-        //User update(User user)
-        System.out.println("\nUser update(User user)");
-        //1. new user is null
-        System.out.println(rep.update(null));
+    static void testGetUserByName(){
+        {
+            //1.user not exists
+            System.out.print("testGetUserByName - user not exists: ");
+            System.out.println(new UserRepository(new User[]{
+                    new User(2, "User2", "121235h212")
+            }).getUserByName("User3"));
+        }
+        {
+            //2.name is null
+            System.out.print("testGetUserByName - name is null: ");
+            System.out.println(new UserRepository(new User[]{
+                    new User(2, "User2", "121235h212"),
+                    null
+            }).getUserByName(null));
+        }
+    }
 
-        //method delete(long id)
-        System.out.println("\nmethod delete(long id)");
-        //1. id not exists
-        rep.delete(416);
-        System.out.println(Arrays.toString(rep.getUserNames()));
+    static void testGetUserById(){
+        {
+            System.out.print("testGetUserById - id not exists: ");
+            System.out.println(new UserRepository(new User[]{
+                    new User(2, "User2", "121235h212"),
+                    null
+            }).getUserById(4));
+        }
+    }
+
+    static void testGetUserBySessionId(){
+        {
+            System.out.print("testGetUserBySessionId - session not exists: ");
+            System.out.println(new UserRepository(new User[]{
+                    new User(2, "User2", "test"),
+                    null
+            }).getUserBySessionId("test"));
+        }
+        {
+            System.out.print("testGetUserBySessionId - session is null: ");
+            System.out.println(new UserRepository(new User[]{
+                    new User(2, "User2", "121235h212"),
+                    null
+            }).getUserBySessionId(null));
+        }
     }
 }

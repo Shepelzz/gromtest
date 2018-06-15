@@ -14,14 +14,20 @@ public class ElectronicsOrder extends Order {
     public void validateOrder() {
         String[] cities = {"Киев","Одесса","Днепр","Харьков"};
 
-        if(checkCity(cities, getShipFromCity()) && checkCity(cities, getShipToCity()) && getBasePrice() >= 100 && getCustomerOwned().getGender() == "Женский"){
-                setDateConfirmed(new Date());
+        if(     getCustomerOwned() != null
+                && checkCity(cities, getShipFromCity())
+                && checkCity(cities, getShipToCity())
+                && getBasePrice() >= 100
+                && getCustomerOwned().getGender() == "Женский"){
+            setDateConfirmed(new Date());
         }
     }
 
     @Override
     public void calculatePrice() {
         int price = getBasePrice();
+        if(price < 0)
+            return;
         double shipmentPrice = price * 0.1;
         if(getShipToCity() != "Киев" && getShipToCity() != "Одесса")
             shipmentPrice = price * 0.15;
