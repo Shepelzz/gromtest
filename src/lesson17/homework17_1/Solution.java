@@ -4,23 +4,31 @@ import java.util.Arrays;
 
 public class Solution {
 
-    int countWords(String input){
-        String[] words = input.split(" ");
+    public int countWords(String input){
+        if(input == null || input.trim().equals(""))
+            return 0;
+
+        String[] words = input.trim().split(" |,|//|;");
 
         int countWords = 0;
         for(String w : words){
-            boolean checkWord = true;
-            for(int i = 0; i< w.length(); i++){
-                //System.out.println(w.charAt(i)+ "-"+ (int) w.charAt(i));
-                if(!((int) w.charAt(i) >= 65 && (int) w.charAt(i) <= 90) && !((int) w.charAt(i) >= 97 && (int) w.charAt(i) <= 122)){
-                    checkWord = false;
-                    break;
-                }
-            }
-            if(checkWord)
+            if(checkBytes(w.getBytes())) {
                 countWords++;
+            }
         }
-
         return countWords;
+    }
+    private boolean checkBytes(byte[] bytes){
+        boolean checkWord = false;
+        for (byte b : bytes) {
+            if ((b >= 65 && b <= 90) || (b >= 97 && b <= 122)) {
+                checkWord = true;
+            }
+            else {
+                checkWord = false;
+                break;
+            }
+        }
+        return checkWord;
     }
 }
