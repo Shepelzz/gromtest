@@ -1,15 +1,37 @@
 package lesson17.homework17_4;
 
-import java.util.Arrays;
-
 public class Demo {
     public static void main(String[] args) {
         Solution solution= new Solution();
-        solution.validate("https://google.com");
+        System.out.println(solution.validate("https://google.com"));
+        System.out.println(solution.validate("http://google.com"));
+        System.out.println(solution.validate("https://www.google.org"));
+        System.out.println(solution.validate("http://i.ua"));
+        System.out.println(solution.validate("https://google.net"));
+        System.out.println();
 
-        System.out.println(Arrays.toString("https://google.com".split("://")));
+        //1. test protocol invalid
+        System.out.println("htps://google.com: "+solution.validate("htps://google.com"));
 
+        //2. www.
+        System.out.println("https://www.google.com: "+solution.validate("https://www.google.com"));
 
-        System.out.println("erer".indexOf(""));
+        //3. domain zone invalid
+        System.out.println("https://www.google.com.ua: "+solution.validate("https://www.google.com.ua"));
+        System.out.println("https://www.google.not: "+solution.validate("https://www.google.not"));
+
+        //4. point or other symbol in body
+        System.out.println("https://www.go.ogle.com: "+solution.validate("https://www.go.ogle.com"));
+        System.out.println("https://www._google.com: "+solution.validate("https://www._google.com"));
+        System.out.println("https://www.go-ogle.com: "+solution.validate("https://www.go-ogle.com"));
+
+        //5. null value
+        System.out.println("null: "+solution.validate(null));
+
+        //6. empty values
+        System.out.println(" "+solution.validate(" "));
+        System.out.println("www.google.com: "+solution.validate("www.google.com"));
+        System.out.println("https://.com: "+solution.validate("https://.com"));
+        System.out.println("https://google: "+solution.validate("https://google"));
     }
 }
