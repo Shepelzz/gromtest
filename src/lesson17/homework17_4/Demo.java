@@ -10,6 +10,13 @@ public class Demo {
         System.out.println(solution.validate("https://google.net"));
         System.out.println();
 
+
+        test();
+    }
+
+    public static void test(){
+        Solution solution= new Solution();
+
         //1. test protocol invalid
         System.out.println("htps://google.com: "+solution.validate("htps://google.com"));
 
