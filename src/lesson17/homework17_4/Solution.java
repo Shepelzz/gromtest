@@ -9,8 +9,10 @@ public class Solution {
     }
 
     private boolean checkProtocol(String address){
-        if(address.contains("http://") || address.contains("https://"))
-            return true;
+        String[] protocols = {"http://", "https://"};
+        for(String protocol : protocols)
+            if(address.contains(protocol))
+                return true;
         return false;
     }
 
@@ -20,26 +22,26 @@ public class Solution {
         );
         if(body.contains("www."))
             body = body.substring(4);
-        if(checkBytes(body.getBytes()))
+        if(checkWord(body))
             return true;
         return false;
     }
 
     private boolean checkDomainZone(String address){
         String zone = address.lastIndexOf(".") == -1 ? "" : address.substring(address.lastIndexOf("."));
-        if(zone.contains(".com") || zone.contains(".org") || zone.contains(".net"))
-            return true;
+        String[] domains = {".com", ".org", ".net"};
+        for(String domain : domains)
+            if(zone.contains(domain))
+                return true;
         return false;
     }
 
-    private boolean checkBytes(byte[] bytes){
-        boolean checkWord = false;
-        for (byte b : bytes) {
-            if ((b >= 65 && b <= 90) || (b >= 97 && b <= 122))
-                checkWord = true;
-            else
+    private boolean checkWord(String word){
+        if(word == null || word.equals(""))
+            return false;
+        for(Character ch : word.toCharArray())
+            if(!Character.isLetter(ch))
                 return false;
-        }
-        return checkWord;
+        return true;
     }
 }

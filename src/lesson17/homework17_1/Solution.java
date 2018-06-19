@@ -1,34 +1,25 @@
 package lesson17.homework17_1;
 
-import java.util.Arrays;
-
 public class Solution {
-
     public int countWords(String input){
         if(input == null || input.trim().equals(""))
             return 0;
 
         String[] words = input.trim().split(" |,|//|;");
 
-        int countWords = 0;
-        for(String w : words){
-            if(checkBytes(w.getBytes())) {
-                countWords++;
-            }
-        }
-        return countWords;
+        int count = 0;
+        for(String word : words)
+            if(checkWord(word))
+                count++;
+        return count;
     }
-    private boolean checkBytes(byte[] bytes){
-        boolean checkWord = false;
-        for (byte b : bytes) {
-            if ((b >= 65 && b <= 90) || (b >= 97 && b <= 122)) {
-                checkWord = true;
-            }
-            else {
-                checkWord = false;
-                break;
-            }
-        }
-        return checkWord;
+
+    private boolean checkWord(String word){
+        if(word == null || word.equals(""))
+            return false;
+        for(Character ch : word.toCharArray())
+            if(!Character.isLetter(ch))
+                return false;
+        return true;
     }
 }

@@ -1,6 +1,5 @@
 package lesson17.homework17_3;
 
-
 public class Solution {
     public String mostCountedWord(String input){
         if(!(input == null) && !(input.trim().equals("")) && !(getIndexOfMaxValue(getSizes(getWords(input))) == -1))
@@ -12,24 +11,22 @@ public class Solution {
         return input.trim().split(" |,|//|;");
     }
 
+    private boolean checkWord(String word){
+        if(word == null || word.equals(""))
+            return false;
+        for(Character ch : word.toCharArray())
+            if(!Character.isLetter(ch))
+                return false;
+        return true;
+    }
+
     private int[] getSizes(String[] words){
         int[] counts = new int[words.length];
         for (int i = 0; i < words.length; i++)
             for (int j = i + 1; j < words.length; j++)
-                if (words[i] != null && checkBytes(words[i].getBytes()) && words[i].equals(words[j]))
+                if (checkWord(words[i]) && words[i].equals(words[j]))
                     counts[i] += 1;
         return counts;
-    }
-
-    private boolean checkBytes(byte[] bytes){
-        boolean checkWord = false;
-        for (byte b : bytes) {
-            if ((b >= 65 && b <= 90) || (b >= 97 && b <= 122))
-                checkWord = true;
-            else
-                return false;
-        }
-        return checkWord;
     }
 
     private int getIndexOfMaxValue(int[] arr){
