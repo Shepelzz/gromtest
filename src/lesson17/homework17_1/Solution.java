@@ -5,7 +5,7 @@ public class Solution {
         if(input == null || input.trim().equals(""))
             return 0;
 
-        String[] words = input.trim().split(" |,|//|;");
+        String[] words = input.trim().split(" ");
 
         int count = 0;
         for(String word : words)

@@ -2,25 +2,24 @@ package lesson17.homework17_3;
 
 public class Solution {
     public String mostCountedWord(String input){
-        if(!(input == null) && !(input.trim().equals("")) && !(getIndexOfMaxValue(getSizes(getWords(input))) == -1))
-            return getWords(input)[getIndexOfMaxValue(getSizes(getWords(input)))];
+        if(input == null || input.trim().equals(""))
+            return null;
+        String[] words = input.trim().split(" ");
+        if((getIndexOfMaxValue(getSizes(words)) != -1))
+            return getWords(input)[getIndexOfMaxValue(getSizes(words))];
         return null;
     }
 
     private String[] getWords(String input){
-        return input.trim().split(" |,|//|;");
+        if(input == null || input.trim().equals(""))
+            return null;
+        return input.trim().split(" ");
     }
 
-    private boolean checkWord(String word){
-        if(word == null || word.equals(""))
-            return false;
-        for(Character ch : word.toCharArray())
-            if(!Character.isLetter(ch))
-                return false;
-        return true;
-    }
 
     private int[] getSizes(String[] words){
+        if(words == null)
+            return null;
         int[] counts = new int[words.length];
         for (int i = 0; i < words.length; i++)
             for (int j = i + 1; j < words.length; j++)
@@ -41,5 +40,14 @@ public class Solution {
                 size = arr[i];
             }
         return size <= 0 ? -1 : index;
+    }
+
+    private boolean checkWord(String word){
+        if(word == null || word.equals(""))
+            return false;
+        for(Character ch : word.toCharArray())
+            if(!Character.isLetter(ch))
+                return false;
+        return true;
     }
 }

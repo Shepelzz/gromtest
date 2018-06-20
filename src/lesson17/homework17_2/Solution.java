@@ -2,28 +2,26 @@ package lesson17.homework17_2;
 
 public class Solution {
     public String maxWord(String input){
-        if(!(input == null) && !(input.trim().equals("")))
-            for(String w : sortDescending(getWords(input)))
-                if(checkWord(w))
-                    return w;
+        if(input == null || input.trim().equals(""))
+            return null;
+        for(String w : sortDescending(input.trim().split(" ")))
+            if(checkWord(w))
+                return w;
         return null;
     }
 
     public String minWord(String input){
-        if(!(input == null) && !(input.trim().equals("")))
-            for(String w : sortAscending(getWords(input)))
-                if(checkWord(w))
-                    return w;
+        if(input == null || input.trim().equals(""))
+            return null;
+        for(String w : sortAscending(input.trim().split(" ")))
+            if(checkWord(w))
+                return w;
         return null;
     }
 
-
-
-    private String[] getWords(String input){
-        return input.trim().split(" |,|//|;");
-    }
-
     private String[] sortAscending(String[] words){
+        if (words == null)
+            return null;
         for(int i = 0; i < words.length; i++)
             for (int j = i + 1; j < words.length; j++)
                 if (words[j].length() < words[i].length()) {
@@ -35,6 +33,8 @@ public class Solution {
     }
 
     private String[] sortDescending(String[] words){
+        if (words == null)
+            return null;
         for(int i = words.length-1; i >= 0; i--)
             for (int j = i - 1; j >= 0; j--)
                 if (words[j].length() < words[i].length()) {

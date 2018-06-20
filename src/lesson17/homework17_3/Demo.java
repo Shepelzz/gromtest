@@ -2,7 +2,7 @@ package lesson17.homework17_3;
 
 public class Demo {
     public static void main(String[] args) {
-        String str = "y rr g word word word word tr word ur,,,,,iii,w0rd";
+        String str = "y rr g word word word word tr word ur   iii w0rd";
         Solution solution = new Solution();
         System.out.println(solution.mostCountedWord(str));
         System.out.println();
@@ -14,7 +14,7 @@ public class Demo {
         Solution solution = new Solution();
 
         //0. работа с разделителями
-        System.out.println(solution.mostCountedWord("y word//word tr//tr word ur,,,,,iii,w0rd"));
+        System.out.println(solution.mostCountedWord("y word  word tr tr word ur    iii w0rd"));
 
         //1.null value
         System.out.println(solution.mostCountedWord(null));
@@ -29,7 +29,7 @@ public class Demo {
         System.out.println(solution.mostCountedWord(""));
 
         //5. not text values
-        System.out.println(solution.mostCountedWord("123 123 456 7 ,,8 454lo lo lo "));
+        System.out.println(solution.mostCountedWord("123 123 456 7   8 454lo lo lo "));
 
         //6. diff case words
         System.out.println(solution.mostCountedWord("Upper lowER C_se C_se"));
