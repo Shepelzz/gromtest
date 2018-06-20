@@ -30,8 +30,6 @@ public class Solution {
     }
 
     private boolean checkWord(String word){
-        if(word == null || word.equals(""))
-            return false;
         for(Character ch : word.toCharArray())
             if(!Character.isLetter(ch))
                 return false;

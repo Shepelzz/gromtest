@@ -2,13 +2,15 @@ package lesson17.homework17_2;
 
 public class Demo {
     public static void main(String[] args) {
-        String str = "qwe qwer qwert y1   qw7ertyuio";
+        //String str = "qwe qwer qwert y1   qw7ertyuio";
         Solution solution = new Solution();
-        System.out.println(solution.maxWord(str));
-        System.out.println(solution.minWord(str));
-        System.out.println();
+        //System.out.println(solution.maxWord(str));
+        //System.out.println(solution.minWord(str));
+        //System.out.println();
 
-        test();
+        System.out.println(solution.minWord("  h yhy    "));
+
+        //test();
     }
 
     public static void test(){
