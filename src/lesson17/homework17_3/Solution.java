@@ -6,22 +6,23 @@ public class Solution {
             return null;
 
         String[] words = input.trim().split(" ");
-        int currentCounter = 0, maxCounter = 0;
-        String maxCountedWord = null;
 
-        for(int i = 0; i < words.length; i++){
-            for(int j = i+1; j < words.length; j++){
-                if(words[i].equals(words[j]) && checkWord(words[i])){
-                    currentCounter++;
+        int wordCount = 1;
+        String mostCountedWord = null;
+
+        for(String w1 : words){
+            int counter = 0;
+            for(String w2 : words){
+                if(checkWord(w1) && w1.equals(w2)){
+                    counter++;
                 }
             }
-            if(currentCounter > maxCounter){
-                maxCounter = currentCounter;
-                maxCountedWord = words[i];
+            if(counter > wordCount) {
+                wordCount = counter;
+                mostCountedWord = w1;
             }
-            currentCounter = 0;
         }
-        return maxCountedWord;
+        return mostCountedWord;
     }
 
     private boolean checkWord(String word){

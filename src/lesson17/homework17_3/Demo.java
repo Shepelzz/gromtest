@@ -2,12 +2,11 @@ package lesson17.homework17_3;
 
 public class Demo {
     public static void main(String[] args) {
-        //String str = " 33 iui 33 iui oo oo o o oo";
+        String str = " 33 iui 33 iui oo oo o o oo";
         Solution solution = new Solution();
-        //System.out.println(solution.mostCountedWord(str));
-        //System.out.println();
+        System.out.println(solution.mostCountedWord(str));
 
-        test();
+        //test();
 
     }
 
