@@ -40,6 +40,7 @@ public class Demo {
         System.out.println("www.google.com: "+solution.validate("www.google.com"));
         System.out.println("https://.com: "+solution.validate("https://.com"));
         System.out.println("https://google: "+solution.validate("https://google"));
+        System.out.println("tthttps://google: "+solution.validate("tthttps://google"));
 
     }
 }

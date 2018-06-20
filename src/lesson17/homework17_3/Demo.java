@@ -6,7 +6,7 @@ public class Demo {
         Solution solution = new Solution();
         System.out.println(solution.mostCountedWord(str));
 
-        //test();
+        test();
 
     }
 

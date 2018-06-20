@@ -3,7 +3,9 @@ package lesson17.homework17_4;
 public class Solution {
 
     public boolean validate(String address){
-        if(!(address == null) && !(address.trim().equals("")) && checkProtocol(address) && checkDomainName(address) && checkDomainZone(address))
+        if(address == null || address.trim().equals(""))
+            return false;
+        if(checkProtocol(address) && checkDomainName(address) && checkDomainZone(address))
             return true;
         return false;
     }

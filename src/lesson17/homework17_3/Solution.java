@@ -7,7 +7,7 @@ public class Solution {
 
         String[] words = input.trim().split(" ");
 
-        int wordCount = 1;
+        int wordCount = 0;
         String mostCountedWord = null;
 
         for(String w1 : words){
