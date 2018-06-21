@@ -11,8 +11,6 @@ public class Solution {
     }
 
     private boolean checkProtocol(String address){
-        if(address.indexOf(":") != address.lastIndexOf(":"))
-            return false;
         String[] protocols = {"http://", "https://"};
         for(String protocol : protocols)
             if(address.contains(protocol))
