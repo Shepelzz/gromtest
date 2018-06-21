@@ -2,16 +2,18 @@ package lesson17.homework17_4;
 
 public class Demo {
     public static void main(String[] args) {
-        Solution solution= new Solution();
+        /*Solution solution= new Solution();
         System.out.println(solution.validate("https://google.com"));
         System.out.println(solution.validate("http://google.com"));
         System.out.println(solution.validate("https://www.google.org"));
         System.out.println(solution.validate("http://i.ua"));
         System.out.println(solution.validate("https://google.net"));
-        System.out.println();
+        System.out.println();*/
 
+        Solution s = new Solution();
+        System.out.println(s.validate("https://www.google.com"));
 
-        test();
+        //test();
     }
 
     public static void test(){

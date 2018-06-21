@@ -19,11 +19,10 @@ public class Solution {
     }
 
     private boolean checkDomainName(String address){
-        String body = address.substring(address.indexOf(":")+3,
-                                        address.lastIndexOf(".") == -1 ? address.length() : address.lastIndexOf(".")
+        String body = address.substring(address.indexOf(":")+3, address.lastIndexOf(".") == -1 ? address.length() : address.lastIndexOf(".")
         );
         if(body.contains("www."))
-            body = body.substring(4);
+            body = body.replace("www.", "");
         if(checkWord(body))
             return true;
         return false;
