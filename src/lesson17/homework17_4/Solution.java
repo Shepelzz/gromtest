@@ -11,6 +11,8 @@ public class Solution {
     }
 
     private boolean checkProtocol(String address){
+        if(address.indexOf(":") != address.lastIndexOf(":"))
+            return false;
         String[] protocols = {"http://", "https://"};
         for(String protocol : protocols)
             if(address.contains(protocol))
@@ -19,17 +21,27 @@ public class Solution {
     }
 
     private boolean checkDomainName(String address){
-        String body = address.substring(address.indexOf(":")+3, address.lastIndexOf(".") == -1 ? address.length() : address.lastIndexOf(".")
-        );
+        if(address.lastIndexOf(".") == -1) //сразу исключаю отсуствие доменной зоны
+            return false;
+
+        String body = address.substring(0, address.lastIndexOf(".")); //вырезаю зону из строки
+
+        body = body.replace("http://", ""); //и удаляю протоколы, так как раз мы на этом шаге, то он точно есть
+        body = body.replace("https://", "");
+
         if(body.contains("www."))
-            body = body.replace("www.", "");
+            body = body.substring("www.".length());  //нужно точно знать что эта фигня встретится только 1 раз в начале строки
+
         if(checkWord(body))
             return true;
         return false;
     }
 
     private boolean checkDomainZone(String address){
-        String zone = address.lastIndexOf(".") == -1 ? "" : address.substring(address.lastIndexOf("."));
+        if(address.lastIndexOf(".") == -1) //сразу исключаю отсуствие доменной зоны
+            return false;
+
+        String zone = address.substring(address.lastIndexOf("."));
         String[] domains = {".com", ".org", ".net"};
         for(String domain : domains)
             if(zone.contains(domain))

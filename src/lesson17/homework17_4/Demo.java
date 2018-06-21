@@ -2,18 +2,15 @@ package lesson17.homework17_4;
 
 public class Demo {
     public static void main(String[] args) {
-        /*Solution solution= new Solution();
-        System.out.println(solution.validate("https://google.com"));
-        System.out.println(solution.validate("http://google.com"));
-        System.out.println(solution.validate("https://www.google.org"));
-        System.out.println(solution.validate("http://i.ua"));
-        System.out.println(solution.validate("https://google.net"));
-        System.out.println();*/
+        Solution solution= new Solution();
+        //System.out.println(solution.validate("https://google.com"));
+        //System.out.println(solution.validate("http://google.com"));
+        //System.out.println(solution.validate("https://www.google.org"));
+        //System.out.println(solution.validate("http://i.ua"));
+        //System.out.println(solution.validate("https://google.net"));
+        //System.out.println();
 
-        Solution s = new Solution();
-        System.out.println(s.validate("https://www.google.com"));
-
-        //test();
+        test();
     }
 
     public static void test(){
@@ -43,6 +40,9 @@ public class Demo {
         System.out.println("https://.com: "+solution.validate("https://.com"));
         System.out.println("https://google: "+solution.validate("https://google"));
         System.out.println("tthttps://google: "+solution.validate("tthttps://google"));
+
+        System.out.println("https://www.www.google.net: "+solution.validate("https://www.www.google.net"));
+        System.out.println("https://google.com.com: "+solution.validate("https://google.com.com"));
 
     }
 }
