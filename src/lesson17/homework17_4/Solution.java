@@ -1,50 +1,48 @@
 package lesson17.homework17_4;
 
 public class Solution {
-
     public boolean validate(String address){
         if(address == null || address.trim().equals(""))
             return false;
-        if(checkProtocol(address) && checkDomainName(address) && checkDomainZone(address))
-            return true;
-        return false;
+        return (checkProtocol(address) && checkDomainZone(address) && checkAddressBody(address));
     }
+
 
     private boolean checkProtocol(String address){
-        String[] protocols = {"http://", "https://"};
+        String[] protocols = {"https://", "http://"};
         for(String protocol : protocols)
-            if(address.contains(protocol))
-                return true;
-        return false;
-    }
-
-    private boolean checkDomainName(String address){
-        if(address.lastIndexOf(".") == -1) //сразу исключаю отсуствие доменной зоны
-            return false;
-
-        String body = address.substring(0, address.lastIndexOf(".")); //вырезаю зону из строки
-
-        body = body.replace("http://", ""); //и удаляю протоколы, так как раз мы на этом шаге, то он точно есть
-        body = body.replace("https://", "");
-
-        if(body.contains("www."))
-            body = body.substring("www.".length());  //нужно точно знать что эта фигня встретится только 1 раз в начале строки
-
-        if(checkWord(body))
-            return true;
+           if(address.startsWith(protocol))
+               return true;
         return false;
     }
 
     private boolean checkDomainZone(String address){
-        if(address.lastIndexOf(".") == -1) //сразу исключаю отсуствие доменной зоны
-            return false;
-
-        String zone = address.substring(address.lastIndexOf("."));
         String[] domains = {".com", ".org", ".net"};
         for(String domain : domains)
-            if(zone.contains(domain))
+            if(address.endsWith(domain))
                 return true;
         return false;
+    }
+
+    private boolean checkAddressBody(String address){
+        return checkWord(getAddressBody(address));
+    }
+
+    private String getAddressBody(String address){
+        String[] protocols = {"https://", "http://"};
+        for(String protocol : protocols)
+            if(address.startsWith(protocol))
+                address = address.substring(protocol.length());
+
+        String[] domains = {".com", ".org", ".net"};
+        for(String domain : domains)
+            if(address.endsWith(domain))
+                address = address.substring(0, address.lastIndexOf(domain));
+
+        if(address.startsWith("www."))
+            address = address.substring(4);
+
+        return address;
     }
 
     private boolean checkWord(String word){
@@ -55,4 +53,5 @@ public class Solution {
                 return false;
         return true;
     }
+
 }

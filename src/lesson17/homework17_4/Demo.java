@@ -9,6 +9,9 @@ public class Demo {
         //System.out.println(solution.validate("http://i.ua"));
         //System.out.println(solution.validate("https://google.net"));
         //System.out.println();
+        //String sss = "https://google.org";
+        //System.out.println(solution.validate(sss));
+
 
         test();
     }
@@ -18,6 +21,7 @@ public class Demo {
 
         //1. test protocol invalid
         System.out.println("htps://google.com: "+solution.validate("htps://google.com"));
+        System.out.println("https://https://google.com: "+solution.validate("https://https://google.com"));
 
         //2. www.
         System.out.println("https://www.google.com: "+solution.validate("https://www.google.com"));
