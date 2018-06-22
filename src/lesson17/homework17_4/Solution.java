@@ -49,7 +49,7 @@ public class Solution {
         if(word == null || word.equals(""))
             return false;
         for(Character ch : word.toCharArray())
-            if(!Character.isLetter(ch))
+            if(!Character.isLetterOrDigit(ch))
                 return false;
         return true;
     }

@@ -12,8 +12,10 @@ public class Demo {
         //String sss = "https://google.org";
         //System.out.println(solution.validate(sss));
 
+        System.out.println(solution.validate("http://te5ts.com"));
 
         test();
+
     }
 
     public static void test(){
@@ -48,5 +50,7 @@ public class Demo {
         System.out.println("https://www.www.google.net: "+solution.validate("https://www.www.google.net"));
         System.out.println("https://google.com.com: "+solution.validate("https://google.com.com"));
 
+        //7. digit in body
+        System.out.println("https://google2.com: "+solution.validate("https://google2.com"));
     }
 }
