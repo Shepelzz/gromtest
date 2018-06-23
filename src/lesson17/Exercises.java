@@ -1,21 +1,19 @@
 package lesson17;
 
-import java.util.Arrays;
-
 public class Exercises {
     public static void main(String[] args){
         String test = "There is Test something new or jot sdf sdf sdf word Test op or";
 
-        System.out.println(deleteDuplicates(test));
+        //System.out.println(deleteDuplicates(test));
 
-        System.out.println(Arrays.toString(countDuplicates(test, new String[]{"or", "some", "test"})));
+        //System.out.println(Arrays.toString(countDuplicates(test, new String[]{"or", "some", "test"})));
 
-        String str = "Today is good day... Hello";
+        String str = "Today is good is day... Hello";
 
         System.out.println(replace(str,"is", "that"));
-        System.out.println(replace(str,"o", " "));
-        System.out.println(replace(str,"To", "PPPP"));
-        System.out.println(replace(str,"lo", "X"));
+        //System.out.println(replace(str,"o", " "));
+        //System.out.println(replace(str,"To", "PPPP"));
+        //System.out.println(replace(str,"lo", "X"));
     }
 
     //delete replacing words
@@ -68,11 +66,10 @@ public class Exercises {
         if(indexes.length == 0)
             return input;
 
-        for(int index : indexes){
-            if(checkReplace(input, target, index)){
-                return replace(input, target,replacement, index);
-            }
-        }
+        for(int index : indexes)
+            if(checkReplace(input, target, index))
+                input = replace(input, target, replacement, index);
+
         return input;
     }
 
