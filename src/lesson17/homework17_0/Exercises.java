@@ -1,9 +1,23 @@
 package lesson17.homework17_0;
 
 public class Exercises {
+    public static String replace(String input, String target, String replacement){
+        if(input == null || target == null || replacement == null || target.trim().equals("") || target.equals(replacement))
+            return input;
+
+        while(input.indexOf(target) != -1){
+            String beforeTarget = input.substring(0, input.indexOf(target));
+            String afterTarget = input.substring(input.indexOf(target) + target.length());
+
+            input = beforeTarget + replacement + afterTarget;
+        }
+
+        return input;
+    }
 
 
-    public String replace(String input, String target, String replacement){
+
+    public String replace2(String input, String target, String replacement){
         if(input == null)
             return input;
         if(target == null || replacement == null || target.trim() == "")

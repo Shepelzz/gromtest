@@ -5,7 +5,7 @@ public class Demo {
         Exercises solution = new Exercises();
         String str = "test str here was here two times or not no test";
 
-        System.out.println(solution.replace("", "", ""));
+        System.out.println(solution.replace(str, "here", "here"));
         System.out.println();
 
         test();
@@ -33,22 +33,8 @@ public class Demo {
 
         //7. replacement is empty
         System.out.println("7. replacement is empty: "+solution.replace("test str here was here two times or not no test", "test", ""));
+
+        //8. target == replacement
+        System.out.println("8. target == replacement: "+solution.replace("test str here was here two times or not no test", "here", "here"));
     }
-
-    /*    public static String replace2(String input, String target, String replacement){
-        if(input == null)
-            return null;
-
-        if(target == null || replacement == null || target.trim() == "")
-            return input;
-
-        while(input.indexOf(target) != -1){
-            String beforeTarget = input.substring(0, input.indexOf(target));
-            String afterTarget = input.substring(input.indexOf(target) + target.length());
-
-            input = beforeTarget + replacement + afterTarget;
-        }
-
-        return input;
-    }*/
 }
