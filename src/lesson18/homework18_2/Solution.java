@@ -2,9 +2,6 @@ package lesson18.homework18_2;
 
 public class Solution {
     public int[] findNumbers(String text){
-        if(text == null)
-            return new int[0];
-
         String[] words = text.trim().split(" ");
 
         int intCount = 0;
@@ -24,7 +21,6 @@ public class Solution {
             else
                 System.out.println("not a number");
         }
-
         return numbers;
     }
 
