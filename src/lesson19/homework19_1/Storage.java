@@ -37,6 +37,9 @@ public class Storage {
 
 
     public void addFile(File file) throws IndexOutOfBoundsException, IllegalArgumentException{
+        if(file == null)
+            return;
+
         if(checkFileIfExists(file))
             throw new IllegalArgumentException("file already exists");
 
@@ -61,6 +64,9 @@ public class Storage {
     }
 
     public void deleteFile(File file) throws IllegalArgumentException {
+        if(file == null)
+            return;
+
         int index = 0;
         for(File f : files) {
             if (f != null && f.equals(file) && f.hashCode() == file.hashCode()) {

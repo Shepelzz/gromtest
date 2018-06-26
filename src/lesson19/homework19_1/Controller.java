@@ -2,7 +2,7 @@ package lesson19.homework19_1;
 
 public class Controller {
     public void put(Storage storage, File file){
-        if(storage == null || file == null)
+        if(storage == null)
             return;
 
         try {
@@ -13,7 +13,7 @@ public class Controller {
     }
 
     public void delete(Storage storage, File file){
-        if(storage == null || file == null)
+        if(storage == null)
             return;
 
         try {
