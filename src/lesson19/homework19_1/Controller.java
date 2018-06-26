@@ -8,7 +8,7 @@ public class Controller {
         try {
             storage.addFile(file);
         } catch (IllegalArgumentException | IndexOutOfBoundsException e){
-            System.out.println("Can not put file id:"+file.getId()+" to storage id:"+storage.getId()+". Reason: "+e.getMessage());
+            System.err.println("Can not put file id:"+file.getId()+" to storage id:"+storage.getId()+". Reason: "+e.getMessage());
         }
     }
 
@@ -19,7 +19,7 @@ public class Controller {
         try {
             storage.deleteFile(file);
         } catch(IllegalArgumentException e){
-            System.out.println("Can not delete file id:"+file.getId()+" from storage id:"+storage.getId()+". Reason: "+e.getMessage());
+            System.err.println("Can not delete file id:"+file.getId()+" from storage id:"+storage.getId()+". Reason: "+e.getMessage());
         }
     }
 
@@ -44,10 +44,10 @@ public class Controller {
                 storageTo.addFile(file);
                 storageFrom.deleteFile(file);
             } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-                System.out.println("Can not transfer file id:"+file.getId()+" to storage id:"+storageTo.getId()+". Reason: "+e.getMessage());
+                System.err.println("Can not transfer file id:"+file.getId()+" to storage id:"+storageTo.getId()+". Reason: "+e.getMessage());
             }
         } catch (IllegalArgumentException e){
-            System.out.println("Can not transfer file id:"+id+" to storage id:"+storageTo.getId()+". Reason: "+e.getMessage());
+            System.err.println("Can not transfer file id:"+id+" to storage id:"+storageTo.getId()+". Reason: "+e.getMessage());
         }
     }
 }
