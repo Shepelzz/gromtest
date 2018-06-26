@@ -31,7 +31,7 @@ public class Converter {
     public static int stringToInt(String input){
         try{
             return Integer.parseInt(input);
-        } catch (Exception e){
+        } catch (NumberFormatException | ClassCastException e){
             System.out.println(input+" can not be converted to int");
             return 0;
         }
