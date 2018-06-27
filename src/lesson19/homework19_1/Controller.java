@@ -24,7 +24,7 @@ public class Controller {
     }
 
     public void transferAll(Storage storageFrom, Storage storageTo){
-        if(storageFrom == null || storageTo == null)
+        if(storageFrom == null || storageTo == null || storageFrom == storageTo)
             return;
 
         for(File f : storageFrom.getFiles())

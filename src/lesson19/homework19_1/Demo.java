@@ -2,6 +2,26 @@ package lesson19.homework19_1;
 
 public class Demo {
     public static void main(String[] args) {
+        /*File f1 = new File(1, "qwertyuhdlfjsn", ".txt", 9);
+        File f2 = new File(2, "file2", ".txt", 2);
+        File f3 = new File(3, "file3", ".dvd", 5617);
+        File f4 = new File(4, "file4", ".xls", 7000);
+        File f5 = new File(5, "file5", ".txt", 1);
+        File f6 = new File(6, "file3", ".iso", 5);
+        File f7 = new File(7, "file7", ".xls", 12);
+        File f8 = new File(8, "file8", ".xls", 6000);
+        File f9 = new File(8, "file8", ".xls", 18);
+
+        Storage storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", "dvd"},"Ukraine",12000);;
+        Storage storage2 = new Storage(0002, new File[3], new String[]{".txt", ".xls"},"Ukraine",9000);
+
+        Controller controller = new Controller();
+
+        controller.put(storage1, f2);
+        controller.put(storage1, f4);
+        controller.put(storage1, f7);
+
+        System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());*/
 
         test();
     }
