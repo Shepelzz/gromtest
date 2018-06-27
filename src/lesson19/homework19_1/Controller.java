@@ -2,7 +2,7 @@ package lesson19.homework19_1;
 
 public class Controller {
     public void put(Storage storage, File file){
-        if(storage == null)
+        if(storage == null || file == null)
             return;
 
         try {
@@ -24,7 +24,7 @@ public class Controller {
     }
 
     public void transferAll(Storage storageFrom, Storage storageTo){
-        if(storageFrom == null || storageTo == null || storageFrom == storageTo)
+        if(storageFrom == null || storageTo == null)
             return;
 
         for(File f : storageFrom.getFiles())
