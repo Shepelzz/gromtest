@@ -13,14 +13,14 @@ public class Controller {
         }
     }
 
-    public void delete(Storage storage, File file){
+    public void delete(Storage storage, File file) throws IllegalArgumentException{
         if(storage == null)
             return;
 
         try {
             storage.deleteFile(file);
         } catch(IllegalArgumentException e){
-            System.err.println(errorMessage(file.getId(), storage.getId(), e.getMessage()));
+            throw new IllegalArgumentException(errorMessage(file.getId(), storage.getId(), e.getMessage()));
         }
     }
 
