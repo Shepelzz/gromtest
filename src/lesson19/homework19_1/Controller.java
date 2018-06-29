@@ -1,14 +1,16 @@
 package lesson19.homework19_1;
 
 public class Controller {
-    public void put(Storage storage, File file){
+    public File put(Storage storage, File file){
         if(storage == null || file == null)
-            return;
+            return null;
 
         try {
             storage.addFile(file);
+            return file;
         } catch (IllegalArgumentException | IndexOutOfBoundsException e){
             System.err.println("Can not put file id:"+file.getId()+" to storage id:"+storage.getId()+". Reason: "+e.getMessage());
+            return null;
         }
     }
 
