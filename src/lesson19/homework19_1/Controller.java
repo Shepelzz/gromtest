@@ -1,26 +1,28 @@
 package lesson19.homework19_1;
 
 public class Controller {
-    public File put(Storage storage, File file) throws Exception{
+    public File put(Storage storage, File file) throws IllegalArgumentException, IndexOutOfBoundsException{
         if(storage == null || file == null)
             return null;
 
         try {
             storage.addFile(file);
             return file;
-        } catch (IllegalArgumentException | IndexOutOfBoundsException e){
-            throw new Exception("Can not put file id:"+file.getId()+" to storage id:"+storage.getId()+". Reason: "+e.getMessage());
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(errorMessage(file.getId(), storage.getId(), e.getMessage()));
+        } catch (IndexOutOfBoundsException e){
+            throw new IndexOutOfBoundsException(errorMessage(file.getId(), storage.getId(), e.getMessage()));
         }
     }
 
-    public void delete(Storage storage, File file){
+    public void delete(Storage storage, File file) throws IllegalArgumentException{
         if(storage == null)
             return;
 
         try {
             storage.deleteFile(file);
         } catch(IllegalArgumentException e){
-            System.err.println("Can not delete file id:"+file.getId()+" from storage id:"+storage.getId()+". Reason: "+e.getMessage());
+            throw new IllegalArgumentException(errorMessage(file.getId(), storage.getId(), e.getMessage()));
         }
     }
 
@@ -41,14 +43,22 @@ public class Controller {
 
         try {
             file = storageFrom.getFileById(id);
-            try {
-                storageTo.addFile(file);
-                storageFrom.deleteFile(file);
-            } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-                System.err.println("Can not transfer file id:"+file.getId()+" to storage id:"+storageTo.getId()+". Reason: "+e.getMessage());
-            }
+            //try {
+            put(storageTo, file);
+            delete(storageFrom, file);
+                //storageTo.addFile(file);
+                //storageFrom.deleteFile(file);
+            //} catch (IllegalArgumentException | IndexOutOfBoundsException e) {
+                //System.err.println("Can not transfer file id:"+file.getId()+" to storage id:"+storageTo.getId()+". Reason: "+e.getMessage());
+            //}
         } catch (IllegalArgumentException e){
-            System.err.println("Can not transfer file id:"+id+" to storage id:"+storageTo.getId()+". Reason: "+e.getMessage());
-        }
+            throw new IllegalArgumentException(errorMessage(file.getId(), storageTo.getId(), e.getMessage()));
+        } //catch (IndexOutOfBoundsException e){
+            //throw new IndexOutOfBoundsException(errorMessage(file.getId(), storageTo.getId(), e.getMessage()));
+        //}
+    }
+
+    private String errorMessage(long fileId, long storageId, String errorMessage){
+        return "Can not put file id:"+fileId+" to storage id:"+storageId+". Reason: "+errorMessage;
     }
 }

@@ -48,30 +48,30 @@ public class Demo {
             //1. file name > 10
             System.out.print("1. file name > 10: ");
             storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", "dvd"},"Ukraine",12000);
-            try {controller.put(storage1, f1);}catch(Exception e){}
+            try {controller.put(storage1, f1);}catch(Exception e){System.err.println(e.getMessage());}
 
             //2. file format not supported
             System.out.print("2. file format not supported: ");
             storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", "dvd"},"Ukraine",12000);
-            try {controller.put(storage1, f6);}catch(Exception e){}
+            try {controller.put(storage1, f6);}catch(Exception e){System.err.println(e.getMessage());}
 
             //3. file is null
             System.out.print("3. file is null: ");
             storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", "dvd"},"Ukraine",12000);
-            try {controller.put(storage1, null);}catch(Exception e){}
+            try {controller.put(storage1, null);}catch(Exception e){System.err.println(e.getMessage());}
             System.out.println();
 
             //4. storage is full
             System.out.print("4. storage is full: ");
             storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", "dvd"},"Ukraine",10000);
-            try {controller.put(storage1, f8);}catch(Exception e){}
-            try {controller.put(storage1, f4);}catch(Exception e){}
+            try {controller.put(storage1, f8);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.put(storage1, f4);}catch(Exception e){System.err.println(e.getMessage());}
 
             //5. file exists
             System.out.print("5. file exists: ");
             storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", "dvd"},"Ukraine",12000);
-            try {controller.put(storage1, f2);}catch(Exception e){}
-            try {controller.put(storage1, f2);}catch(Exception e){}
+            try {controller.put(storage1, f2);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.put(storage1, f2);}catch(Exception e){System.err.println(e.getMessage());}
 
         // method delete
         System.out.println("\nmethod delete test:");
@@ -79,12 +79,12 @@ public class Demo {
             //1. file not exists
             System.out.print("1. file not exists: ");
             storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", "dvd"},"Ukraine",12000);
-            try {controller.put(storage1, f8);}catch(Exception e){}
-            controller.delete(storage1, f2);
+            try {controller.put(storage1, f8);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.delete(storage1, f2);}catch(Exception e){System.err.println(e.getMessage());}
 
             //2. file is null
             System.out.print("2. file is null: ");
-            controller.delete(storage1, null);
+            try {controller.delete(storage1, null);}catch(Exception e){System.err.println(e.getMessage());}
             System.out.println();
 
         //method transfer all
@@ -94,28 +94,28 @@ public class Demo {
             System.out.print("1. file not exists: ");
             storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", "dvd"},"Ukraine",12000);
             storage2 = new Storage(0002, new File[3], new String[]{".txt", ".xls"},"Ukraine",9000);
-            controller.transferAll(storage1, storage2);
+            try {controller.transferAll(storage1, storage2);}catch(Exception e){System.err.println(e.getMessage());}
             System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
 
             //2. storage 2 is smaller than 1
             System.out.print("2. is smaller than 1: ");
-            try {controller.put(storage1, f2);}catch(Exception e){}
-            try {controller.put(storage1, f4);}catch(Exception e){}
-            try {controller.put(storage1, f9);}catch(Exception e){}
-            try {controller.put(storage1, f7);}catch(Exception e){}
-            controller.transferAll(storage1, storage2);
+            try {controller.put(storage1, f2);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.put(storage1, f4);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.put(storage1, f9);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.put(storage1, f7);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.transferAll(storage1, storage2);}catch(Exception e){System.err.println(e.getMessage());}
 
             //3. null values in storage 1
             System.out.print("3. null values in storage 1: ");
             storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", "dvd"},"Ukraine",12000);
-            try {controller.put(storage1, f2);}catch(Exception e){}
-            try {controller.put(storage1, f4);}catch(Exception e){}
-            try {controller.put(storage1, f9);}catch(Exception e){}
-            try {controller.put(storage1, f7);}catch(Exception e){}
-            controller.delete(storage1, f4);
+            try {controller.put(storage1, f2);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.put(storage1, f4);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.put(storage1, f9);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.put(storage1, f7);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.delete(storage1, f4);}catch(Exception e){System.err.println(e.getMessage());}
             storage2 = new Storage(0002, new File[3], new String[]{".txt", ".xls"},"Ukraine",9000);
             System.out.print("|before: storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
-            controller.transferAll(storage1, storage2);
+            try {controller.transferAll(storage1, storage2);}catch(Exception e){System.err.println(e.getMessage());}
             System.out.print("|after: storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
             System.out.println();
 
@@ -126,21 +126,20 @@ public class Demo {
             System.out.print("1. no file with such id: ");
             storage1 = new Storage(0001, new File[2], new String[]{".txt", ".xls", "dvd"},"Ukraine",12000);
             storage2 = new Storage(0002, new File[3], new String[]{".txt", ".xls"},"Ukraine",9000);
-            try {controller.put(storage1, f2);}catch(Exception e){}
-            try {controller.put(storage1, f4);}catch(Exception e){}
-            controller.transferFile(storage1, storage2, 8);
+            try {controller.put(storage1, f2);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.put(storage1, f4);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.transferFile(storage1, storage2, 8);}catch(Exception e){System.err.println(e.getMessage());}
 
             //2. storage 2 is full
             System.out.print("2. storage 2 is full: ");
-            try {controller.put(storage2, f2);}catch(Exception e){}
-            try {controller.put(storage2, f5);}catch(Exception e){}
-            try {controller.put(storage2, f7);}catch(Exception e){}
-            controller.transferFile(storage1, storage2, 4);
+            try {controller.put(storage2, f2);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.put(storage2, f5);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.put(storage2, f7);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.transferFile(storage1, storage2, 4);}catch(Exception e){System.err.println(e.getMessage());}
 
             //3. file exists in storage2
             System.out.print("3. file exists in storage2: ");
-            controller.delete(storage2, f7);
-            controller.transferFile(storage1, storage2, 2);
-
+            try {controller.delete(storage2, f7);}catch(Exception e){System.err.println(e.getMessage());}
+            try {controller.transferFile(storage1, storage2, 2);}catch(Exception e){System.err.println(e.getMessage());}
     }
 }
