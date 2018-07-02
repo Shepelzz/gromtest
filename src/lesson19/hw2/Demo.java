@@ -17,19 +17,17 @@ public class Demo {
 
         Controller controller = new Controller();
 
-        try{
-            controller.put(storage1, f2);
-            controller.put(storage1, f4);
-            controller.put(storage1, f5);
-            controller.put(storage1, f3);
+        try{controller.put(storage1, f1);}catch (Exception e){System.out.println(e.getMessage());}
+        try{controller.put(storage1, f2);}catch (Exception e){System.out.println(e.getMessage());}
+        try{controller.put(storage1, f4);}catch (Exception e){System.out.println(e.getMessage());}
+        try{controller.put(storage1, f5);}catch (Exception e){System.out.println(e.getMessage());}
+        try{controller.put(storage1, f3);}catch (Exception e){System.out.println(e.getMessage());}
 
-            controller.transferAll(storage1, storage2);
+        try{controller.transferAll(storage1, storage2);}catch (Exception e){System.out.println(e.getMessage());}
 
-            controller.transferFile(storage2, storage1, 4);
-            controller.transferFile(storage1, storage2, 8);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+            //controller.transferFile(storage2, storage1, 4);
+            //controller.transferFile(storage1, storage2, 8);
+
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
 

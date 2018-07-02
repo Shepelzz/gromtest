@@ -1,35 +1,35 @@
 package lesson19.hw2;
 
 public class Controller {
-    public File put(Storage storage, File file) throws IllegalArgumentException, IndexOutOfBoundsException{
+    public File put(Storage storage, File file) throws RuntimeException{
 
         if(storage.checkFileIfExists(file))
-            throw new IllegalArgumentException("file already exists. file id:"+file.getId()+" storage id:"+storage.getId());
+            throw new RuntimeException("file already exists. file id:"+file.getId()+" storage id:"+storage.getId());
 
         if(!storage.checkFileSize(file))
-            throw new IllegalArgumentException("file is too large. file id:"+file.getId()+" storage id:"+storage.getId());
+            throw new RuntimeException("file is too large. file id:"+file.getId()+" storage id:"+storage.getId());
 
         if(!storage.checkFileFormat(file))
-            throw new IllegalArgumentException("file format is not accepted. file id:"+file.getId()+" storage id:"+storage.getId());
+            throw new RuntimeException("file format is not accepted. file id:"+file.getId()+" storage id:"+storage.getId());
 
         if(!storage.checkFileName(file))
-            throw new IllegalArgumentException("file name is too large. file id:"+file.getId()+" storage id:"+storage.getId());
+            throw new RuntimeException("file name is too large. file id:"+file.getId()+" storage id:"+storage.getId());
 
         if(storage.checkFreeStorageCell()==0)
-            throw new IndexOutOfBoundsException("storage is full. file id:"+file.getId()+" storage id:"+storage.getId());
+            throw new RuntimeException("storage is full. file id:"+file.getId()+" storage id:"+storage.getId());
 
         storage.addFile(file);
         return file;
     }
 
-    public void delete(Storage storage, File file) throws IllegalArgumentException{
+    public void delete(Storage storage, File file) throws RuntimeException{
         if(!storage.checkFileIfExists(file))
-            throw new IllegalArgumentException("file not found. file id:"+file.getId()+" storage id:"+storage.getId());
+            throw new RuntimeException("file not found. file id:"+file.getId()+" storage id:"+storage.getId());
 
         storage.deleteFile(file);
     }
 
-    public void transferAll(Storage storageFrom, Storage storageTo){
+    public void transferAll(Storage storageFrom, Storage storageTo) throws RuntimeException{
         if(storageFrom == null || storageTo == null)
             return;
 
@@ -38,16 +38,16 @@ public class Controller {
                 transferFile(storageFrom, storageTo, f.getId());
     }
 
-    public void transferFile(Storage storageFrom, Storage storageTo, long id) throws IllegalArgumentException, IndexOutOfBoundsException{
+    public void transferFile(Storage storageFrom, Storage storageTo, long id) throws RuntimeException{
         if(storageFrom.getFileById(id) == null)
-            throw new IllegalArgumentException("file not found. file id:"+id+" storage id:"+storageFrom.getId());
+            throw new RuntimeException("file not found. file id:"+id+" storage id:"+storageFrom.getId());
 
         File file = storageFrom.getFileById(id);
 
         try{
             put(storageTo, file);
             delete(storageFrom, file);
-        } catch (IllegalArgumentException | IndexOutOfBoundsException e){
+        } catch (RuntimeException e){
             System.out.println(e.getMessage());
         }
     }

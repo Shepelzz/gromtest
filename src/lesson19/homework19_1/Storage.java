@@ -36,12 +36,12 @@ public class Storage {
     }
 
 
-    public void addFile(File file) throws IndexOutOfBoundsException, IllegalArgumentException{
+    public void addFile(File file) throws RuntimeException{
         if(file == null)
             return;
 
         if(checkFileIfExists(file))
-            throw new IllegalArgumentException("file already exists");
+            throw new RuntimeException("file already exists");
 
         if(!checkFileSize(file))
             throw new IllegalArgumentException("file is too large");

@@ -21,5 +21,6 @@ public class RuntimeExceptionExample {
     private static void npe(Object o){
         if(o != null)
             System.out.println(o.hashCode());
+
     }
 }
