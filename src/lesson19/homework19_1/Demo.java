@@ -7,6 +7,7 @@ public class Demo {
 
         Controller controller = new Controller();
 
+
         try{
             File f1 = new File(1, "qwertyuhdlfjsn", ".txt", 9);
             controller.put(storage1, f1);
@@ -35,6 +36,13 @@ public class Demo {
             System.out.println(e.getMessage());
         }
 
+        try{
+            File f5 = new File(5, "file4", ".dvd", 15000);
+            controller.put(storage1, f5);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
 
         try{
@@ -43,8 +51,10 @@ public class Demo {
             System.out.println(e.getMessage());
         }
 
+        System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
+
         try{
-            controller.transferFile(storage2, storage1, 4);
+            controller.transferFile(storage2, storage1, 2);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

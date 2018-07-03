@@ -16,8 +16,9 @@ public class Controller {
     }
 
     public void transferAll(Storage storageFrom, Storage storageTo) throws Exception{
-        if(storageFrom == null || storageTo == null)
-            return;
+        for(File f : storageFrom.getFiles())
+            if(f != null)
+                storageTo.checkPutFile(f);
 
         for(File f : storageFrom.getFiles())
             if(f != null)
