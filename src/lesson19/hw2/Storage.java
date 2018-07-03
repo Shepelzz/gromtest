@@ -79,7 +79,29 @@ public class Storage {
         return info;
     }
 
-    protected boolean checkFileIfExists(File file){
+    public void checkPutFile( File file){
+        if(checkFileIfExists(file))
+            throw new RuntimeException("file already exists. file id:"+file.getId()+" storage id:"+getId());
+
+        if(!checkFileSize(file))
+            throw new RuntimeException("file is too large. file id:"+file.getId()+" storage id:"+getId());
+
+        if(!checkFileFormat(file))
+            throw new RuntimeException("file format is not accepted. file id:"+file.getId()+" storage id:"+getId());
+
+        if(!checkFileName(file))
+            throw new RuntimeException("file name is too large. file id:"+file.getId()+" storage id:"+getId());
+
+        if(checkFreeStorageCell()==0)
+            throw new RuntimeException("storage is full. file id:"+file.getId()+" storage id:"+getId());
+    }
+
+    public void checkDeleteFile(File file){
+        if(!checkFileIfExists(file))
+            throw new RuntimeException("file not found. file id:"+file.getId()+" storage id:"+getId());
+    }
+
+    private boolean checkFileIfExists(File file){
         for(File f : files)
             if (f != null && f.equals(file) && f.hashCode() == file.hashCode())
                 return true;
@@ -92,20 +114,20 @@ public class Storage {
         return false;
     }
 
-    protected boolean checkFileFormat(File file){
+    private boolean checkFileFormat(File file){
         for(String format : getFormatsSupported())
             if(format.equals(file.getFormat()))
                 return true;
          return false;
     }
 
-    protected boolean checkFileName(File file){
+    private boolean checkFileName(File file){
         if(file.getName().length() <= 10)
             return true;
         return false;
     }
 
-    protected int checkFreeStorageCell(){
+    private int checkFreeStorageCell(){
         int freeCells = 0;
         for(File file : files)
             if(file == null)
@@ -121,6 +143,4 @@ public class Storage {
 
         return getStorageSize()-filesSize;
     }
-
-
 }
