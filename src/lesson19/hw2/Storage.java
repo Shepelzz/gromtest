@@ -58,13 +58,13 @@ public class Storage {
         }
     }
 
-    public File getFileById(long id) throws Exception{
+    public File getFileById(long id){
         for(File file : files){
             if( file != null && file.getId() == id){
                 return file;
             }
         }
-        throw new Exception("file not found. file id:"+id+" storage id:"+getId());
+        throw new RuntimeException("file not found. file id:"+id+" storage id:"+getId());
     }
 
 
@@ -79,26 +79,26 @@ public class Storage {
         return info;
     }
 
-    public void checkPutFile( File file) throws Exception{
+    public void checkPutFile( File file) {
         if(checkFileIfExists(file))
-            throw new Exception("file already exists. file id:"+file.getId()+" storage id:"+getId());
+            throw new RuntimeException("file already exists. file id:"+file.getId()+" storage id:"+getId());
 
         if(!checkFileSize(file))
-            throw new Exception("file is too large. file id:"+file.getId()+" storage id:"+getId());
+            throw new RuntimeException("file is too large. file id:"+file.getId()+" storage id:"+getId());
 
         if(!checkFileFormat(file))
-            throw new Exception("file format is not accepted. file id:"+file.getId()+" storage id:"+getId());
+            throw new RuntimeException("file format is not accepted. file id:"+file.getId()+" storage id:"+getId());
 
         if(!checkFileName(file))
-            throw new Exception("file name is too large. file id:"+file.getId()+" storage id:"+getId());
+            throw new RuntimeException("file name is too large. file id:"+file.getId()+" storage id:"+getId());
 
         if(checkFreeStorageCell()==0)
-            throw new Exception("storage is full. file id:"+file.getId()+" storage id:"+getId());
+            throw new RuntimeException("storage is full. file id:"+file.getId()+" storage id:"+getId());
     }
 
-    public void checkDeleteFile(File file) throws Exception{
+    public void checkDeleteFile(File file){
         if(!checkFileIfExists(file))
-            throw new Exception("file not found. file id:"+file.getId()+" storage id:"+getId());
+            throw new RuntimeException("file not found. file id:"+file.getId()+" storage id:"+getId());
     }
 
     private boolean checkFileIfExists(File file){
