@@ -35,6 +35,7 @@ public class Demo {
     }
 
     public static void test(){
+        /*
         File f1 = new File(1, "qwertyuhdlfjsn", ".txt", 9);
         File f2 = new File(2, "file2", ".txt", 2);
         File f3 = new File(3, "file3", ".dvd", 5617);
@@ -149,6 +150,6 @@ public class Demo {
         System.out.print("3. file exists in storage2: ");
         controller.delete(storage2, f7);
         controller.transferFile(storage1, storage2, 2);
-
+*/
     }
 }
