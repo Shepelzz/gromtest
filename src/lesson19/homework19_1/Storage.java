@@ -36,22 +36,7 @@ public class Storage {
     }
 
 
-    public void addFile(File file) throws RuntimeException{
-        if(file == null)
-            return;
-
-        if(checkFileIfExists(file))
-            throw new RuntimeException("file already exists");
-
-        if(!checkFileSize(file))
-            throw new IllegalArgumentException("file is too large");
-
-        if(!checkFileFormat(file))
-            throw new IllegalArgumentException("file format is not accepted");
-
-        if(!checkFileName(file))
-            throw new IllegalArgumentException("file name is too large");
-
+    public void addFile(File file){
         int index = 0;
         for(File f : files) {
             if (f == null){
@@ -60,13 +45,9 @@ public class Storage {
             }
             index++;
         }
-        throw new IndexOutOfBoundsException("storage is full");
     }
 
-    public void deleteFile(File file) throws IllegalArgumentException {
-        if(file == null)
-            return;
-
+    public void deleteFile(File file){
         int index = 0;
         for(File f : files) {
             if (f != null && f.equals(file) && f.hashCode() == file.hashCode()) {
@@ -75,16 +56,15 @@ public class Storage {
             }
             index++;
         }
-        throw new IllegalArgumentException("file not found");
     }
 
-    public File getFileById(long id) throws IllegalArgumentException{
+    public File getFileById(long id) throws Exception{
         for(File file : files){
             if( file != null && file.getId() == id){
                 return file;
             }
         }
-        throw new IllegalArgumentException("there is no file with such id");
+        throw new Exception("file not found. file id:"+id+" storage id:"+getId());
     }
 
 
@@ -97,6 +77,28 @@ public class Storage {
                 info = info.concat("["+f.getId()+"] ");
         }
         return info;
+    }
+
+    public void checkPutFile( File file) throws Exception{
+        if(checkFileIfExists(file))
+            throw new Exception("file already exists. file id:"+file.getId()+" storage id:"+getId());
+
+        if(!checkFileSize(file))
+            throw new Exception("file is too large. file id:"+file.getId()+" storage id:"+getId());
+
+        if(!checkFileFormat(file))
+            throw new Exception("file format is not accepted. file id:"+file.getId()+" storage id:"+getId());
+
+        if(!checkFileName(file))
+            throw new Exception("file name is too large. file id:"+file.getId()+" storage id:"+getId());
+
+        if(checkFreeStorageCell()==0)
+            throw new Exception("storage is full. file id:"+file.getId()+" storage id:"+getId());
+    }
+
+    public void checkDeleteFile(File file) throws Exception{
+        if(!checkFileIfExists(file))
+            throw new Exception("file not found. file id:"+file.getId()+" storage id:"+getId());
     }
 
     private boolean checkFileIfExists(File file){
@@ -113,7 +115,7 @@ public class Storage {
     }
 
     private boolean checkFileFormat(File file){
-        for(String format : formatsSupported)
+        for(String format : getFormatsSupported())
             if(format.equals(file.getFormat()))
                 return true;
          return false;
@@ -123,6 +125,14 @@ public class Storage {
         if(file.getName().length() <= 10)
             return true;
         return false;
+    }
+
+    private int checkFreeStorageCell(){
+        int freeCells = 0;
+        for(File file : files)
+            if(file == null)
+                freeCells++;
+        return freeCells;
     }
 
     private long getFreeStorageSize(){
