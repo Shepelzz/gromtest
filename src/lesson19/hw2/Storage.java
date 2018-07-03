@@ -96,7 +96,7 @@ public class Storage {
             throw new Exception("storage is full. file id:"+file.getId()+" storage id:"+getId());
     }
 
-    public void checkDeleteFile(File file) throws Exception{
+    public void checkDeleteFile(File file) throws RuntimeExceptionException{
         if(!checkFileIfExists(file))
             throw new Exception("file not found. file id:"+file.getId()+" storage id:"+getId());
     }
