@@ -8,7 +8,7 @@ public class Controller {
         return file;
     }
 
-    public void delete(Storage storage, File file) throws RuntimeExceptionException{
+    public void delete(Storage storage, File file) throws Exception{
         storage.checkDeleteFile(file);
 
         storage.deleteFile(file);
