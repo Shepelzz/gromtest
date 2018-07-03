@@ -8,7 +8,10 @@ public class File {
     private String format;
     private long size;
 
-    public File(long id, String name, String format, long size) {
+    public File(long id, String name, String format, long size) throws Exception{
+        if(name.length()>10)
+            throw new Exception("file was not created. file name is too large. file id:"+id);
+
         this.id = id;
         this.name = name;
         this.format = format;

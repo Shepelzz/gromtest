@@ -2,18 +2,23 @@ package lesson19.homework19_1;
 
 public class Demo {
     public static void main(String[] args) {
-        File f1 = new File(1, "qwertyuhdlfjsn", ".txt", 9);
-        File f2 = new File(2, "file2", ".txt", 2);
-        File f3 = new File(3, "file3", ".dvd", 617);
-        File f4 = new File(4, "file4", ".xls", 7000);
-        File f5 = new File(5, "file5", ".txt", 1);
-        File f6 = new File(6, "file3", ".iso", 5);
-        File f7 = new File(7, "file7", ".xls", 12);
-        File f8 = new File(8, "file8", ".xls", 6000);
-        File f9 = new File(8, "file8", ".xls", 18);
+        File f1 = null, f2 = null, f3 = null, f4 = null, f5 = null, f6 = null, f7 = null, f8 = null, f9 = null;
+
+        try{f1 = new File(1, "qwertyuhdlfjsn", ".txt", 9);}catch (Exception e){System.out.println(e.getMessage());}
+        try{f2 = new File(2, "file2", ".txt", 2);}catch (Exception e){System.out.println(e.getMessage());}
+        try{f3 = new File(3, "file3", ".dvd", 617);}catch (Exception e){System.out.println(e.getMessage());}
+        try{f4 = new File(4, "file4", ".xls", 7000);}catch (Exception e){System.out.println(e.getMessage());}
+        try{f5 = new File(5, "file5", ".txt", 1);}catch (Exception e){System.out.println(e.getMessage());}
+        try{f6 = new File(6, "file3", ".iso", 5);}catch (Exception e){System.out.println(e.getMessage());}
+        try{f7 = new File(7, "file7", ".xls", 12);}catch (Exception e){System.out.println(e.getMessage());}
+        try{f8 = new File(8, "file8", ".xls", 6000);}catch (Exception e){System.out.println(e.getMessage());}
+        try{f9 = new File(8, "file8", ".xls", 18);}catch (Exception e){System.out.println(e.getMessage());}
+
+        System.out.println(f2.getId());
 
         Storage storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", ".dvd"},"Ukraine",12000);;
         Storage storage2 = new Storage(0002, new File[3], new String[]{".txt", ".xls"},"Ukraine",9000);
+        System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
 
         Controller controller = new Controller();
 
