@@ -25,7 +25,6 @@ public class Controller {
     }
 
     public void transferFile(Storage storageFrom, Storage storageTo, long id) throws Exception{
-
         put(storageTo, storageFrom.getFileById(id));
         delete(storageFrom, storageFrom.getFileById(id));
     }
