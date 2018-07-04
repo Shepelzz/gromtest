@@ -88,14 +88,23 @@ public class Storage {
 
     public void checkDeleteFile(File file)  throws Exception{
         for(File f : files)
-            if (f != null && f.equals(file) && f.hashCode() == file.hashCode())
+            if (f != null && f.equals(file) )
                 return;
         throw new Exception("file not found. file id:"+file.getId()+" storage id:"+getId());
     }
 
+    public long getFreeStorageSize(){
+        long filesSize = 0;
+        for(File file : files)
+            if(file != null)
+                filesSize = filesSize+file.getSize();
+
+        return getStorageSize()-filesSize;
+    }
+
     private void checkFileIfExists(File file)  throws Exception{
         for(File f : files)
-            if (f != null && f.equals(file) && f.hashCode() == file.hashCode())
+            if (f != null && f.equals(file))
                 throw new Exception("file already exists. file id:"+file.getId()+" storage id:"+getId());
     }
 
@@ -118,14 +127,5 @@ public class Storage {
                 freeCells++;
         if (freeCells == 0)
             throw new Exception("storage is full. file id:"+file.getId()+" storage id:"+getId());
-    }
-
-    private long getFreeStorageSize(){
-        long filesSize = 0;
-        for(File file : files)
-            if(file != null)
-                filesSize = filesSize+file.getSize();
-
-        return getStorageSize()-filesSize;
     }
 }

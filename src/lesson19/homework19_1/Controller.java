@@ -16,12 +16,19 @@ public class Controller {
     }
 
     public void transferAll(Storage storageFrom, Storage storageTo) throws Exception{
+        long transferSize = 0;
+        //проверяю все файлы по отдельности. если хоть один не пройдет - ошибка
         for(File f : storageFrom.getFiles())
-            if(f != null)
+            if(f != null) {
                 storageTo.checkPutFile(f);
-
-        for(File f : storageFrom.getFiles())
-            if(f != null)
+                transferSize += f.getSize(); //формирую общий размер трансфера
+            }
+        //проверяю размер трансфера. если не ок - ошибка
+        if(transferSize > storageTo.getFreeStorageSize())
+            throw new Exception("transfer fail. there is no enough free space in storage id:"+storageTo.getId());
+        //если до сюда дошло - юзаю метод transferFile который перенесет файлы по очереди
+        for (File f : storageFrom.getFiles())
+            if (f != null)
                 transferFile(storageFrom, storageTo, f.getId());
     }
 
