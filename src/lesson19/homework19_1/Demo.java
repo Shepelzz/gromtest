@@ -3,7 +3,7 @@ package lesson19.homework19_1;
 public class Demo {
     public static void main(String[] args) {
         Storage storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", ".dvd"},"Ukraine",12000);;
-        Storage storage2 = new Storage(0002, new File[3], new String[]{".txt", ".xls"},"Ukraine",7600);
+        Storage storage2 = new Storage(0002, new File[3], new String[]{".txt", ".xls"},"Ukraine",7700);
 
         Controller controller = new Controller();
 
@@ -37,8 +37,15 @@ public class Demo {
         }
 
         try{
-            File f5 = new File(5, "file4", ".dvd", 15000);
+            File f5 = new File(5, "file5", ".dvd", 15000);
             controller.put(storage1, f5);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        try{
+            File f6 = new File(6, "file6", ".xls", 30);
+            controller.put(storage1, f6);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -64,11 +71,9 @@ public class Demo {
             System.out.println(e.getMessage());
         }
 
-        System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
-
         try{
             File f4 = new File(4, "file4", ".xls", 7000);
-            controller.delete(storage1, f4);
+            controller.delete(storage2, f4);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

@@ -79,11 +79,23 @@ public class Storage {
         return info;
     }
 
-    public void checkPutFile( File file) throws Exception{
+    public void checkPutFile(File file) throws Exception{
         checkFileIfExists(file);
         checkFileSize(file);
         checkFileFormat(file);
         checkFreeStorageCell(file);
+    }
+
+    public void checkPutFile(File[] files) throws Exception{
+        long filesSize = 0;
+        //проверяю все файлы по отдельности. если хоть один не пройдет - ошибка
+        for(File file : files)
+            if(file != null) {
+                checkPutFile(file);
+                filesSize += file.getSize(); //формирую общий размер трансфера
+            }
+        if(filesSize > getFreeStorageSize() || getFreeStorageCellsCount() < files.length)
+            throw new Exception("there is no enough free space in storage id:"+getId());
     }
 
     public void checkDeleteFile(File file)  throws Exception{
@@ -121,11 +133,15 @@ public class Storage {
     }
 
     private void checkFreeStorageCell(File file) throws Exception{
+        if (getFreeStorageCellsCount() == 0)
+            throw new Exception("storage is full. file id:"+file.getId()+" storage id:"+getId());
+    }
+
+    private int getFreeStorageCellsCount(){
         int freeCells = 0;
         for(File f : files)
             if(f == null)
                 freeCells++;
-        if (freeCells == 0)
-            throw new Exception("storage is full. file id:"+file.getId()+" storage id:"+getId());
+        return freeCells;
     }
 }
