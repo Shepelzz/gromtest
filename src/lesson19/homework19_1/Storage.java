@@ -35,6 +35,36 @@ public class Storage {
         return storageSize;
     }
 
+    public long getUsedStorageSpace(){
+        long filesSize = 0;
+        for(File file : files)
+            if(file != null)
+                filesSize = filesSize+file.getSize();
+        return filesSize;
+    }
+
+    public long getFreeStorageSpace(){
+        return getStorageSize() - getUsedStorageSpace();
+    }
+
+    public int getUsedStorageCellsCount(){
+        int usedCells = 0;
+        for(File f : files)
+            if(f != null)
+                usedCells++;
+        return usedCells;
+    }
+
+    public int getFreeStorageCellsCount(){
+        return files.length - getUsedStorageCellsCount();
+    }
+
+    public File getFileById(long id) throws Exception{
+        for(File file : files)
+            if( file != null && file.getId() == id)
+                return file;
+        throw new Exception("file not found. file id:"+id+" storage id:"+getId());
+    }
 
     public void addFile(File file){
         int index = 0;
@@ -58,90 +88,50 @@ public class Storage {
         }
     }
 
-    public File getFileById(long id) throws Exception{
-        for(File file : files){
-            if( file != null && file.getId() == id){
-                return file;
-            }
-        }
-        throw new Exception("file not found. file id:"+id+" storage id:"+getId());
+    public void checkSpaceForAdd(long size, int cells) throws Exception{
+        if(size > getFreeStorageSpace() || cells > getFreeStorageCellsCount())
+            throw new Exception("there is no enough space in storage id:"+getId());
     }
 
-
-    public String getStorageInfo(){
-        String info = "";
-        for(File f : files){
-            if(f == null)
-                info = info.concat("[] ");
-            else
-                info = info.concat("["+f.getId()+"] ");
-        }
-        return info;
-    }
-
-    public void checkPutFile(File file) throws Exception{
-        checkFileIfExists(file);
-        checkFileSize(file);
-        checkFileFormat(file);
-        checkFreeStorageCell(file);
-    }
-
-    public void checkPutFile(File[] files) throws Exception{
-        long filesSize = 0;
-        //проверяю все файлы по отдельности. если хоть один не пройдет - ошибка
-        for(File file : files)
-            if(file != null) {
-                checkPutFile(file);
-                filesSize += file.getSize(); //формирую общий размер трансфера
-            }
-        if(filesSize > getFreeStorageSize() || getFreeStorageCellsCount() < files.length)
-            throw new Exception("there is no enough free space in storage id:"+getId());
-    }
-
-    public void checkDeleteFile(File file)  throws Exception{
-        for(File f : files)
-            if (f != null && f.equals(file) )
-                return;
-        throw new Exception("file not found. file id:"+file.getId()+" storage id:"+getId());
-    }
-
-    public long getFreeStorageSize(){
-        long filesSize = 0;
-        for(File file : files)
-            if(file != null)
-                filesSize = filesSize+file.getSize();
-
-        return getStorageSize()-filesSize;
-    }
-
-    private void checkFileIfExists(File file)  throws Exception{
+    public void checkFileIfExists(File file)  throws Exception{
         for(File f : files)
             if (f != null && f.equals(file))
                 throw new Exception("file already exists. file id:"+file.getId()+" storage id:"+getId());
     }
 
-    private void checkFileSize(File file) throws Exception{
-        if(file.getSize() > getFreeStorageSize())
-            throw new Exception("file is too large. file id:"+file.getId()+" storage id:"+getId());
+    public void checkFileIfExists(File[] files) throws Exception{
+        for(File file : files)
+            if(file != null) {
+                checkFileIfExists(file);
+            }
     }
 
-    private void checkFileFormat(File file) throws Exception{
+    public void checkFileFormat(File file) throws Exception{
         for(String format : getFormatsSupported())
             if(format.equals(file.getFormat()))
                 return;
         throw new Exception("file format is not accepted. file id:"+file.getId()+" storage id:"+getId());
     }
 
-    private void checkFreeStorageCell(File file) throws Exception{
-        if (getFreeStorageCellsCount() == 0)
-            throw new Exception("storage is full. file id:"+file.getId()+" storage id:"+getId());
+    public void checkFileFormat(File[] files) throws Exception{
+        for(File file : files)
+            if(file != null) {
+                checkFileFormat(file);
+            }
     }
 
-    private int getFreeStorageCellsCount(){
-        int freeCells = 0;
+    public void checkFileSize(File file) throws Exception{
+        if(file.getSize() > getFreeStorageSpace() || getFreeStorageCellsCount() == 0)
+            throw new Exception("file is too large or storage is full. file id:"+file.getId()+" storage id:"+getId());
+    }
+
+    public String getStorageInfo(){
+        String info = "";
         for(File f : files)
             if(f == null)
-                freeCells++;
-        return freeCells;
+                info = info.concat("[] ");
+            else
+                info = info.concat("["+f.getId()+"] ");
+        return info;
     }
 }

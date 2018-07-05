@@ -2,6 +2,7 @@ package lesson19.homework19_1;
 
 public class Demo {
     public static void main(String[] args) {
+
         Storage storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", ".dvd"},"Ukraine",12000);;
         Storage storage2 = new Storage(0002, new File[3], new String[]{".txt", ".xls"},"Ukraine",7700);
 
@@ -66,20 +67,43 @@ public class Demo {
             System.out.println(e.getMessage());
         }
         try{
-            controller.transferFile(storage1, storage2, 8);
+            controller.transferFile(storage1, storage2, 4);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
         try{
             File f4 = new File(4, "file4", ".xls", 7000);
-            controller.delete(storage2, f4);
+            controller.delete(storage1, f4);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
+
+        try{
+            File f4 = new File(4, "file4", ".xls", 7000);
+            controller.delete(storage1, f4);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        try{
+            File f6 = new File(6, "file6", ".xls", 7000);
+            controller.delete(storage1, f6);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        try{
+            controller.transferAll(storage1, storage2);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
         //test();
+
     }
 
     public static void test(){
