@@ -17,18 +17,9 @@ public class Controller {
     }
 
     public void transferAll(Storage storageFrom, Storage storageTo) throws Exception{
-        storageTo.checkFreeSpaceForAdd(storageFrom.getFreeStorageSpace());
-        storageTo.checkFreeCellsForAdd(storageFrom.getUsedStorageCellsCount());
-
-        for(File file : storageFrom.getFiles())
-            if(file != null) {
-                storageTo.checkFileIfExists(file);
-            }
-
-        for(File file : storageFrom.getFiles())
-            if(file != null) {
-                storageTo.checkFileFormat(file);
-            }
+        storageTo.checkSpaceForAdd(storageFrom.getFreeStorageSpace(), storageFrom.getUsedStorageCellsCount());
+        storageTo.checkFileIfExists(storageFrom.getFiles());
+        storageTo.checkFileFormat(storageFrom.getFiles());
 
         for (File file : storageFrom.getFiles())
             if (file != null) {
