@@ -80,7 +80,7 @@ public class Storage {
     public void deleteFile(File file){
         int index = 0;
         for(File f : files) {
-            if (f != null && f.equals(file) && f.hashCode() == file.hashCode()) {
+            if (f != null && f.equals(file)) {
                 files[index] = null;
                 return;
             }
