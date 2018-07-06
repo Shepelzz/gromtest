@@ -88,8 +88,13 @@ public class Storage {
         }
     }
 
-    public void checkSpaceForAdd(long size, int cells) throws Exception{
-        if(size > getFreeStorageSpace() || cells > getFreeStorageCellsCount())
+    public void checkFreeSpaceForAdd(long size) throws Exception{
+        if(size > getFreeStorageSpace())
+            throw new Exception("there is no enough space in storage id:"+getId());
+    }
+
+    public void checkFreeCellsForAdd(int cells) throws Exception{
+        if(cells > getFreeStorageCellsCount())
             throw new Exception("there is no enough space in storage id:"+getId());
     }
 
@@ -99,25 +104,11 @@ public class Storage {
                 throw new Exception("file already exists. file id:"+file.getId()+" storage id:"+getId());
     }
 
-    public void checkFileIfExists(File[] files) throws Exception{
-        for(File file : files)
-            if(file != null) {
-                checkFileIfExists(file);
-            }
-    }
-
     public void checkFileFormat(File file) throws Exception{
         for(String format : getFormatsSupported())
             if(format.equals(file.getFormat()))
                 return;
         throw new Exception("file format is not accepted. file id:"+file.getId()+" storage id:"+getId());
-    }
-
-    public void checkFileFormat(File[] files) throws Exception{
-        for(File file : files)
-            if(file != null) {
-                checkFileFormat(file);
-            }
     }
 
     public void checkFileSize(File file) throws Exception{
