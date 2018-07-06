@@ -43,20 +43,12 @@ public class Storage {
         return filesSize;
     }
 
-    public long getFreeStorageSpace(){
-        return getStorageSize() - getUsedStorageSpace();
-    }
-
     public int getUsedStorageCellsCount(){
         int usedCells = 0;
         for(File f : files)
             if(f != null)
                 usedCells++;
         return usedCells;
-    }
-
-    public int getFreeStorageCellsCount(){
-        return files.length - getUsedStorageCellsCount();
     }
 
     public File getFileById(long id) throws Exception{
@@ -88,22 +80,25 @@ public class Storage {
         }
     }
 
-    public void checkSpaceForAdd(long size, int cells) throws Exception{
-        if(size > getFreeStorageSpace() || cells > getFreeStorageCellsCount())
+    public void checkSpaceForAdd(long size) throws Exception{
+        if(size > getStorageSize() - getUsedStorageSpace())
+            throw new Exception("there is no enough space in storage id:"+getId());
+    }
+
+    public void checkCellsForAdd(int cells) throws Exception{
+        if(cells > files.length - getUsedStorageCellsCount())
             throw new Exception("there is no enough space in storage id:"+getId());
     }
 
     public void checkFileIfExists(File file)  throws Exception{
-        for(File f : files)
-            if (f != null && f.equals(file))
+        try {
+            if (getFileById(file.getId()).equals(file))
                 throw new Exception("file already exists. file id:"+file.getId()+" storage id:"+getId());
-    }
+        }catch (Exception e){}
 
-    public void checkFileIfExists(File[] files) throws Exception{
-        for(File file : files)
-            if(file != null) {
-                checkFileIfExists(file);
-            }
+        /*for(File f : files)
+            if (f != null && f.equals(file))
+                throw new Exception("file already exists. file id:"+file.getId()+" storage id:"+getId());*/
     }
 
     public void checkFileFormat(File file) throws Exception{
@@ -111,18 +106,6 @@ public class Storage {
             if(format.equals(file.getFormat()))
                 return;
         throw new Exception("file format is not accepted. file id:"+file.getId()+" storage id:"+getId());
-    }
-
-    public void checkFileFormat(File[] files) throws Exception{
-        for(File file : files)
-            if(file != null) {
-                checkFileFormat(file);
-            }
-    }
-
-    public void checkFileSize(File file) throws Exception{
-        if(file.getSize() > getFreeStorageSpace() || getFreeStorageCellsCount() == 0)
-            throw new Exception("file is too large or storage is full. file id:"+file.getId()+" storage id:"+getId());
     }
 
     public String getStorageInfo(){

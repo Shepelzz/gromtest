@@ -4,7 +4,7 @@ public class Demo {
     public static void main(String[] args) {
 
         Storage storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", ".dvd"},"Ukraine",12000);;
-        Storage storage2 = new Storage(0002, new File[3], new String[]{".txt", ".xls"},"Ukraine",7700);
+        Storage storage2 = new Storage(0002, new File[3], new String[]{".txt", ".xls", ".pdf"},"Ukraine",7700);
 
         Controller controller = new Controller();
 
@@ -102,6 +102,31 @@ public class Demo {
         }
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
+
+        try{
+            File f6 = new File(3, "file3", ".xls", 7000);
+            controller.delete(storage2, f6);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        try{
+            File f1 = new File(1, "file1", ".pdf", 9);
+            controller.put(storage2, f1);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
+
+        try{
+            controller.transferAll(storage2, storage1);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
+
+
+
         //test();
 
     }
