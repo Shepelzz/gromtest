@@ -3,10 +3,7 @@ package lesson19.homework19_1;
 public class Controller {
 
     public File put(Storage storage, File file) throws Exception{
-        storage.checkFileIfExists(file);
-        storage.checkCellsForAdd(1);
-        storage.checkSpaceForAdd(file.getSize());
-        storage.checkFileFormat(file);
+        storage.checkPutFile(file);
 
         storage.addFile(file);
         return file;
@@ -14,17 +11,12 @@ public class Controller {
 
     public void delete(Storage storage, File file) throws Exception{
         storage.getFileById(file.getId());
+
         storage.deleteFile(file);
     }
 
     public void transferAll(Storage storageFrom, Storage storageTo) throws Exception{
-        storageTo.checkSpaceForAdd(storageFrom.getUsedStorageSpace());
-        storageTo.checkCellsForAdd(storageFrom.getUsedStorageCellsCount());
-        for (File file : storageFrom.getFiles())
-            if (file != null) {
-                storageTo.checkFileIfExists(file);
-                storageTo.checkFileFormat(file);
-            }
+        storageTo.checkTransfer(storageFrom);
 
         for (File file : storageFrom.getFiles())
             if (file != null) {
@@ -34,7 +26,9 @@ public class Controller {
     }
 
     public void transferFile(Storage storageFrom, Storage storageTo, long id) throws Exception{
-        put(storageTo, storageFrom.getFileById(id));
-        delete(storageFrom, storageFrom.getFileById(id));
+        storageTo.checkPutFile(storageFrom.getFileById(id));
+
+        storageTo.addFile(storageFrom.getFileById(id));
+        storageFrom.deleteFile(storageFrom.getFileById(id));
     }
 }

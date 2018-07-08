@@ -8,117 +8,154 @@ public class Demo {
 
         Controller controller = new Controller();
 
-
+        System.out.print("Create new file id:1 in storage 1 - ");
         try{
             File f1 = new File(1, "qwertyuhdlfjsn", ".txt", 9);
             controller.put(storage1, f1);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
+        System.out.print("Create new file id:2 in storage 1 - ");
         try{
             File f2 = new File(2, "file2", ".txt", 2);
             controller.put(storage1, f2);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
+        System.out.print("Create new file id:3 in storage 1 - ");
         try{
             File f3 = new File(3, "file3", ".txt", 617);
             controller.put(storage1, f3);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
+        System.out.print("Create new file id:4 in storage 1 - ");
         try{
             File f4 = new File(4, "file4", ".xls", 7000);
             controller.put(storage1, f4);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
+        System.out.print("Create new file id:5 in storage 1 - ");
         try{
             File f5 = new File(5, "file5", ".dvd", 15000);
             controller.put(storage1, f5);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
+        System.out.print("Create new file id:6 in storage 1 - ");
         try{
             File f6 = new File(6, "file6", ".xls", 30);
             controller.put(storage1, f6);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
 
+        System.out.print("Transfet all from stor 1 to stor 2 - ");
         try{
             controller.transferAll(storage1, storage2);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
 
+        System.out.print("Transfer file id:2 from stor 2 to stor 1 - ");
         try{
             controller.transferFile(storage2, storage1, 2);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        try{
-            controller.transferFile(storage1, storage2, 4);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
+        System.out.print("Transfer file id:4 from stor 1 to stor 2 - ");
         try{
-            File f4 = new File(4, "file4", ".xls", 7000);
-            controller.delete(storage1, f4);
+            controller.transferFile(storage1, storage2, 4);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
 
+        System.out.print("Delete file id:4 from stor 1 - ");
         try{
             File f4 = new File(4, "file4", ".xls", 7000);
             controller.delete(storage1, f4);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
+        System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
+
+        System.out.print("Delete file id:4 from stor 1 - ");
+        try{
+            File f4 = new File(4, "file4", ".xls", 7000);
+            controller.delete(storage1, f4);
+            System.out.println("Done");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        System.out.print("Delete file id:6 from stor 1 - ");
         try{
             File f6 = new File(6, "file6", ".xls", 7000);
             controller.delete(storage1, f6);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-        try{
-            controller.transferAll(storage1, storage2);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
 
+        System.out.print("Transfet all from stor 1 to stor 2 - ");
+        try{
+            controller.transferAll(storage1, storage2);
+            System.out.println("Done");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
+
+        System.out.print("Delete file id:6 from stor 2 - ");
         try{
             File f6 = new File(3, "file3", ".xls", 7000);
             controller.delete(storage2, f6);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+
+        System.out.print("Create new file id:1 in storage 2 - ");
         try{
             File f1 = new File(1, "file1", ".pdf", 9);
             controller.put(storage2, f1);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
 
+        System.out.print("Transfet all from stor 2 to stor 1 - ");
         try{
             controller.transferAll(storage2, storage1);
+            System.out.println("Done");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
