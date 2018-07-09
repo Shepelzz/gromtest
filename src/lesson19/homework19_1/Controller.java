@@ -3,7 +3,7 @@ package lesson19.homework19_1;
 public class Controller {
 
     public File put(Storage storage, File file) throws Exception{
-        storage.checkPutFile(file);
+        storage.checkFile(file);
 
         storage.addFile(file);
         return file;
@@ -15,8 +15,8 @@ public class Controller {
         storage.deleteFile(file);
     }
 
-    public void transferAll(Storage storageFrom, Storage storageTo) throws Exception{
-        storageTo.checkTransfer(storageFrom.getFiles());
+    /*public void transferAll(Storage storageFrom, Storage storageTo) throws Exception{
+        storageTo.checkTransfer(storageFrom);
 
         for (File file : storageFrom.getFiles())
             if (file != null) {
@@ -30,5 +30,5 @@ public class Controller {
 
         storageTo.addFile(storageFrom.getFileById(id));
         storageFrom.deleteFile(storageFrom.getFileById(id));
-    }
+    }*/
 }

@@ -42,27 +42,10 @@ public class Storage {
         throw new Exception("file not found. file id:"+id+" storage id:"+getId());
     }
 
-    public void checkPutFile(File file) throws Exception{
-        checkFileIfExists(file);
-        checkFileFormat(file);
-    }
-
-    public void checkTransfer(File[] files) throws Exception{
-        long filesSize = 0;
-        int filesCount = 0;
-
-        for(File file : files){
-            if (file != null){
-                checkPutFile(file);
-
-            }
-        }
-
-        for (File file : files)
-            if (file != null) {
-                checkFileIfExists(file);
-                checkFileFormat(file);
-            }
+    public void checkFile(File file) throws Exception{
+        checkFileIfExists(file.getId());
+        checkAvaliableSpaceForAdd(file.getId(), file.getSize());
+        checkFileFormat(file.getId(), file.getFormat());
     }
 
     public void addFile(File file){
@@ -97,28 +80,30 @@ public class Storage {
         return info;
     }
 
-    private void checkFileIfExists(File file)  throws Exception{
+    private void checkFileIfExists(long fileId)  throws Exception{
         try {
-            if (getFileById(file.getId()).equals(file))
-                throw new Exception("file already exists. file id:"+file.getId()+" storage id:"+getId());
+            if (getFileById(fileId) != null)
+                throw new Exception("file already exists. file id:"+fileId+" storage id:"+getId());
         }catch (Exception e){}
     }
 
-    private void checkFileFormat(File file) throws Exception{
+    private void checkFileFormat(long fileId, String fileFormat) throws Exception{
         for(String format : getFormatsSupported())
-            if(format.equals(file.getFormat()))
+            if(format.equals(fileFormat))
                 return;
-        throw new Exception("file format is not accepted. file id:"+file.getId()+" storage id:"+getId());
+        throw new Exception("file format is not accepted. file id:"+fileId+" storage id:"+getId());
     }
 
-    private void checkAvaliableSpaceForAdd(Storage storage) throws Exception{
-        //if(storage.getUsedStorageSpace() > getStorageSize() - getUsedStorageSpace())
-            throw new Exception("there is no enough space in storage id:"+getId());
-    }
-
-
-    private void checkAvaliableCellsForAdd(File file) throws Exception {
-        //if (file.getSize() > getStorageSize() - getUsedStorageSpace())
-            throw new Exception("there is no enough space in storage id:" + getId());
+    private void checkAvaliableSpaceForAdd(long fileId, long fileSize) throws Exception{
+        long storageFreeSize = getStorageSize();
+        int storageFreeCells = getFiles().length;
+        for(File file : files){
+            if(file != null) {
+                storageFreeSize -= file.getSize();
+                storageFreeCells--;
+            }
+        }
+        if(storageFreeSize < fileSize || storageFreeCells < 1)
+            throw new Exception("storage is full. file id:"+fileId+" storage id:"+getId());
     }
 }
