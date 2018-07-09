@@ -47,14 +47,23 @@ public class Storage {
         checkFileFormat(file);
     }
 
-    public void checkTransfer(Storage storageFrom) throws Exception{
-        for (File file : storageFrom.getFiles())
+    public void checkTransfer(File[] files) throws Exception{
+        long filesSize = 0;
+        int filesCount = 0;
+
+        for(File file : files){
+            if (file != null){
+                checkPutFile(file);
+
+            }
+        }
+
+        for (File file : files)
             if (file != null) {
                 checkFileIfExists(file);
                 checkFileFormat(file);
             }
     }
-
 
     public void addFile(File file){
         int index = 0;
@@ -77,8 +86,6 @@ public class Storage {
             index++;
         }
     }
-
-
 
     public String getStorageInfo(){
         String info = "";
@@ -104,5 +111,14 @@ public class Storage {
         throw new Exception("file format is not accepted. file id:"+file.getId()+" storage id:"+getId());
     }
 
+    private void checkAvaliableSpaceForAdd(Storage storage) throws Exception{
+        //if(storage.getUsedStorageSpace() > getStorageSize() - getUsedStorageSpace())
+            throw new Exception("there is no enough space in storage id:"+getId());
+    }
 
+
+    private void checkAvaliableCellsForAdd(File file) throws Exception {
+        //if (file.getSize() > getStorageSize() - getUsedStorageSpace())
+            throw new Exception("there is no enough space in storage id:" + getId());
+    }
 }

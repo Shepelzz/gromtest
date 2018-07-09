@@ -16,7 +16,7 @@ public class Controller {
     }
 
     public void transferAll(Storage storageFrom, Storage storageTo) throws Exception{
-        storageTo.checkTransfer(storageFrom);
+        storageTo.checkTransfer(storageFrom.getFiles());
 
         for (File file : storageFrom.getFiles())
             if (file != null) {
