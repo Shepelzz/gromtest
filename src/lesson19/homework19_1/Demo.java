@@ -63,7 +63,7 @@ public class Demo {
         }
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
-/*
+
         System.out.print("Transfet all from stor 1 to stor 2 - ");
         try{
             controller.transferAll(storage1, storage2);
@@ -91,7 +91,7 @@ public class Demo {
         }
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
-*/
+
         System.out.print("Delete file id:4 from stor 1 - ");
         try{
             File f4 = new File(4, "file4", ".xls", 7000);
@@ -120,7 +120,7 @@ public class Demo {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-/*
+
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
 
         System.out.print("Transfet all from stor 1 to stor 2 - ");
@@ -141,7 +141,7 @@ public class Demo {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-*/
+
         System.out.print("Create new file id:1 in storage 2 - ");
         try{
             File f1 = new File(1, "file1", ".pdf", 9);
@@ -151,7 +151,7 @@ public class Demo {
             System.out.println(e.getMessage());
         }
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
-/*
+
         System.out.print("Transfet all from stor 2 to stor 1 - ");
         try{
             controller.transferAll(storage2, storage1);
@@ -161,7 +161,7 @@ public class Demo {
         }
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
-*/
+
 
 
         //test();
