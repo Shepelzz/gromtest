@@ -4,7 +4,7 @@ public class Demo {
     public static void main(String[] args) {
 
         Storage storage1 = new Storage(0001, new File[4], new String[]{".txt", ".xls", ".dvd"},"Ukraine",12000);;
-        Storage storage2 = new Storage(0002, new File[3], new String[]{".txt", ".xls", ".pdf"},"Ukraine",7700);
+        Storage storage2 = new Storage(0002, new File[5], new String[]{".txt", ".xls", ".pdf"},"Ukraine",7700);
 
         Controller controller = new Controller();
 
@@ -161,8 +161,6 @@ public class Demo {
         }
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
-
-
 
         //test();
 
