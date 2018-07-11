@@ -42,30 +42,23 @@ public class Storage {
         throw new Exception("file not found. file id:"+id+" storage id:"+getId());
     }
 
-    public long getUsedSize(){
-        long usedSize = 0;
-        for(File file : files)
-            if(file != null)
-                usedSize += file.getSize();
-        return usedSize;
-    }
-
-    public int getUsedCells(){
-        int usedCells = 0;
-        for(File f : files)
-            if(f != null)
-                usedCells++;
-        return usedCells;
-    }
-
     public void checkPutFile(File file) throws Exception{
         checkAvailableSpace(file.getSize(), 1);
         checkFileIfExists(id);
         checkFileFormat(file.getId(), file.getFormat());
     }
 
-    public void checkTransfer(File[] files, long size, int count) throws Exception{
-        checkAvailableSpace(size, count);
+    public void checkTransfer(File[] files) throws Exception{
+        long filesSize = 0;
+        int filesCount = 0;
+
+        for(File file : files)
+            if(file != null){
+                filesSize += file.getSize();
+                filesCount++;
+            }
+
+        checkAvailableSpace(filesSize, filesCount);
 
         for (File file : files)
             if (file != null) {
@@ -121,9 +114,15 @@ public class Storage {
     }
 
     private void checkAvailableSpace(long Size, int Count) throws Exception{
-        long freeSize = getStorageSize() - getUsedSize();
-        int freeCells = getFiles().length - getUsedCells();
-        if(Count > freeCells || Size > freeSize)
+        long usedSize = 0;
+        int usedCells = 0;
+        for(File file : files)
+            if(file != null) {
+                usedSize += file.getSize();
+                usedCells++;
+            }
+
+        if(Count > getFiles().length - usedCells || Size > getStorageSize() - usedSize)
             throw new Exception("storage is full. storage id:"+getId());
     }
 }

@@ -133,7 +133,7 @@ public class Demo {
 
         System.out.println("storage1: "+storage1.getStorageInfo()+" storage2:"+storage2.getStorageInfo());
 
-        System.out.print("Delete file id:6 from stor 2 - ");
+        System.out.print("Delete file id:3 from stor 2 - ");
         try{
             File f6 = new File(3, "file3", ".xls", 7000);
             controller.delete(storage2, f6);
