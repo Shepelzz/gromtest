@@ -35,6 +35,28 @@ public class Storage {
         return storageSize;
     }
 
+    public void addFile(File file){
+        int index = 0;
+        for(File f : files) {
+            if (f == null){
+                files[index] = file;
+                return;
+            }
+            index++;
+        }
+    }
+
+    public void deleteFile(File file){
+        int index = 0;
+        for(File f : files) {
+            if (f != null && f.equals(file)) {
+                files[index] = null;
+                return;
+            }
+            index++;
+        }
+    }
+
     public File getFileById(long id) throws Exception{
         for(File file : files)
             if( file != null && file.getId() == id)
@@ -65,28 +87,6 @@ public class Storage {
                 checkFileIfExists(file.getId());
                 checkFileFormat(file.getId(), file.getFormat());
             }
-    }
-
-    public void addFile(File file){
-        int index = 0;
-        for(File f : files) {
-            if (f == null){
-                files[index] = file;
-                return;
-            }
-            index++;
-        }
-    }
-
-    public void deleteFile(File file){
-        int index = 0;
-        for(File f : files) {
-            if (f != null && f.equals(file)) {
-                files[index] = null;
-                return;
-            }
-            index++;
-        }
     }
 
     public String getStorageInfo(){
