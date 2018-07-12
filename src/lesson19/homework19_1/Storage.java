@@ -113,7 +113,7 @@ public class Storage {
         throw new Exception("file format is not accepted. file id:"+fileId+" storage id:"+getId());
     }
 
-    private void checkAvailableSpace(long Size, int Count) throws Exception{
+    private void checkAvailableSpace(long size, int count) throws Exception{
         long usedSize = 0;
         int usedCells = 0;
         for(File file : files)
@@ -122,7 +122,10 @@ public class Storage {
                 usedCells++;
             }
 
-        if(Count > getFiles().length - usedCells || Size > getStorageSize() - usedSize)
+        if(count > getFiles().length - usedCells)
             throw new Exception("storage is full. storage id:"+getId());
+
+        if(size > getStorageSize() - usedSize)
+            throw new Exception("there is no free space. storage id:"+getId());
     }
 }
