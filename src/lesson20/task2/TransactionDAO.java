@@ -88,7 +88,7 @@ public class TransactionDAO {
         return result;
     }
 
-    Transaction[] transactionList(String city) throws BadRequestException{
+    public Transaction[] transactionList(String city) throws BadRequestException{
         if(city == null)
             throw new BadRequestException("Can`t show transaction list by null city");
 
@@ -111,9 +111,9 @@ public class TransactionDAO {
 
     }
 
-    Transaction[] transactionList(int amount) throws BadRequestException{
-        if(amount < 0)
-            throw new BadRequestException("Can`t show transaction list by negative amount");
+    public Transaction[] transactionList(int amount){
+//        if(amount <= 0)
+//            throw new BadRequestException("Can`t show transaction list by negative or zero amount");
 
         int count = 0;
         for(Transaction tr : transactions)
