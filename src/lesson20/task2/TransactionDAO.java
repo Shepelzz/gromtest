@@ -112,8 +112,8 @@ public class TransactionDAO {
     }
 
     Transaction[] transactionList(int amount) throws BadRequestException{
-        if(amount <= 0)
-            throw new BadRequestException("Can`t show transaction list by negative or zero amount");
+        if(amount < 0)
+            throw new BadRequestException("Can`t show transaction list by negative amount");
 
         int count = 0;
         for(Transaction tr : transactions)
