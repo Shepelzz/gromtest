@@ -63,9 +63,6 @@ public class TransactionDAO {
 
         if(!isFreeCells)
             throw new InternalServerException("Not enough space to save transaction with id: "+transaction.getId());
-
-        //транзакция есть в массиве
-
     }
 
     public Transaction[] transactionList(){
@@ -111,9 +108,9 @@ public class TransactionDAO {
 
     }
 
-    public Transaction[] transactionList(int amount){
-//        if(amount <= 0)
-//            throw new BadRequestException("Can`t show transaction list by negative or zero amount");
+    public Transaction[] transactionList(int amount) throws BadRequestException{
+        if(amount < 0)
+            throw new BadRequestException("Can`t show transaction list by negative or zero amount");
 
         int count = 0;
         for(Transaction tr : transactions)
