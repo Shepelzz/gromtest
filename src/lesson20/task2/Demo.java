@@ -12,11 +12,7 @@ public class Demo {
 
         System.out.println(Arrays.toString(controller.transactionList()));
 
-        try {
-            System.out.println(Arrays.toString(controller.transactionList(5)));
-        }catch (BadRequestException e){
-            System.out.println(e.getMessage());
-        }
+        System.out.println(Arrays.toString(controller.transactionList(5)));
 
         try{
             Transaction t1 = new Transaction(1000, "Kiev", 1, "notes", TransactionType.INCOME, new Date());
@@ -64,11 +60,6 @@ public class Demo {
             System.out.println(e.getMessage());
         }
 
-        try {
-            System.out.println(Arrays.toString(controller.transactionList(1)));
-        }catch (BadRequestException e){
-            System.out.println(e.getMessage());
-        }
-
+        System.out.println(Arrays.toString(controller.transactionList(1)));
     }
 }
