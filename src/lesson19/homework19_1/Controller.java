@@ -4,13 +4,13 @@ public class Controller {
 
     public File put(Storage storage, File file) throws Exception{
         storage.checkPutFile(file);
-
         storage.addFile(file);
         return file;
     }
 
     public void delete(Storage storage, File file) throws Exception{
-        storage.getFileById(file.getId());
+        if(storage.getFileById(file.getId()) == null)
+            throw new Exception("file not found. file id:"+file.getId()+" storage id:"+storage.getId());
 
         storage.deleteFile(file);
     }

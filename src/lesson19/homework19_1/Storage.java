@@ -57,16 +57,17 @@ public class Storage {
         }
     }
 
-    public File getFileById(long id) throws Exception{
+    public File getFileById(long id){
         for(File file : files)
             if( file != null && file.getId() == id)
                 return file;
-        throw new Exception("file not found. file id:"+id+" storage id:"+getId());
+        return null;
     }
 
     public void checkPutFile(File file) throws Exception{
         checkAvailableSpace(file.getSize(), 1);
-        checkFileIfExists(id);
+        if(getFileById(file.getId()) != null)
+            throw new Exception("file already exists. file id:"+file.getId()+" storage id:"+getId());
         checkFileFormat(file.getId(), file.getFormat());
     }
 
@@ -84,7 +85,8 @@ public class Storage {
 
         for (File file : files)
             if (file != null) {
-                checkFileIfExists(file.getId());
+                if(getFileById(file.getId()) != null)
+                    throw new Exception("file already exists. file id:"+file.getId()+" storage id:"+getId());
                 checkFileFormat(file.getId(), file.getFormat());
             }
     }
@@ -99,12 +101,15 @@ public class Storage {
         return info;
     }
 
-    private void checkFileIfExists(long fileId)  throws Exception{
-        try {
-            if (getFileById(fileId) != null)
-                throw new Exception("file already exists. file id:"+fileId+" storage id:"+getId());
-        }catch (Exception e){}
+/*    public void checkFileIfExists(long fileId) throws Exception{
+        if(getFileById(fileId) != null)
+            throw new Exception("file already exists. file id:"+fileId+" storage id:"+getId());
     }
+
+    public void checkFileIfNotExists(long fileId) throws Exception{
+        if(getFileById(fileId) == null)
+            throw new Exception("file not found. file id:"+fileId+" storage id:"+getId());
+    }*/
 
     private void checkFileFormat(long fileId, String fileFormat) throws Exception{
         for(String format : getFormatsSupported())
