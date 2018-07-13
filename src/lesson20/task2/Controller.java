@@ -18,7 +18,7 @@ public class Controller {
         return transactionDAO.transactionList(city);
     }
 
-    public Transaction[] transactionList(int amount){
+    public Transaction[] transactionList(int amount) throws BadRequestException{
         return transactionDAO.transactionList(amount);
     }
 
