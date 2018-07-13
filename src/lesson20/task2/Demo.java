@@ -60,6 +60,11 @@ public class Demo {
             System.out.println(e.getMessage());
         }
 
-        //System.out.println(Arrays.toString(controller.transactionList(1)));
+        try {
+            System.out.println(Arrays.toString(controller.transactionList(1)));
+        }catch (BadRequestException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }

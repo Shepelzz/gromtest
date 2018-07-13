@@ -73,14 +73,12 @@ public class TransactionDAO {
 
         Transaction[] result = new Transaction[count];
         int index = 0;
-        for (Transaction tr : transactions) {
-            if (count != 0 && tr != null) {
-                result[index] = tr;
-                index++;
-                count--;
-            }
-            else
-                break;
+        if(result.length != 0){
+            for (Transaction tr : transactions)
+                if (count != 0 && tr != null) {
+                    result[index] = tr;
+                    index++;
+                }
         }
         return result;
     }
@@ -96,13 +94,12 @@ public class TransactionDAO {
 
         Transaction[] result = new Transaction[count];
         int index = 0;
-        for (Transaction tr : transactions) {
-            if (count != 0 && tr != null && tr.getCity().equals(city)) {
-                result[index] = tr;
-                index++;
-                count--;
-            } else
-                break;
+        if(result.length != 0){
+            for (Transaction tr : transactions)
+                if (tr != null && tr.getCity().equals(city)) {
+                    result[index] = tr;
+                    index++;
+                }
         }
         return result;
 
@@ -119,13 +116,12 @@ public class TransactionDAO {
 
         Transaction[] result = new Transaction[count];
         int index = 0;
-        for (Transaction tr : transactions) {
-            if (count != 0 && tr != null && tr.getAmount() == amount) {
-                result[index] = tr;
-                index++;
-                count--;
-            } else
-                break;
+        if(result.length != 0) {
+            for (Transaction tr : transactions)
+                if (tr != null && tr.getAmount() == amount) {
+                    result[index] = tr;
+                    index++;
+                }
         }
         return result;
     }
