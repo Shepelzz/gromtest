@@ -10,6 +10,8 @@ public class Demo {
     public static void main(String[] args) {
         Controller controller = new Controller();
 
+        System.out.println(Arrays.toString(controller.transactionList()));
+
         try{
             Transaction t1 = new Transaction(1000, "Kiev", 1, "notes", TransactionType.INCOME, new Date());
             Transaction t2 = new Transaction(1001, "Kiev", 5, "notes", TransactionType.INCOME, new Date());

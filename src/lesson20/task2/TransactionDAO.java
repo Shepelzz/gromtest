@@ -74,17 +74,18 @@ public class TransactionDAO {
             if(tr != null)
                 count++;
 
-        if(count != 0) {
-            Transaction[] result = new Transaction[count];
-            int index = 0;
-            for (Transaction tr : transactions)
-                if (tr != null) {
-                    result[index] = tr;
-                    index++;
-                }
-            return result;
-        } else
-            return null;
+        Transaction[] result = new Transaction[count];
+        int index = 0;
+        for (Transaction tr : transactions) {
+            if (count != 0 && tr != null) {
+                result[index] = tr;
+                index++;
+                count--;
+            }
+            else
+                break;
+        }
+        return result;
     }
 
     Transaction[] transactionList(String city) throws BadRequestException{
@@ -96,18 +97,18 @@ public class TransactionDAO {
             if(tr != null && tr.getCity().equals(city))
                 count++;
 
-        if(count != 0) {
-            Transaction[] result = new Transaction[count];
-            int index = 0;
-            for (Transaction tr : transactions)
-                if (tr != null && tr.getCity().equals(city)){
-                    result[index] = tr;
-                    index++;
-                }
+        Transaction[] result = new Transaction[count];
+        int index = 0;
+        for (Transaction tr : transactions) {
+            if (count != 0 && tr != null && tr.getCity().equals(city)) {
+                result[index] = tr;
+                index++;
+                count--;
+            } else
+                break;
+        }
+        return result;
 
-            return result;
-        } else
-            return null;
     }
 
     Transaction[] transactionList(int amount) throws BadRequestException{
@@ -119,17 +120,17 @@ public class TransactionDAO {
             if(tr != null && tr.getAmount() == amount)
                 count++;
 
-        if(count != 0) {
-            Transaction[] result = new Transaction[count];
-            int index = 0;
-            for (Transaction tr : transactions)
-                if (tr != null && tr.getAmount() == amount) {
-                    result[index] = tr;
-                    index++;
-                }
-            return result;
-        } else
-            return null;
+        Transaction[] result = new Transaction[count];
+        int index = 0;
+        for (Transaction tr : transactions) {
+            if (count != 0 && tr != null && tr.getAmount() == amount) {
+                result[index] = tr;
+                index++;
+                count--;
+            } else
+                break;
+        }
+        return result;
     }
 
     private Transaction[] getTransactionsPerDay(Date dateOfCurrentTracsaction){
