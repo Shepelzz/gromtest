@@ -15,15 +15,16 @@ public class Demo {
         //System.out.println(Arrays.toString(controller.transactionList(5)));
 
         try{
-            Transaction t1 = new Transaction(1000, "Kiev", 1, "notes", TransactionType.INCOME, new Date());
-            Transaction t2 = new Transaction(1001, "Kiev", 5, "notes", TransactionType.INCOME, new Date());
-            Transaction t3 = new Transaction(1002, "Odessa", 5, "notes", TransactionType.INCOME, new Date());
-            Transaction t4 = new Transaction(1003, "Kiev", 5, "notes", TransactionType.INCOME, new Date());
-            Transaction t5 = new Transaction(1004, "Kiev", 5, "notes", TransactionType.OUTCOME, new Date());
-            Transaction t6 = new Transaction(1005, "Kiev", 1, "notes", TransactionType.INCOME, new Date());
-            Transaction t7 = new Transaction(1006, "Odessa", 1, "notes", TransactionType.INCOME, new Date());
-            Transaction t8 = new Transaction(1007, "Odessa", 5, "notes", TransactionType.OUTCOME, new Date());
-            Transaction t9 = new Transaction(1008, "Kiev", 5, "notes", TransactionType.OUTCOME, new Date());
+            Transaction t1 = new Transaction(1001, "Kiev", 1, "notes", TransactionType.INCOME, new Date());
+            Transaction t2 = new Transaction(1002, "Kiev", 5, "notes", TransactionType.INCOME, new Date());
+            Transaction t3 = new Transaction(1003, "Odessa", 5, "notes", TransactionType.INCOME, new Date());
+            Transaction t4 = new Transaction(1004, "Kiev", 5, "notes", TransactionType.INCOME, new Date());
+            Transaction t5 = new Transaction(1005, "Kiev", 5, "notes", TransactionType.OUTCOME, new Date());
+            Transaction t6 = new Transaction(1006, "Kiev", 1, "notes", TransactionType.INCOME, new Date());
+            Transaction t7 = new Transaction(1007, "Odessa", 1, "notes", TransactionType.INCOME, new Date());
+            Transaction t8 = new Transaction(1008, "Odessa", 5, "notes", TransactionType.OUTCOME, new Date());
+            Transaction t9 = new Transaction(1009, "Kiev", 5, "notes", TransactionType.OUTCOME, new Date());
+            Transaction t10 = new Transaction(1010, "Kiev", 5, "notes", TransactionType.OUTCOME, new Date());
 
             controller.save(t1);
             controller.save(t2);
@@ -34,19 +35,24 @@ public class Demo {
             controller.save(t7);
             controller.save(t8);
             controller.save(t9);
+            controller.save(t10);
+
         }catch (BadRequestException | InternalServerException e){
             System.out.println(e.getMessage());
         }
-
+/*
         try{
             Transaction t2 = new Transaction(1009, "Kiev", 8, "notes", TransactionType.INCOME, new Date());
             controller.save(t2);
         }catch (BadRequestException | InternalServerException e){
             System.out.println(e.getMessage());
         }
-
+*/
         System.out.println(Arrays.toString(controller.transactionList()));
 
+        for (Transaction tr : controller.transactionList())
+            System.out.print("["+tr.getId()+"] ");
+/*
         try{
             Transaction t2 = new Transaction(1010, "Kiev", 8, "notes", TransactionType.INCOME, new Date());
             controller.save(t2);
@@ -65,6 +71,6 @@ public class Demo {
         }catch (BadRequestException e){
             System.out.println(e.getMessage());
         }
-
+*/
     }
 }
