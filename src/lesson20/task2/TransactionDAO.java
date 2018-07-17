@@ -42,10 +42,7 @@ public class TransactionDAO {
         return result;
     }
 
-    public Transaction[] transactionList(String city) throws BadRequestException{
-        if(city == null)
-            throw new BadRequestException("Can`t show transaction list by null city");
-
+    public Transaction[] transactionList(String city){
         int count = 0;
         for(Transaction tr : transactions)
             if(tr != null && tr.getCity().equals(city))
@@ -64,10 +61,7 @@ public class TransactionDAO {
 
     }
 
-    public Transaction[] transactionList(int amount) throws BadRequestException{
-        if(amount < 0)
-            throw new BadRequestException("Can`t show transaction list by negative or zero amount");
-
+    public Transaction[] transactionList(int amount){
         int count = 0;
         for(Transaction tr : transactions)
             if(tr != null && tr.getAmount() == amount)
@@ -145,10 +139,10 @@ public class TransactionDAO {
             sum += tr.getAmount();
             count++;
         }
-        if(sum >= utils.getLimitTransactionsPerDayAmount())
+        if(sum > utils.getLimitTransactionsPerDayAmount())
             throw new LimitExceeded("Transaction limit per day amount exceeded "+ transactionId + ". Can`t be saved");
 
-        if(count >= utils.getLimitTransactionsPerDayCount())
+        if(count > utils.getLimitTransactionsPerDayCount())
             throw new LimitExceeded("Transaction limit per day count exceeded "+ transactionId + ". Can`t be saved");
     }
 

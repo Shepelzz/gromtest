@@ -25,6 +25,7 @@ public class Demo {
             Transaction t8 = new Transaction(1008, "Odessa", 5, "notes", TransactionType.OUTCOME, new Date());
             Transaction t9 = new Transaction(1009, "Kiev", 5, "notes", TransactionType.OUTCOME, new Date());
             Transaction t10 = new Transaction(1010, "Kiev", 5, "notes", TransactionType.OUTCOME, new Date());
+            Transaction t11 = new Transaction(1011, "Kiev", 5, "notes", TransactionType.INCOME, new Date());
 
             controller.save(t1);
             controller.save(t2);
@@ -37,22 +38,22 @@ public class Demo {
             controller.save(t9);
             controller.save(t10);
 
+            controller.save(t11);
+
         }catch (BadRequestException | InternalServerException e){
             System.out.println(e.getMessage());
         }
-/*
+
         try{
             Transaction t2 = new Transaction(1009, "Kiev", 8, "notes", TransactionType.INCOME, new Date());
             controller.save(t2);
         }catch (BadRequestException | InternalServerException e){
             System.out.println(e.getMessage());
         }
-*/
-        System.out.println(Arrays.toString(controller.transactionList()));
 
         for (Transaction tr : controller.transactionList())
             System.out.print("["+tr.getId()+"] ");
-/*
+
         try{
             Transaction t2 = new Transaction(1010, "Kiev", 8, "notes", TransactionType.INCOME, new Date());
             controller.save(t2);
@@ -60,17 +61,16 @@ public class Demo {
             System.out.println(e.getMessage());
         }
 
-        try {
-            System.out.println(Arrays.toString(controller.transactionList("Odessa")));
-        }catch (BadRequestException e){
-            System.out.println(e.getMessage());
-        }
+        System.out.print("\nCity = Odessa: ");
+        for (Transaction tr : controller.transactionList("Odessa"))
+            System.out.print("["+tr.getId()+"] ");
 
-        try {
-            System.out.println(Arrays.toString(controller.transactionList(1)));
-        }catch (BadRequestException e){
-            System.out.println(e.getMessage());
-        }
-*/
+        System.out.print("\nCity = LA: ");
+        for (Transaction tr : controller.transactionList("LA"))
+            System.out.print("["+tr.getId()+"] ");
+
+        System.out.print("\nAmount = 1: ");
+        for (Transaction tr : controller.transactionList(1))
+            System.out.print("["+tr.getId()+"] ");
     }
 }
