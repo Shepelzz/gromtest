@@ -124,7 +124,6 @@ public class TransactionDAO {
         checkSimpleTransactionLimit(transaction.getId(), transaction.getAmount());  //сумма транзакций больше указ лимита
         checkTransactionsPerDayLimit(transaction.getId(), transaction.getDateCreated(), transaction.getAmount());  //сумма и кол-во транз за день больше дневн лимита
         checkTransactionCity(transaction.getId(), transaction.getCity());  //город не разрешен
-        checkTransactionDAOSpace(transaction.getId());  //не хватило места
     }
 
     private static void checkSimpleTransactionLimit(long transactionId, int transactionAmount) throws LimitExceeded {
@@ -151,12 +150,5 @@ public class TransactionDAO {
             if(transactionCity.equals(c))
                 return;
         throw new BadRequestException("Transaction city is not accepted: "+ transactionId+". Can`t be saved");
-    }
-
-    private static void checkTransactionDAOSpace(long transactionId) throws InternalServerException {
-        for(Transaction tr : transactions)
-            if(tr == null)
-                return;
-        throw new InternalServerException("Not enough space to save transaction with id: "+transactionId);
     }
 }
