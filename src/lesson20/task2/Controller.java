@@ -21,5 +21,4 @@ public class Controller {
     public Transaction[] transactionList(int amount){
         return transactionDAO.transactionList(amount);
     }
-
 }

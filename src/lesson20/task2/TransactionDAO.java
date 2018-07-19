@@ -151,4 +151,5 @@ public class TransactionDAO {
                 return;
         throw new BadRequestException("Transaction city is not accepted: "+ transactionId+". Can`t be saved");
     }
+
 }

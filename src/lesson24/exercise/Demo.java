@@ -22,5 +22,6 @@ public class Demo {
         System.out.println(Arrays.toString(toolDAO.getAll()));
 
         GeneralDAO<Order> orderDAO = new GeneralDAO<>();
+
     }
 }

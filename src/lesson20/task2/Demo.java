@@ -73,4 +73,5 @@ public class Demo {
         for (Transaction tr : controller.transactionList(1))
             System.out.print("["+tr.getId()+"] ");
     }
+
 }

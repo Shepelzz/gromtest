@@ -61,4 +61,5 @@ public class Transaction {
 
         return Objects.hash(id, city, amount, description, type);
     }
+
 }
