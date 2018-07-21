@@ -6,7 +6,11 @@ public class GeneralDAO<T> {
     private T[] array = (T[]) new Object[5];
 
     public T save(T t) throws Exception{
-        validate();
+        for(T el : array){
+            if(t.equals(el)){
+                throw  new Exception("element "+t.toString()+" exists in array");
+            }
+        }
 
         int index = 0;
         for(T el : array){
@@ -16,21 +20,11 @@ public class GeneralDAO<T> {
             }
             index++;
         }
-        return null;
-    }
-
-    private void validate() throws Exception{
-        int count = 0;
-        for(T el : array){
-            if(el == null){
-                count++;
-            }
-        }
-        if(count == 0)
-            throw new Exception("there is no free space");
+        throw new Exception("there is no free space");
     }
 
     public T[] getAll(){
         return array;
     }
 }
+
