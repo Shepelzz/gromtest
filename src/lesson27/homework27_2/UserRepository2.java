@@ -1,9 +1,9 @@
 package lesson27.homework27_2;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
-public class UserRepository {
-    public LinkedList<User> users = new LinkedList<>();
+public class UserRepository2 {
+    public ArrayList<User> users = new ArrayList<>();
 
     public User save(User user){
         if(user == null)
