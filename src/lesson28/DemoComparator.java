@@ -34,12 +34,14 @@ public class DemoComparator {
                 //если datecreated не равно - сравниваю по нему
                 //если равно - обьекты равны
 
-                if(o1.getChannelName().equals(o2.getChannelName()))
+                if(!(o1.getChannelName().equals(o2.getChannelName())))
                     return o1.getChannelName().compareTo(o2.getChannelName());
-                //TODO
+                else if(!(o1.getFingerPrint().equals(o2.getFingerPrint())))
+                    return o1.getFingerPrint().compareTo(o2.getFingerPrint());
+                else if(!(o1.getDateCreated().equals(o2.getDateCreated())))
+                    return o1.getDateCreated().compareTo(o2.getDateCreated());
+                else return 0;
 
-
-                return 0;
             }
         };
     }
