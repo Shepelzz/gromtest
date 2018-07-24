@@ -35,7 +35,7 @@ public class Demo {
 
 
         Date startGet = new Date();
-        System.out.println(userRepository.getUsers().length);
+        userRepository.getUsers();
         Date finishGet = new Date();
         long getTime = finishGet.getTime() - startGet.getTime();
         System.out.println("get - array list: "+ getTime);
@@ -54,7 +54,7 @@ public class Demo {
 
 
         Date startGet2 = new Date();
-        System.out.println(userRepository2.getUsers().length);
+        userRepository2.getUsers();
         Date finishGet2 = new Date();
         long getTime2 = finishGet2.getTime() - startGet2.getTime();
         System.out.println("get - linked list: "+ getTime2);
