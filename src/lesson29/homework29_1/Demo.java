@@ -4,7 +4,10 @@ public class Demo {
     public static void main(String[] args) {
 
         HashSetTest hashSetTest = new HashSetTest();
-        hashSetTest.useHashTest();
+
+        for(Order order : hashSetTest.useHashTest()){
+            System.out.println(order.getId());
+        }
 
     }
 }
