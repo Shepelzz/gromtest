@@ -39,15 +39,21 @@ public class HashSetTest {
 
         //toArray
         System.out.println("\ntoArray:");
-
-        orders.toArray(new Order[]{
-                new Order(6, 6, "USD", "item6", "1"),
-                new Order(7, 54, "USD", "item7", "1")
-        });
-        print(orders.iterator());
-        //System.out.println(Arrays.toString(orders.toArray(new Order[3])));
+        System.out.println(Arrays.toString(orders.toArray(new Order[3])));
 
 
+        //size
+        System.out.println("\nsize:");
+        System.out.println("HashSet size: "+orders.size());
+        System.out.println(Arrays.toString(orders.toArray(new Order[orders.size()])));
+
+
+        Order order41 = new Order(41, 23, "USD", "item4", "1");
+        Order order51 = new Order(51, 1232, "USD", "item5", "1");
+        Order order61 = new Order(61, 122, "USD", "item5", "1");
+        orders.add(order41);
+        orders.add(order51);
+        orders.add(order61);
         return orders;
     }
 
@@ -56,5 +62,7 @@ public class HashSetTest {
             System.out.print(iterator.next().getId()+" ");
         }
     }
+
+
 
 }
