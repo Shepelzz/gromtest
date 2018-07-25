@@ -1,4 +1,4 @@
-package lesson12;
+package lesson30.task1;
 
 public interface BankSystem {
 
@@ -9,7 +9,5 @@ public interface BankSystem {
     void transferMoney(User fromUser, User toUser, int amount);
 
     void paySalary(User user);
-
-
 
 }
