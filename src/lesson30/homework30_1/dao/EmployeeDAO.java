@@ -7,16 +7,20 @@ import java.util.Set;
 
 public class EmployeeDAO {
 
-    private Set<Employee> employees = new HashSet<>();
+    private static Set<Employee> employees = new HashSet<>();
 
-    {
-//        Employee employee1 = new Employee("Sergo", "Artemko", new Date(), Position.DEVELOPER, );
-//        Employee employee2 = new Employee();
-//        Employee employee3 = new Employee();
-//        Employee employee4 = new Employee();
-//        Employee employee5 = new Employee();
-//        Employee employee6 = new Employee();
+    public void setEmployees(Employee employee) {
+        employees.add(employee);
+    }
 
+    public Set<Employee> employeesByProject(String projectName){
+        Set<Employee> result = new HashSet<>();
 
+        for(Employee e : employees){
+            if(e.getProjects().contains(projectName)){
+                result.add(e);
+            }
+        }
+        return new HashSet<>();
     }
 }

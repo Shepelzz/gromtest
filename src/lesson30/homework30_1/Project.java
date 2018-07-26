@@ -25,14 +25,13 @@ public class Project {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
-        return Objects.equals(name, project.name) &&
-                Objects.equals(customer, project.customer);
+        return Objects.equals(name, project.name);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name, customer);
+        return Objects.hash(name);
     }
 
     @Override
