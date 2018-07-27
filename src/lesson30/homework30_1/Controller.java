@@ -1,8 +1,10 @@
 package lesson30.homework30_1;
 
+import lesson30.homework30_1.dao.DepartmentDAO;
 import lesson30.homework30_1.dao.EmployeeDAO;
 import lesson30.homework30_1.dao.ProjectDAO;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -11,34 +13,27 @@ public class Controller {
     public Set<Employee> employeesByProject(String projectName){
         Set<Employee> result = new TreeSet<>();
 
-        for(Employee e : EmployeeDAO.getEmployees())
-            for (Project p : e.getProjects())
-                if(p.getName().equals(projectName)){
-                    result.add(e);
-                    break;
-                }
+        for(Employee e : EmployeeDAO.getEmployees()){
+            if(e.getProjects().contains(ProjectDAO.getProjectByName(projectName))){
+                result.add(e);
+            }
+        }
 
         return result;
     }
 
     public Set<Project> projectsByEmployee(Employee employee){
-        Set<Project> result = new TreeSet<>();
+        if(!EmployeeDAO.getEmployees().contains(employee))
+            return new HashSet<>();
 
-        for(Employee e : EmployeeDAO.getEmployees())
-            if(e.equals(employee)){
-                for(Project p : e.getProjects())
-                    result.add(p);
-                break;
-            }
-
-        return result;
+        return employee.getProjects();
     }
 
     public Set<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType){
         Set<Employee> result = new TreeSet<>();
 
-        for(Employee e : EmployeeDAO.getEmployees())
-            if(e.getDepartment().getType().equals(departmentType) && e.getProjects().size() == 0)
+        for(Employee e : DepartmentDAO.getDepartmentByType(departmentType).getEmployees())
+            if(e.getProjects().isEmpty())
                 result.add(e);
 
         return result;
@@ -48,7 +43,7 @@ public class Controller {
         Set<Employee> result = new TreeSet<>();
 
         for(Employee e : EmployeeDAO.getEmployees())
-            if(e.getProjects().size() == 0)
+            if(e.getProjects().isEmpty())
                 result.add(e);
 
         return result;
@@ -65,9 +60,10 @@ public class Controller {
 
         for(Project p : lead.getProjects())
             for(Employee e : EmployeeDAO.getEmployees())
-                if(e.getProjects().contains(p) && e.getPosition() != Position.TEAM_LEAD)
+                if(e.getProjects().contains(p))
                     result.add(e);
 
+        result.remove(lead);
         return result;
     }
 
@@ -116,8 +112,7 @@ public class Controller {
         Set<Employee> result = new TreeSet<>();
 
         for(Project p : projectsByCustomer(customer))
-            for(Employee e : employeesByProject(p.getName()))
-                result.add(e);
+            result.addAll(employeesByProject(p.getName()));
 
         return result;
     }

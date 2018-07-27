@@ -16,4 +16,12 @@ public class ProjectDAO {
     public static Set<Project> getProjects() {
         return projects;
     }
+
+    public static Project getProjectByName(String name){
+        for(Project p : getProjects()){
+            if(p.getName().equals(name))
+                return p;
+        }
+        return null;
+    }
 }

@@ -31,23 +31,23 @@ public class Demo {
         System.out.println(controller.employeesWithoutProject());
 
         //employeesByTeamLead
-        System.out.println("\n--EmployeesByTeamLead");
+        System.out.println("\n--EmployeesByTeamLead [Miroslava]");
         System.out.println(controller.employeesByTeamLead(EmployeeDAO.getEmployeeByName("Miroslava", "T")));
 
         //teamLeadsByEmployee
-        System.out.println("\n--TeamLeadsByEmployee");
+        System.out.println("\n--TeamLeadsByEmployee [Andrey T]");
         System.out.println(controller.teamLeadsByEmployee(EmployeeDAO.getEmployeeByName("Andrey", "T")));
 
         //employeesByProjectEmployee
-        System.out.println("\n--EmployeesByProjectEmployee");
+        System.out.println("\n--EmployeesByProjectEmployee [Vlad]");
         System.out.println(controller.employeesByProjectEmployee(EmployeeDAO.getEmployeeByName("Vlad", "Z")));
 
         //projectsByCustomer
-        System.out.println("\n--ProjectsByCustomer");
+        System.out.println("\n--ProjectsByCustomer [AAA ltd.]");
         System.out.println(controller.projectsByCustomer(CustomerDAO.getCustomerByName("AAA ltd.", "Ukraine")));
 
         //employeesByCustomerProjects
-        System.out.println("\n--EmployeesByCustomerProjects");
+        System.out.println("\n--EmployeesByCustomerProjects [AAA ltd.]");
         System.out.println(controller.employeesByCustomerProjects(CustomerDAO.getCustomerByName("AAA ltd.", "Ukraine")));
     }
 
