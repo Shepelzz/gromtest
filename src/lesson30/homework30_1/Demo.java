@@ -6,28 +6,49 @@ import lesson30.homework30_1.dao.EmployeeDAO;
 import lesson30.homework30_1.dao.ProjectDAO;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Demo {
     public static void main(String[] args) {
 
-        Set<Project> projects = new HashSet<>();
-        projects.add(new Project("Db", new Customer("1", "2", 9)));
-        projects.add(new Project("An", new Customer("1", "2", 9)));
-        projects.add(new Project("I", new Customer("1", "2", 9)));
-
-        System.out.println(projects.toString());
-
-        System.out.println(projects.contains("Db"));
-
-        /*
         generateData();
 
         Controller controller = new Controller();
 
+        //employeesByProject
+        System.out.println("\n--EmployeesByProject [Database]:");
         System.out.println(controller.employeesByProject("Database").toString());
-        */
+
+        //projectsByEmployee
+        System.out.println("\n--ProjectsByEmployee [Anton]");
+        System.out.println(controller.projectsByEmployee(EmployeeDAO.getEmployeeByName("Anton", "F")));
+
+        //employeesByDepartmentWithoutProject
+        System.out.println("\n--EmployeesByDepartmentWithoutProject [DEVELOPERS]");
+        System.out.println(controller.employeesByDepartmentWithoutProject(DepartmentType.DEVELOPERS));
+
+        //employeesWithoutProject
+        System.out.println("\n--EmployeesWithoutProject");
+        System.out.println(controller.employeesWithoutProject());
+
+        //employeesByTeamLead
+        System.out.println("\n--EmployeesByTeamLead");
+        System.out.println(controller.employeesByTeamLead(EmployeeDAO.getEmployeeByName("Miroslava", "T")));
+
+        //teamLeadsByEmployee
+        System.out.println("\n--TeamLeadsByEmployee");
+        System.out.println(controller.teamLeadsByEmployee(EmployeeDAO.getEmployeeByName("Andrey", "T")));
+
+        //employeesByProjectEmployee
+        System.out.println("\n--EmployeesByProjectEmployee");
+        System.out.println(controller.employeesByProjectEmployee(EmployeeDAO.getEmployeeByName("Vlad", "Z")));
+
+        //projectsByCustomer
+        System.out.println("\n--ProjectsByCustomer");
+        System.out.println(controller.projectsByCustomer(CustomerDAO.getCustomerByName("AAA ltd.", "Ukraine")));
+
+        //employeesByCustomerProjects
+        System.out.println("\n--EmployeesByCustomerProjects");
+        System.out.println(controller.employeesByCustomerProjects(CustomerDAO.getCustomerByName("AAA ltd.", "Ukraine")));
     }
 
 

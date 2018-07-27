@@ -1,6 +1,7 @@
 package lesson28;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -16,5 +17,12 @@ public class DemoComparable {
         set.add(capability3);
 
         System.out.println(set.toString());
+
+        Set<Capability> set1 = new HashSet<>();
+        set1.add(capability1);
+        set1.add(capability2);
+        set1.add(capability3);
+
+        System.out.println(set1.toString());
     }
 }

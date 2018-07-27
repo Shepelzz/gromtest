@@ -3,7 +3,7 @@ package lesson30.homework30_1;
 
 import java.util.Objects;
 
-public class Project {
+public class Project implements Comparable<Project>{
     private String name;
     private Customer customer;
 
@@ -36,9 +36,14 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{" +
+        return "\nProject{" +
                 "name='" + name + '\'' +
                 ", customer=" + customer +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Project p) {
+        return this.name.compareTo(p.getName());
     }
 }

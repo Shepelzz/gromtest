@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Employee {
+public class Employee implements Comparable<Employee>{
     private String firstName;
     private String lastname;
     private Date dateHired;
@@ -69,12 +69,17 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "\nEmployee{" +
                 "firstName='" + firstName + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", dateHired=" + dateHired +
                 ", position=" + position +
                 ", department=" + department +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Employee e) {
+        return this.firstName.concat(this.lastname).compareTo(e.getFirstName().concat(e.getLastname()));
     }
 }

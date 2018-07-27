@@ -12,4 +12,8 @@ public class ProjectDAO {
     public void setProjects(Project project) {
         projects.add(project);
     }
+
+    public static Set<Project> getProjects() {
+        return projects;
+    }
 }

@@ -12,4 +12,12 @@ public class CustomerDAO {
     public void setCustomers(Customer customer) {
         customers.add(customer);
     }
+
+    public static Customer getCustomerByName(String name, String country){
+        for(Customer c : customers){
+            if(c.getName().equals(name) && c.getCountry().equals(country))
+                return c;
+        }
+        return null;
+    }
 }
