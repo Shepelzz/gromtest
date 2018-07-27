@@ -4,7 +4,6 @@ import lesson30.homework30_1.dao.DepartmentDAO;
 import lesson30.homework30_1.dao.EmployeeDAO;
 import lesson30.homework30_1.dao.ProjectDAO;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -23,10 +22,13 @@ public class Controller {
     }
 
     public Set<Project> projectsByEmployee(Employee employee){
-        if(!EmployeeDAO.getEmployees().contains(employee))
-            return new HashSet<>();
+        Set<Project> result = new TreeSet<>();
 
-        return employee.getProjects();
+        if(!EmployeeDAO.getEmployees().contains(employee))
+            return result;
+
+        result.addAll(employee.getProjects());
+        return result;
     }
 
     public Set<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType){
@@ -73,7 +75,7 @@ public class Controller {
         if(!EmployeeDAO.getEmployees().contains(employee))
             return result;
 
-        if(employee.getProjects().size() == 0)
+        if(employee.getProjects().isEmpty())
             return result;
 
         for(Project p : employee.getProjects())
@@ -87,7 +89,7 @@ public class Controller {
     public Set<Employee> employeesByProjectEmployee(Employee employee){
         Set<Employee> result = new TreeSet<>();
 
-        if(employee.getProjects().size() == 0)
+        if(employee.getProjects().isEmpty())
             return result;
 
         for(Project p : employee.getProjects())

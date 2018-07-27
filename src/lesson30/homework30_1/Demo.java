@@ -112,6 +112,10 @@ public class Demo {
         employee5.addProjects(project1);
         employee5.addProjects(project2);
         employee5.addProjects(project4);
+
+        employee5.addProjects(project3);
+        employee5.addProjects(project5);
+        employee5.addProjects(project6);
         Employee employee6 = new Employee("Andrey", "T", new Date(), Position.DEVELOPER, department3);
         employee6.addProjects(project1);
         employee6.addProjects(project2);
