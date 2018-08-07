@@ -1,7 +1,5 @@
 package lesson31.homework31_1;
 
-import java.util.Arrays;
-
 public class Demo {
     public static void main(String[] args) {
 
