@@ -1,9 +1,12 @@
 package lesson30.homework30_1.dao;
 
+import lesson30.homework30_1.Customer;
+import lesson30.homework30_1.Employee;
 import lesson30.homework30_1.Project;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ProjectDAO {
 
@@ -23,5 +26,22 @@ public class ProjectDAO {
                 return p;
         }
         return null;
+    }
+
+    public static Set<Project> projectsByCustomer(Customer customer){
+        Set<Project> result = new TreeSet<>();
+
+        for(Project p : projects)
+            if(p.getCustomer().equals(customer))
+                result.add(p);
+
+        return result;
+    }
+
+    public static Set<Project> projectsByEmployee(Employee employee){
+        Set<Project> result = new TreeSet<>();
+
+        result.addAll(employee.getProjects());
+        return result;
     }
 }
