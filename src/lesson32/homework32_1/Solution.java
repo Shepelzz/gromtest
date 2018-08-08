@@ -1,11 +1,12 @@
 package lesson32.homework32_1;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Solution {
 
-    public void readNumbers(){
+    public void readNumbers() throws IOException {
 
         InputStreamReader reader = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(reader);
@@ -14,35 +15,26 @@ public class Solution {
         int numberOfAttempts = 3;
 
         while(numberOfAttempts > 0){
-            try {
-                String input = br.readLine();
-                System.out.println(calculateResultSumFromNumbers(input));
-                break;
-            } catch (Exception ex){
-                numberOfAttempts--;
+            String input = br.readLine();
 
-                if (numberOfAttempts > 0)
-                    System.out.println("Your numbers are wrong. You have " + numberOfAttempts + " attempts to try again");
-                else {
-                    System.out.println("Your numbers are wrong. Number attempts exceeded");
+            try {
+                if (input.split(" ").length == 10) {
+                    for (String str : input.split(" "))
+                        if (Integer.parseInt(str) <= 100)
+                            sum += Integer.parseInt(str);
+
+                    System.out.println(sum);
                     break;
                 }
+            } catch (NumberFormatException ex){}
+
+            numberOfAttempts--;
+            if (numberOfAttempts > 0)
+                System.out.println("Your numbers are wrong. You have " + numberOfAttempts + " attempts to try again");
+            else {
+                System.out.println("Your numbers are wrong. Number attempts exceeded");
+                break;
             }
         }
-    }
-
-    private int calculateResultSumFromNumbers(String numbers) throws Exception{
-        if(numbers.split(" ").length != 10)
-            throw new Exception("numbers count is not 10");
-
-        int sum = 0;
-        for (String str : numbers.split(" ")) {
-            if(Integer.parseInt(str) <= 100)
-                sum += Integer.parseInt(str);
-            else
-                throw new Exception("number larger than 100");
-        }
-
-        return sum;
     }
 }
