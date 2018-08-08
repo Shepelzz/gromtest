@@ -16,22 +16,8 @@ public class Solution {
         while(numberOfAttempts > 0){
             try {
                 String input = br.readLine();
-
-                if(input.split(" ").length != 10){
-                    throw new Exception("numbers count is not 10");
-                }
-
-                for (String str : input.split(" ")) {
-                    if(Integer.parseInt(str) <= 100) {
-                        sum += Integer.parseInt(str);
-                    }
-                    else
-                        throw new Exception("number larger than 100");
-                }
-
-                System.out.println(sum);
+                System.out.println(calculateResultSumFromNumbers(input));
                 break;
-
             } catch (Exception ex){
                 numberOfAttempts--;
 
@@ -43,5 +29,20 @@ public class Solution {
                 }
             }
         }
+    }
+
+    private int calculateResultSumFromNumbers(String numbers) throws Exception{
+        if(numbers.split(" ").length != 10)
+            throw new Exception("numbers count is not 10");
+
+        int sum = 0;
+        for (String str : numbers.split(" ")) {
+            if(Integer.parseInt(str) <= 100)
+                sum += Integer.parseInt(str);
+            else
+                throw new Exception("number larger than 100");
+        }
+
+        return sum;
     }
 }
