@@ -10,10 +10,7 @@ public class Solution {
 
         for(Character ch : text.toCharArray())
             if(Character.isLetter(ch)) {
-                if(result.containsKey(ch))
-                    result.put(ch, result.get(ch)+1);
-                else
-                    result.put(ch, 1);
+                result.put(ch, result.containsKey(ch) ? result.get(ch)+1 : 1);
             }
         return result;
     }

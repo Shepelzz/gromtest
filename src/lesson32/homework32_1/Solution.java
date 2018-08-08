@@ -18,7 +18,7 @@ public class Solution {
                 String input = br.readLine();
 
                 if(input.split(" ").length != 10){
-                    throw new Exception("length");
+                    throw new Exception("numbers count is not 10");
                 }
 
                 for (String str : input.split(" ")) {
@@ -26,7 +26,7 @@ public class Solution {
                         sum += Integer.parseInt(str);
                     }
                     else
-                        throw new Exception("int");
+                        throw new Exception("number larger than 100");
                 }
 
                 System.out.println(sum);
