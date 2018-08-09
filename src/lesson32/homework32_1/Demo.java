@@ -4,9 +4,8 @@ package lesson32.homework32_1;
 
 public class Demo {
     public static void main(String[] args){
-        Solution solution = new Solution();
         try{
-            solution.readNumbers();
+            Solution.readNumbers();
         } catch (IOException ex){
             System.out.println(ex.getMessage());
         }

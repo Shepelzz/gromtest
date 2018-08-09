@@ -6,35 +6,46 @@ import java.io.InputStreamReader;
 
 public class Solution {
 
-    public void readNumbers() throws IOException {
+    public static void readNumbers() throws IOException {
 
-        InputStreamReader reader = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(reader);
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        byte numberOfAttempts = 3;
 
-        int sum = 0;
-        int numberOfAttempts = 3;
-
-        while(numberOfAttempts > 0){
+        while(numberOfAttempts != 0){
             String input = br.readLine();
+            String[] items = input.split(" ");
 
-            try {
-                if (input.split(" ").length == 10) {
-                    for (String str : input.split(" "))
-                        if (Integer.parseInt(str) <= 100)
-                            sum += Integer.parseInt(str);
-
-                    System.out.println(sum);
-                    break;
+            if(!validate(items)){
+                if(numberOfAttempts == 1) {
+                    System.out.println("Your numbers are wrong. Number attempts exceeded");
+                    return;
                 }
-            } catch (NumberFormatException ex){}
 
-            numberOfAttempts--;
-            if (numberOfAttempts > 0)
-                System.out.println("Your numbers are wrong. You have " + numberOfAttempts + " attempts to try again");
-            else {
-                System.out.println("Your numbers are wrong. Number attempts exceeded");
-                break;
+                System.out.println("Your numbers are wrong. You have " + --numberOfAttempts + " attempts to try again");
+                continue;
             }
+
+            int res = 0;
+            for(String item : items)
+                res += Integer.parseInt(item);
+
+            System.out.println(res);
+            return;
         }
+    }
+
+    private static boolean validate(String[] input){
+        if(input.length != 10)
+            return false;
+
+        for(String item : input){
+            for(char ch : item.toCharArray())
+                if(!Character.isDigit(ch))
+                    return false;
+
+            if(Integer.parseInt(item) > 100)
+                return false;
+        }
+        return true;
     }
 }
