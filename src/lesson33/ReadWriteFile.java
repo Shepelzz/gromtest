@@ -32,8 +32,8 @@ public class ReadWriteFile {
         FileWriter writer = null;
         BufferedWriter bufferedWriter = null;
         try {
-            //TODO use other constructor
-            writer = new FileWriter(path, true);
+            File file = new File(path);
+            writer = new FileWriter(file, true);
             bufferedWriter = new BufferedWriter(writer);
 
             bufferedWriter.append("\r\n");
