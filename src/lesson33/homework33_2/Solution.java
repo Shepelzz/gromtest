@@ -27,23 +27,23 @@ public class Solution {
     }
 
     private static void readFile(String path){
-        FileReader reader;
-        try {
-            reader = new FileReader(path);
-        } catch (FileNotFoundException e){
-            System.err.println("File with path " + path + " not found");
-            return;
-        }
-        BufferedReader br = new BufferedReader(reader);
+
+        FileReader reader = null;
+        BufferedReader br = null;
 
         try {
+            reader = new FileReader(path);
+            br = new BufferedReader(reader);
             String line;
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
             }
+        } catch (FileNotFoundException e){
+            System.err.println("File with path " + path + " not found");
+            return;
         } catch (IOException e){
             System.err.println("Can`t read file by path "+path);
-        } finally {
+        }  finally {
             IOUtils.closeQuietly(br);
             IOUtils.closeQuietly(reader);
         }
