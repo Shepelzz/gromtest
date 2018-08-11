@@ -13,10 +13,9 @@ public class Solution {
 
         StringBuffer fileFromText = new StringBuffer();
         StringBuffer fileToText = new StringBuffer();
-
-        String[] sentences = readFromFile(fileFromPath).toString().split("\\.");
         String currentLine = "";
-        for(String sentence : sentences){
+
+        for(String sentence : readFromFile(fileFromPath).toString().split("\\.")){
             currentLine = currentLine.concat(sentence+".");
             if(currentLine.length() > 10) {
                 if(currentLine.contains(word)) {
@@ -30,11 +29,9 @@ public class Solution {
                 currentLine = "";
             }
         }
-        fileFromText.replace(fileFromText.length()-1, fileFromText.length(), "");
-        fileToText.replace(fileToText.length()-1, fileToText.length(), "");
 
-        writeToFile(fileFromPath, fileFromText, false);
-        writeToFile(fileToPath, fileToText, false);
+        writeToFile(fileFromPath, fileFromText.replace(fileFromText.length()-1, fileFromText.length(), ""), false);
+        writeToFile(fileToPath, fileToText.replace(fileToText.length()-1, fileToText.length(), ""), false);
     }
 
     private static StringBuffer readFromFile(String path){
@@ -67,7 +64,8 @@ public class Solution {
         if(!fileFrom.exists())
             throw new FileNotFoundException("File "+ fileFrom +" does not exist");
         if(!fileTo.exists())
-            throw new FileNotFoundException("File "+ fileTo +" does not exist");
+            fileTo.createNewFile();
+            //throw new FileNotFoundException("File "+ fileTo +" does not exist");
 
         if(!fileFrom.canRead())
             throw new Exception("File "+ fileFrom +" does not have permission to be read");
