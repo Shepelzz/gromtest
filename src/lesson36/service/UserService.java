@@ -15,8 +15,15 @@ public class UserService {
         //if logic is ok
         userRepository.registerUser(user);
 
-
         return null;
+    }
+
+    public void login(String userName, String password){
+
+    }
+
+    public void logout(){
+
     }
 
 }
