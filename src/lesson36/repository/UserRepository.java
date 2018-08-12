@@ -7,8 +7,8 @@ import java.util.Set;
 
 public class UserRepository {
 
-    Set<User> users = new HashSet<>();
-
+    Set<User> users = new HashSet<>();  //надо ли?
+    private static long maxId; //= getMaxId с файла
 
     //считывание данных - считывание файла
     //обработка данных - маппинг данных
