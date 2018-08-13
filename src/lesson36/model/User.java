@@ -2,7 +2,7 @@ package lesson36.model;
 
 import lesson36.model.types.UserType;
 
-public class User {
+public class User  implements Comparable<User>{
     private long id;
     private String userName;
     private String password;
@@ -42,5 +42,21 @@ public class User {
 
     public UserType getUserType() {
         return userType;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", country='" + country + '\'' +
+                ", userType=" + userType +
+                '}';
+    }
+
+    @Override
+    public int compareTo(User user) {
+        return (int) (this.id-user.getId());
     }
 }

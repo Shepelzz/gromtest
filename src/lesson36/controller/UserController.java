@@ -8,7 +8,7 @@ public class UserController {
     private UserService userService = new UserService();
     private static User loggedUser = null;
 
-    public User registerUser(User user){
+    public User registerUser(User user) throws Exception{
         return userService.registerUser(user);
     }
 
