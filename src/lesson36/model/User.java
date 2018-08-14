@@ -46,13 +46,12 @@ public class User  implements Comparable<User>{
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", country='" + country + '\'' +
-                ", userType=" + userType +
-                '}';
+        return
+            this.id+", "+
+                this.getUserName()+", "+
+                this.getPassword()+", "+
+                this.getCountry()+", "+
+                this.getUserType().toString();
     }
 
     @Override

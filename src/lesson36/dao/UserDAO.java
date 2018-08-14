@@ -1,46 +1,28 @@
-package lesson36.repository;
+package lesson36.dao;
 
 import lesson36.model.User;
-import lesson36.model.types.UserType;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.concurrent.ThreadLocalRandom;
-
-public class UserRepository {
-    private static final String path = "C:\\Users\\Zhenya Shepel\\Documents\\IDEA Projects\\Java_Courses\\files\\project\\UserDb.txt";
-    private static User loggedUser = null;
+public class UserDAO {
+    private static final String path = "src/lesson36/files/UserDb.txt";
+    private DAO<User> dao = new DAO<>(path);
 
     //считывание данных - считывание файла
     //обработка данных - маппинг данных
 
     public User registerUser(User user) throws Exception{
-        validate();
-        return saveUserToFile(new User(ThreadLocalRandom.current().nextLong(Long.MAX_VALUE), user.getUserName(), user.getPassword(), user.getCountry(), user.getUserType()));
+        return dao.writeToFile(new User(dao.randomId(), user.getUserName(), user.getPassword(), user.getCountry(), user.getUserType()));
     }
 
     public void login(String userName, String password) throws Exception{
-        User user = getUserByNamePassword(userName, password);
-
-        if(getUserByNamePassword(userName, password) == null)
-            throw new Exception("User with name: "+userName+" not found or password is incorrect");
-        loggedUser = user;
     }
 
     public void logout(){
-        loggedUser = null;
     }
 
 
-    private User saveUserToFile(User user){
-        System.out.println("user "+user+" saved."); //TODO saving
-        return user;
-    }
+
+
+    /*
 
     private User getUserByNamePassword(String name, String password) throws Exception{
         //TODO validate???
@@ -51,8 +33,8 @@ public class UserRepository {
     }
 
 
-    private Set<User> getDataFromFile() throws Exception{
-        validate();
+    public Set<User> getDataFromFile() throws Exception{
+        //validate();
 
         Set<User> lines = new TreeSet<>();
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
@@ -70,9 +52,6 @@ public class UserRepository {
         return lines;
     }
 
-    private long getNextId(){
-        return 1;
-    }
 
     private void validate() throws Exception{
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
@@ -106,6 +85,7 @@ public class UserRepository {
             System.err.println("Reading from file "+path+" failed");
         }
     }
+    */
 
 
 }

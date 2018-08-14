@@ -1,6 +1,8 @@
 package lesson36.demo;
 
-import java.util.concurrent.ThreadLocalRandom;
+import lesson36.controller.UserController;
+import lesson36.model.User;
+import lesson36.model.types.UserType;
 
 public class DemoUser {
     public static void main(String[] args) throws Exception{
@@ -13,9 +15,14 @@ public class DemoUser {
 //            System.err.println(e.getMessage());
 //        }
 
+        UserController userController = new UserController();
 
+        try{
+            User user = new User("Vasya1", "1111", "RU", UserType.USER);
+            userController.registerUser(user);
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
 
-
-        System.out.println(ThreadLocalRandom.current().nextLong(Long.MAX_VALUE));
     }
 }

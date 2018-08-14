@@ -1,0 +1,5 @@
+1080367633112369448, InterContinental, Ukraine, Kiev, test
+3611987913137422606, Mot, Ukraine, Kiev, test
+7311701334048307041, Hotel1, Ukraine, Odessa, test
+7311701335048307043, Hotel3, Ukraine, Odessa, test
+7311701335048307041, Hotel4, Ukraine, Odessa, test

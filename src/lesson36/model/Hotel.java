@@ -1,13 +1,13 @@
 package lesson36.model;
 
-public class Hotel {
+public class Hotel implements Comparable<Hotel> {
     private long id;
     private String name;
     private String country;
     private String city;
     private String street;
 
-    public Hotel(long id, String name, String country, String city, String street) {
+    public Hotel(long id, String name, String country, String city, String street) throws Exception{
         this.id = id;
         this.name = name;
         this.country = country;
@@ -15,7 +15,7 @@ public class Hotel {
         this.street = street;
     }
 
-    public Hotel(String name, String country, String city, String street) {
+    public Hotel(String name, String country, String city, String street)  throws Exception{
         this.name = name;
         this.country = country;
         this.city = city;
@@ -40,5 +40,20 @@ public class Hotel {
 
     public String getStreet() {
         return street;
+    }
+
+    @Override
+    public String toString() {
+        return
+            this.id+", "+
+                this.name+", "+
+                this.country+", "+
+                this.city+", "+
+                this.street;
+    }
+
+    @Override
+    public int compareTo(Hotel hotel) {
+        return (int) (this.id-hotel.getId());
     }
 }

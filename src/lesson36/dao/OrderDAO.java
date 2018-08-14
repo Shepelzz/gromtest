@@ -1,6 +1,6 @@
-package lesson36.repository;
+package lesson36.dao;
 
-public class OrderRepository {
+public class OrderDAO {
 
     public void bookRoom(long roomId, long userId, long hotelId){
 

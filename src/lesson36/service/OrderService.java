@@ -1,10 +1,10 @@
 package lesson36.service;
 
-import lesson36.repository.OrderRepository;
+import lesson36.dao.OrderDAO;
 
 public class OrderService {
 
-    private OrderRepository orderRepository = new OrderRepository();
+    private OrderDAO orderRepository = new OrderDAO();
 
     public void bookRoom(long roomId, long userId, long hotelId){
 
