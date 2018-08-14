@@ -7,12 +7,20 @@ import lesson36.dao.RoomDAO;
 import java.util.TreeSet;
 
 public class RoomService {
-
-    private RoomDAO roomRepository = new RoomDAO();
+    private RoomDAO roomDAO = new RoomDAO();
 
     public TreeSet<Room> findRooms(Filter filter){
+        return roomDAO.findRooms(filter);
+    }
 
-        return null;
+    //ADMIN
+    public Room addRoom(Room room) throws Exception{
+        return roomDAO.addRoom(room);
+    }
+
+    //ADMIN
+    public void deleteRoom(long roomId) throws Exception{
+        roomDAO.deleteRoom(roomId);
     }
 
 }

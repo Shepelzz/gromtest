@@ -1,28 +1,29 @@
 package lesson36.dao;
 
 import lesson36.model.Hotel;
+import lesson36.model.User;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class HotelDAO {
     private static final String path = "src/lesson36/files/HotelDb.txt";
-    private DAO<Hotel> dao = new DAO<>(path);
+    private GeneralDAO<Hotel> generalDao = new GeneralDAO<>(path);
 
     //ADMIN
     public Hotel addHotel(Hotel hotel) throws Exception{
-        return dao.writeToFile(new Hotel(dao.randomId(), hotel.getName(), hotel.getCountry(), hotel.getCity(), hotel.getStreet()));
+        return generalDao.writeToFile(new Hotel(generalDao.randomId(), hotel.getName(), hotel.getCountry(), hotel.getCity(), hotel.getStreet()));
     }
 
     //ADMIN
     public void deleteHotel(long hotelId) throws Exception{
-        dao.deleteFromFile(getHotelById(hotelId));
+        generalDao.deleteFromFile(getHotelById(hotelId));
     }
 
     public Set<Hotel> findHotelByName(String name) throws Exception{
         Set<Hotel> result = new HashSet<>();
         long index = 1;
-        for(String line : dao.readFromFile()){
+        for(String line : generalDao.readFromFile()){
             Hotel h = getValidHotel(line, index++);
             if(h.getName().equals(name))
                 result.add(h);
@@ -33,7 +34,7 @@ public class HotelDAO {
     public Set<Hotel> findHotelByCity(String name) throws Exception{
         Set<Hotel> result = new HashSet<>();
         long index = 1;
-        for(String line : dao.readFromFile()){
+        for(String line : generalDao.readFromFile()){
             Hotel h = getValidHotel(line, index++);
             if(h.getCity().equals(name))
                 result.add(h);
@@ -43,7 +44,7 @@ public class HotelDAO {
 
     private Hotel getHotelById(long id) throws Exception{
         long index = 1;
-        for(String line : dao.readFromFile()){
+        for(String line : generalDao.readFromFile()){
             Hotel h = getValidHotel(line, index++);
             if(h.getId() == id)
                 return h;
@@ -54,7 +55,7 @@ public class HotelDAO {
     public Set<Hotel> tempGetHotels() throws Exception{
         Set<Hotel> result = new HashSet<>();
         long index = 1;
-        for(String line : dao.readFromFile()){
+        for(String line : generalDao.readFromFile()){
             Hotel h = getValidHotel(line, index++);
             result.add(h);
         }
@@ -87,4 +88,6 @@ public class HotelDAO {
                 hotelValues[4].trim()
         );
     }
+
+
 }

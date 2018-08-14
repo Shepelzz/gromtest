@@ -1,7 +1,9 @@
 package lesson36.demo;
 
 import lesson36.controller.HotelController;
+import lesson36.dao.GeneralDAO;
 import lesson36.dao.HotelDAO;
+import lesson36.model.Room;
 
 public class DemoHotel {
     public static void main(String[] args) {
@@ -33,4 +35,5 @@ public class DemoHotel {
 //            System.err.println(e.getMessage());
 //        }
     }
+
 }

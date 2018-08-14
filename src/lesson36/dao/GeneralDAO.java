@@ -5,27 +5,14 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class DAO<T>{
+public class GeneralDAO<T>{
     private String path;
 
-    public DAO(String path) {
+    public GeneralDAO(String path) {
         this.path = path;
     }
 
-    protected T writeToFile(T t){
-        try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
-            if(br.readLine() != null)
-                bw.append("\r\n");
-            bw.append(t.toString());
-        } catch (FileNotFoundException e) {
-            System.err.println(t.getClass().getName()+" saving error: file " + path + " does not exist");
-        } catch (IOException e){
-            System.err.println(t.getClass().getName()+" saving error: can`t save "+t.toString()+" to file "+path);
-        }
-        return t;
-    }
-
-    protected Set<String> readFromFile(){
+    Set<String> readFromFile(){
         Set<String> result = new HashSet<>();
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
@@ -41,7 +28,20 @@ public class DAO<T>{
         return result;
     }
 
-    protected void deleteFromFile(T t){
+    T writeToFile(T t){
+        try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
+            if(br.readLine() != null)
+                bw.append("\r\n");
+            bw.append(t.toString());
+        } catch (FileNotFoundException e) {
+            System.err.println(t.getClass().getName()+" saving error: file " + path + " does not exist");
+        } catch (IOException e){
+            System.err.println(t.getClass().getName()+" saving error: can`t save "+t.toString()+" to file "+path);
+        }
+        return t;
+    }
+
+    void deleteFromFile(T t){
         StringBuffer tempData = new StringBuffer();
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
@@ -64,8 +64,14 @@ public class DAO<T>{
         }
     }
 
-    protected long randomId(){
+    long randomId(){
         return ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
     }
 
+    //TODO
+//    private void dosmth(T t){
+//        for(Object o : t.getClass().getDeclaredFields()){
+//            System.out.println(o.getClass().getTypeName());
+//        }
+//    }
 }

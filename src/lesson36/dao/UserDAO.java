@@ -4,13 +4,13 @@ import lesson36.model.User;
 
 public class UserDAO {
     private static final String path = "src/lesson36/files/UserDb.txt";
-    private DAO<User> dao = new DAO<>(path);
+    private GeneralDAO<User> generalDao = new GeneralDAO<>(path);
 
     //считывание данных - считывание файла
     //обработка данных - маппинг данных
 
     public User registerUser(User user){
-        return dao.writeToFile(new User(dao.randomId(), user.getUserName(), user.getPassword(), user.getCountry(), user.getUserType()));
+        return generalDao.writeToFile(new User(generalDao.randomId(), user.getUserName(), user.getPassword(), user.getCountry(), user.getUserType()));
     }
 
     public void login(String userName, String password) throws Exception{
