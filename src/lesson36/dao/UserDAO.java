@@ -9,7 +9,7 @@ public class UserDAO {
     //считывание данных - считывание файла
     //обработка данных - маппинг данных
 
-    public User registerUser(User user) throws Exception{
+    public User registerUser(User user){
         return dao.writeToFile(new User(dao.randomId(), user.getUserName(), user.getPassword(), user.getCountry(), user.getUserType()));
     }
 

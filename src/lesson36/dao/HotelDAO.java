@@ -16,7 +16,7 @@ public class HotelDAO {
 
     //ADMIN
     public void deleteHotel(long hotelId) throws Exception{
-        dao.deleteFromFileById(hotelId);
+        dao.deleteFromFile(getHotelById(hotelId));
     }
 
     public Set<Hotel> findHotelByName(String name) throws Exception{
@@ -39,6 +39,16 @@ public class HotelDAO {
                 result.add(h);
         }
         return result;
+    }
+
+    private Hotel getHotelById(long id) throws Exception{
+        long index = 1;
+        for(String line : dao.readFromFile()){
+            Hotel h = getValidHotel(line, index++);
+            if(h.getId() == id)
+                return h;
+        }
+        throw new Exception("id was not found");
     }
 
     public Set<Hotel> tempGetHotels() throws Exception{

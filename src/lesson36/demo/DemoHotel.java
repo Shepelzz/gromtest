@@ -8,11 +8,11 @@ public class DemoHotel {
         HotelController hotelController = new HotelController();
         HotelDAO hotelDAO = new HotelDAO();
 
-        try{
-            hotelController.deleteHotel(7311701335048307042L);
-        }catch (Exception e){
-            System.err.println(e.getMessage());
-        }
+//        try{
+//            hotelController.deleteHotel(7311701335048307041L);
+//        }catch (Exception e){
+//            System.err.println(e.getMessage());
+//        }
 
 //        try{
 ////            Hotel hotel = new Hotel("InterContinental", "Ukraine", "Kiev", "test");
