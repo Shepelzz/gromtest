@@ -1,7 +1,6 @@
 package lesson36.dao;
 
 import lesson36.model.Hotel;
-import lesson36.model.User;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -52,15 +51,15 @@ public class HotelDAO {
         throw new Exception("id was not found");
     }
 
-    public Set<Hotel> tempGetHotels() throws Exception{
-        Set<Hotel> result = new HashSet<>();
-        long index = 1;
-        for(String line : generalDao.readFromFile()){
-            Hotel h = getValidHotel(line, index++);
-            result.add(h);
-        }
-        return result;
-    }
+//    public Set<Hotel> tempGetHotels() throws Exception{
+//        Set<Hotel> result = new HashSet<>();
+//        long index = 1;
+//        for(String line : generalDao.readFromFile()){
+//            Hotel h = getValidHotel(line, index++);
+//            result.add(h);
+//        }
+//        return result;
+//    }
 
     private Hotel getValidHotel(String inputLine, long lineIndex) throws Exception{
         String[] hotelValues = inputLine.split(",");

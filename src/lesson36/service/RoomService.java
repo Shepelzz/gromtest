@@ -23,4 +23,9 @@ public class RoomService {
         roomDAO.deleteRoom(roomId);
     }
 
+    private void validate(Room room) throws Exception{
+        if(room.getNumberOfGuests() > 0)
+            throw new Exception(getClass().getName()+". Hotel adding error: name can not be empty");
+
+    }
 }

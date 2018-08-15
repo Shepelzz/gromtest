@@ -1,12 +1,10 @@
 package lesson36.demo;
 
 import lesson36.controller.HotelController;
-import lesson36.dao.GeneralDAO;
 import lesson36.dao.HotelDAO;
-import lesson36.model.Room;
 
 public class DemoHotel {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         HotelController hotelController = new HotelController();
         HotelDAO hotelDAO = new HotelDAO();
 
@@ -34,6 +32,16 @@ public class DemoHotel {
 //        }catch (Exception e){
 //            System.err.println(e.getMessage());
 //        }
+
+//        Order o = new Order(
+//                121233456,
+//                new User(11111, "User1", "pass", "UA", UserType.ADMIN),
+//                new Room(22222, 3, 5600.78, true, true, new Date(), new Hotel(3411111, "InterContinental", "Ukraine", "Kiev", "test")),
+//                new Date(),
+//                new Date(),
+//                5600.9
+//            );
+//        System.out.println(o.toString());
     }
 
 }

@@ -68,10 +68,4 @@ public class GeneralDAO<T>{
         return ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
     }
 
-    //TODO
-//    private void dosmth(T t){
-//        for(Object o : t.getClass().getDeclaredFields()){
-//            System.out.println(o.getClass().getTypeName());
-//        }
-//    }
 }

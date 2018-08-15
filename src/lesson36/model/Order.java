@@ -1,5 +1,6 @@
 package lesson36.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Order {
@@ -49,5 +50,16 @@ public class Order {
 
     public double getMoneyPaid() {
         return moneyPaid;
+    }
+
+    @Override
+    public String toString() {
+        return
+            id+", "+
+            user.getId()+", "+
+            room.getId()+", "+
+            new SimpleDateFormat("dd-MM-yyyy").format(dateFrom)+", "+
+            new SimpleDateFormat("dd-MM-yyyy").format(dateTo)+", "+
+            moneyPaid;
     }
 }
