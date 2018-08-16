@@ -41,14 +41,14 @@ public class HotelDAO {
         return result;
     }
 
-    private Hotel getHotelById(long id) throws Exception{
+    public Hotel getHotelById(long id) throws Exception{
         long index = 1;
         for(String line : generalDao.readFromFile()){
             Hotel h = getValidHotel(line, index++);
             if(h.getId() == id)
                 return h;
         }
-        throw new Exception("id was not found");
+        throw new Exception("Hotel id was not found");
     }
 
 //    public Set<Hotel> tempGetHotels() throws Exception{
@@ -65,27 +65,20 @@ public class HotelDAO {
         String[] hotelValues = inputLine.split(",");
 
         if(hotelValues.length != Hotel.class.getDeclaredFields().length)
-            throw new Exception("HotelDAO. Data is not valid. Value: '"+inputLine+"'");
+            throw new Exception("Hotel data is not valid. Line: '"+inputLine+"'");
 
-        if(hotelValues[1].trim().length() == 0)
-            throw new Exception("HotelDAO. Data is not valid. Value: '"+inputLine+"'");
-
-        if(hotelValues[2].trim().length() == 0)
-            throw new Exception("HotelDAO. Data is not valid. Value: '"+inputLine+"'");
-
-        if(hotelValues[3].trim().length() == 0)
-            throw new Exception("HotelDAO. Data is not valid. Value: '"+inputLine+"'");
-
-        if(hotelValues[4].trim().length() == 0)
-            throw new Exception("HotelDAO. Data is not valid. Value: '"+inputLine+"'");
-
-        return new Hotel(
+        try {
+            return new Hotel(
                 Long.valueOf(hotelValues[0]),
                 hotelValues[1].trim(),
                 hotelValues[2].trim(),
                 hotelValues[3].trim(),
                 hotelValues[4].trim()
-        );
+            );
+        }catch (Exception e){
+            System.err.println("Can not read data. "+e.getMessage()+" Line: "+lineIndex);
+        }
+        return null;
     }
 
 

@@ -4,7 +4,7 @@ import lesson36.model.Filter;
 import lesson36.model.Room;
 import lesson36.service.RoomService;
 
-import java.util.HashSet;
+import java.util.Set;
 
 public class RoomController {
     private RoomService roomService = new RoomService();
@@ -19,9 +19,8 @@ public class RoomController {
         roomService.deleteRoom(roomId);
     }
 
-    public HashSet<Room> findRooms(Filter filter){
-
-        return null;
+    public Set<Room> findRooms(Filter filter) throws Exception{
+        return roomService.findRooms(filter);
     }
 
 }

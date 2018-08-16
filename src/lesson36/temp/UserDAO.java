@@ -1,11 +1,11 @@
-package lesson36.dao;
+package lesson36.temp;
 
 import lesson36.model.User;
 import lesson36.model.types.UserType;
 
 public class UserDAO {
     private static final String path = "src/lesson36/files/UserDb.txt";
-    private GeneralDAO<User> generalDao = new GeneralDAO<>(path);
+    private lesson36.temp.GeneralDAO<User> generalDao = new lesson36.temp.GeneralDAO<>(path);
 
     public User registerUser(User user){
         return generalDao.writeToFile(new User(generalDao.randomId(), user.getUserName(), user.getPassword(), user.getCountry(), user.getUserType()));

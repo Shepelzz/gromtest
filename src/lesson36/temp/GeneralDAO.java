@@ -1,4 +1,4 @@
-package lesson36.dao;
+package lesson36.temp;
 
 import java.io.*;
 import java.util.HashSet;
@@ -63,13 +63,6 @@ public class GeneralDAO<T>{
             System.err.println("Writing to file "+path+" failed");
         }
     }
-
-//    T getById(long id){
-//        for(String line : readFromFile()){
-//            if(Long.valueOf(line.split(",")[0]) == id)
-//                return line;
-//        }
-//    }
 
     long randomId(){
         return ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);

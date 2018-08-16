@@ -57,4 +57,15 @@ public class Room {
     public Hotel getHotel() {
         return hotel;
     }
+
+    @Override
+    public String toString() {
+        return
+            id+", "+
+                numberOfGuests+", "+
+                price+", "+
+                breakfastIncluded+", "+
+                petsAllowed+", "+
+                hotel.getId();
+    }
 }

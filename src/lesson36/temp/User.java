@@ -1,8 +1,8 @@
-package lesson36.model;
+package lesson36.temp;
 
 import lesson36.model.types.UserType;
 
-public class User  implements Comparable<User>{
+public class User implements Comparable<User>{
     private long id;
     private String userName;
     private String password;
