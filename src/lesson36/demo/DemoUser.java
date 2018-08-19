@@ -15,14 +15,17 @@ public class DemoUser {
 //            System.err.println(e.getMessage());
 //        }
 
-        UserController userController = new UserController();
+//        UserController userController = new UserController();
+//
+//        try{
+//            User user = new User("Vasya1", "1111", "RU", UserType.USER);
+//            userController.registerUser(user);
+//        }catch (Exception e){
+//            System.err.println(e.getMessage());
+//        }
 
-        try{
-            User user = new User("Vasya1", "1111", "RU", UserType.USER);
-            userController.registerUser(user);
-        }catch (Exception e){
-            System.err.println(e.getMessage());
-        }
+        User user = new User(467628346, "Vasya1", "1111", "RU", UserType.USER);
+        System.out.println(user.toString());
 
     }
 }

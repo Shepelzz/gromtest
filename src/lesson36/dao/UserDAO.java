@@ -1,14 +1,14 @@
 package lesson36.dao;
 
+import lesson36.exception.DAOException;
 import lesson36.model.User;
 import lesson36.model.types.UserType;
 
-public class UserDAO {
+public class UserDAO extends GeneralDAO<User>{
     private static final String path = "src/lesson36/files/UserDb.txt";
-    private GeneralDAO<User> generalDao = new GeneralDAO<>(path);
 
-    public User registerUser(User user){
-        return generalDao.writeToFile(new User(generalDao.randomId(), user.getUserName(), user.getPassword(), user.getCountry(), user.getUserType()));
+    public User registerUser(User user) throws DAOException {
+        return writeToFile(user, path);
     }
 
     public void login(String userName, String password) throws Exception{
@@ -17,38 +17,21 @@ public class UserDAO {
     public void logout(){
     }
 
-    public User getUserById(long id) throws Exception{
-        long index = 1;
-        for(String line : generalDao.readFromFile()){
-            User u = getValidUser(line, index++);
-            if(u.getId() == id)
-                return u;
-        }
-        throw new Exception("User id was not found");
+    public User getUserById(long id) throws DAOException{
+        return parseToObjectHotel(getDataById(id, path));
     }
 
-    private User getValidUser(String inputLine, long lineIndex) throws Exception{
-        String[] userValues = inputLine.split(",");
-
-        if(userValues.length != User.class.getDeclaredFields().length)
-            throw new Exception("User data is not valid. Line: '"+inputLine+"'");
-
-        try {
+    private User parseToObjectHotel(String[] input) throws DAOException {
+        try{
             return new User(
-                    Long.valueOf(userValues[0]),
-                    userValues[1].trim(),
-                    userValues[2].trim(),
-                    userValues[3].trim(),
-                    UserType.getTypeByName(userValues[4])
+                Long.valueOf(input[0]),
+                input[1],
+                input[2],
+                input[3],
+                UserType.getTypeByName(input[4])
             );
         }catch (Exception e){
-            System.err.println("Can not read data. "+e.getMessage()+" Line: "+lineIndex);
+            throw new DAOException(e.getMessage());
         }
-        return null;
     }
-
-
-
-
-
 }

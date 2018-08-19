@@ -3,3 +3,4 @@
 7311701334048307041, Hotel1, Ukraine, Odessa, test
 7311701335048307043, Hotel3, Ukraine, Odessa, test
 7311701335048307041, Hotel4, Ukraine, Odessa, test
+26540059603440722, testtesttest, RU, Moscow, lenina 3

@@ -1,78 +1,97 @@
 package lesson36.dao;
 
+import lesson36.exception.DAOException;
+
 import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class GeneralDAO<T>{
-    private String path;
+public abstract class GeneralDAO<T>{
 
-    public GeneralDAO(String path) {
-        this.path = path;
-    }
-
-    Set<String> readFromFile(){
+    Set<String> readFromFile(String path) throws DAOException{
         Set<String> result = new HashSet<>();
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
-            while ((line = br.readLine()) != null) {
-                if(line.length() != 0)
-                    result.add(line);
-            }
+            while ((line = br.readLine()) != null)
+                result.add(line);
         } catch (FileNotFoundException e){
-            System.err.println("Reading from file error: file " + path + " does not exist");
+            throw new DAOException("Reading from file error: file "+path+" does not exist");
         } catch (IOException e){
-            System.err.println("Reading from file "+path+" failed");
+            throw new DAOException("Reading from file "+path+" failed");
         }
         return result;
     }
 
-    T writeToFile(T t){
+    T writeToFile(T t, String path) throws DAOException{
         try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
             if(br.readLine() != null)
                 bw.append("\r\n");
-            bw.append(t.toString());
+            bw.append(String.valueOf(randomId())).append(", ").append(t.toString());
         } catch (FileNotFoundException e) {
-            System.err.println(t.getClass().getName()+"Writing to file error: file " + path + " does not exist");
+            throw new DAOException("Writing to file error: file "+path+" does not exist");
         } catch (IOException e){
-            System.err.println(t.getClass().getName()+"Writing to file error: can`t save "+t.toString()+" to file "+path);
+            throw new DAOException("Writing to file error: can`t save "+t.toString()+" to file "+path);
         }
         return t;
     }
 
-    void deleteFromFile(T t){
+    void deleteFromFileById(long id, String path) throws DAOException{
         StringBuffer tempData = new StringBuffer();
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
-            while((line = br.readLine()) != null){
-                if(!line.equals(t.toString())){
+            while((line = br.readLine()) != null)
+                if(!Long.valueOf(line.split(",")[0]).equals(id)){
                     tempData.append(line);
                     tempData.append("\r\n");
                 }
-            }
         } catch (FileNotFoundException e) {
-            System.err.println("Reading from file error: file " + path + " does not exist");
+            throw new DAOException("Deleting from file error: file "+path+" does not exist");
         } catch (IOException e){
-            System.err.println("Reading from file error: can`t save to file "+path); /*TODO*/
+            throw new DAOException("Deleting from file error: can`t delete from file "+path);
         }
 
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path), false))){
             bw.append(tempData);
         } catch (IOException e){
-            System.err.println("Writing to file "+path+" failed");
+            throw new DAOException("Deleting from file "+path+" failed");
         }
     }
 
-//    T getById(long id){
-//        for(String line : readFromFile()){
-//            if(Long.valueOf(line.split(",")[0]) == id)
-//                return line;
-//        }
-//    }
+    String[] getDataById(long id, String path) throws DAOException{
+        try(BufferedReader br = new BufferedReader(new FileReader(path))){
+            String line;
+            while ((line = br.readLine()) != null)
+                if(splitLine(line)[0].equals(String.valueOf(id)))
+                    return splitLine(line);
+        } catch (FileNotFoundException e){
+            throw new DAOException("Reading from file error: file "+path+" does not exist");
+        } catch (IOException e){
+            throw new DAOException("Reading from file "+path+" failed");
+        }
+        return null;
+    }
 
-    long randomId(){
+    Set<String[]> getDataByElement(int elementNumber, String elementValue, String path) throws DAOException{
+        Set<String[]> result = new HashSet<>();
+        try(BufferedReader br = new BufferedReader(new FileReader(path))){
+            String line;
+            while ((line = br.readLine()) != null)
+                if(splitLine(line)[elementNumber].equals(elementValue))
+                    result.add(splitLine(line));
+        } catch (FileNotFoundException e){
+            throw new DAOException("Reading from file error: file "+path+" does not exist");
+        } catch (IOException e){
+            throw new DAOException("Reading from file "+path+" failed");
+        }
+        return result;
+    }
+
+    private long randomId(){
         return ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
     }
 
+    private String[] splitLine(String line){
+        return line.split(",");
+    }
 }
