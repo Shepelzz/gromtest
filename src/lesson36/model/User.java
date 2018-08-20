@@ -47,10 +47,10 @@ public class User  implements Comparable<User>{
     @Override
     public String toString() {
         return
-            id+", "+
-                userName+", "+
-                password+", "+
-                country+", "+
+                (id == 0 ? "" : id+",")+
+                userName+","+
+                password+","+
+                country+","+
                 userType.toString();
     }
 

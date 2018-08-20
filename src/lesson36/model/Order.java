@@ -55,11 +55,11 @@ public class Order {
     @Override
     public String toString() {
         return
-            id+", "+
-            user.getId()+", "+
-            room.getId()+", "+
-            new SimpleDateFormat("dd-MM-yyyy").format(dateFrom)+", "+
-            new SimpleDateFormat("dd-MM-yyyy").format(dateTo)+", "+
+            (id == 0 ? "" : id+",")+
+            user.getId()+","+
+            room.getId()+","+
+            new SimpleDateFormat("dd-MM-yyyy").format(dateFrom)+","+
+            new SimpleDateFormat("dd-MM-yyyy").format(dateTo)+","+
             moneyPaid;
     }
 }

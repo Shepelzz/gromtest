@@ -45,11 +45,11 @@ public class Hotel implements Comparable<Hotel> {
     @Override
     public String toString() {
         return
-            this.id+", "+
-                this.name+", "+
-                this.country+", "+
-                this.city+", "+
-                this.street;
+            (id == 0 ? "" : id+",")+
+            name+","+
+            country+","+
+            city+","+
+            street;
     }
 
     @Override

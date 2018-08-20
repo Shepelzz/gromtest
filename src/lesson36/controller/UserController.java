@@ -1,14 +1,14 @@
 package lesson36.controller;
 
+import lesson36.exception.DAOException;
+import lesson36.exception.ServiceException;
 import lesson36.model.User;
 import lesson36.service.UserService;
 
 public class UserController {
-
     private UserService userService = new UserService();
-    private static User loggedUser = null;
 
-    public User registerUser(User user) throws Exception{
+    public User registerUser(User user) throws DAOException, ServiceException {
         return userService.registerUser(user);
     }
 
