@@ -35,6 +35,10 @@ public class Room {
         return id;
     }
 
+    public void setDateAvailableFrom(Date dateAvailableFrom) {
+        this.dateAvailableFrom = dateAvailableFrom;
+    }
+
     public int getNumberOfGuests() {
         return numberOfGuests;
     }

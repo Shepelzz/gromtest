@@ -1,17 +1,19 @@
 package lesson36.demo;
 
 import lesson36.controller.RoomController;
-import lesson36.dao.HotelDAO;
-import lesson36.dao.RoomDAO;
-import lesson36.model.Room;
+import lesson36.model.Filter;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DemoRoom {
     public static void main(String[] args) throws Exception{
         RoomController roomController = new RoomController();
-        roomController.deleteRoom(1475517863681674756L);
+
+        Filter filter = new Filter(0, 0, true, false, new Date(), null, null, "Kiev");
+        //roomController.findRooms(filter);
+
+
+        //roomController.deleteRoom(4587729999860716510L);
 
 //        roomController.addRoom(new Room(
 //            3,

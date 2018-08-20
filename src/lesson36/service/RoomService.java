@@ -1,6 +1,5 @@
 package lesson36.service;
 
-import lesson36.dao.HotelDAO;
 import lesson36.dao.RoomDAO;
 import lesson36.exception.DAOException;
 import lesson36.exception.ServiceException;
@@ -26,7 +25,7 @@ public class RoomService {
 
     public Set<Room> findRooms(Filter filter) throws DAOException, ServiceException{
         if(filter.getDateAvailableFrom().before(new Date()))
-            throw new ServiceException("Room searching error: date can not be arlier than current");
+            throw new ServiceException("Room searching error: date can not be earlier than current");
 
         return roomDAO.findRooms(filter);
     }

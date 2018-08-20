@@ -5,8 +5,6 @@ import lesson36.model.Filter;
 import lesson36.model.Room;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,25 +25,22 @@ public class RoomDAO extends GeneralDAO<Room>{
         Set<Room> result = new HashSet<>();
 
         for(String[] dataLine : readFromFile(path)){
-            
-        }
+            Room room = parseToObjectRoom(dataLine);
 
-//        long index = 1;
-//        for(String line : readFromFile(path)){
-//            Room room = getValidRoom(line, index);
-//
-//            assert room != null;
-//            if( room.getNumberOfGuests() >= filter.getNumberOfGuests() &&
-//                room.getPrice() <= filter.getPrice() &&
-//                room.isBreakfastIncluded() == filter.isBreakfastIncluded() &&
-//                room.isPetsAllowed() == filter.isPetsAllowed() &&
-//                room.getDateAvailableFrom().before(filter.getDateAvailableFrom()) &&
-//                    (filter.getName() == null || room.getHotel().getName().equals(filter.getName())) &&
-//                    (filter.getCountry() == null || room.getHotel().getCountry().equals(filter.getCountry())) &&
-//                    (filter.getCity() == null || room.getHotel().getCity().equals(filter.getCity()))
-//            )
-//                result.add(room);
-//        }
+            boolean numberOfGuests = (filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests() == room.getNumberOfGuests());
+            boolean price = (filter.getPrice() == 0 || filter.getPrice() >= room.getPrice());
+            //TODO как выбрать оба?
+            boolean breakfastIncluded = (filter.isBreakfastIncluded() == room.isBreakfastIncluded());
+            //TODO как выбрать оба?
+            boolean petsAllowed = (filter.isPetsAllowed() == room.isPetsAllowed());
+            boolean dateAvailableFrom = (filter.getDateAvailableFrom().after(room.getDateAvailableFrom()));
+            boolean name = (filter.getName() == null || filter.getName().equals(room.getHotel().getName()));
+            boolean country = (filter.getCountry() == null || filter.getCountry().equals(room.getHotel().getCountry()));
+            boolean city = (filter.getCity() == null || filter.getCity().equals(room.getHotel().getCity()));
+
+            if(numberOfGuests && price && breakfastIncluded && petsAllowed && dateAvailableFrom && name && country && city)
+                result.add(room);
+        }
         return result;
     }
 
@@ -54,6 +49,10 @@ public class RoomDAO extends GeneralDAO<Room>{
         if(data == null)
             return null;
         return parseToObjectRoom(data);
+    }
+
+    public void replaceRoomById(long id, Room newRoom) throws DAOException{
+        replaceDataById(id, newRoom, path);
     }
 
     private Room parseToObjectRoom(String[] input) throws DAOException {
@@ -71,6 +70,8 @@ public class RoomDAO extends GeneralDAO<Room>{
             throw new DAOException(e.getMessage());
         }
     }
+
+
 
 
 }

@@ -27,7 +27,7 @@ public abstract class GeneralDAO<T>{
         try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
             if(br.readLine() != null)
                 bw.append("\r\n");
-            bw.append(String.valueOf(randomId())).append(", ").append(t.toString());
+            bw.append(String.valueOf(randomId())).append(",").append(t.toString());
         } catch (FileNotFoundException e) {
             throw new DAOException("Writing to file error: file "+path+" does not exist");
         } catch (IOException e){
@@ -45,8 +45,9 @@ public abstract class GeneralDAO<T>{
                     tempData.append(line);
                     tempData.append("\r\n");
                 }
-                tempData.replace(tempData.length() - 1, tempData.length(), "");
             }
+            if(tempData.length()>=2)
+                tempData.replace(tempData.length() - 2, tempData.length(), "");
         } catch (FileNotFoundException e) {
             throw new DAOException("Deleting from file error: file "+path+" does not exist");
         } catch (IOException e){
@@ -87,6 +88,21 @@ public abstract class GeneralDAO<T>{
             throw new DAOException("Reading from file "+path+" failed");
         }
         return result;
+    }
+
+    void replaceDataById(long id, T t, String path) throws DAOException{
+        deleteFromFileById(id, path);
+
+        try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
+            if(br.readLine() != null)
+                bw.append("\r\n");
+            bw.append(t.toString());
+        } catch (FileNotFoundException e) {
+            throw new DAOException("Writing to file error: file "+path+" does not exist");
+        } catch (IOException e){
+            throw new DAOException("Writing to file error: can`t save "+t.toString()+" to file "+path);
+        }
+
     }
 
     private long randomId(){
