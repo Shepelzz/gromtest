@@ -24,7 +24,7 @@ public class OrderService {
         Room room = new RoomDAO().getRoomById(roomId);
         if(room.getDateAvailableFrom().after(new Date()))
             throw new ServiceException("Booking error: room (id:"+roomId+") is not available from "+room.getDateAvailableFrom());
-        if(room.getPrice() < moneyPaid)
+        if(room.getPrice() > moneyPaid)
             throw new ServiceException("Booking error: not enough money paid" );
         if(orderDao.findOrderByRoomAndUser(roomId, userId) != null)
             throw new ServiceException("Booking error: room (id:"+roomId+") is already booked by user (id:"+userId+")");

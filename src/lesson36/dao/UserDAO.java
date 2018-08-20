@@ -4,8 +4,6 @@ import lesson36.exception.DAOException;
 import lesson36.model.User;
 import lesson36.model.types.UserType;
 
-import java.util.Set;
-
 public class UserDAO extends GeneralDAO<User>{
     private static final String path = "src/lesson36/files/UserDb.txt";
 
@@ -20,10 +18,12 @@ public class UserDAO extends GeneralDAO<User>{
     }
 
     public User getUserById(long id) throws DAOException{
-        String[] data = getDataById(id, path);
+        int[] parameterNumbers = {0};
+        String[] parameters = {String.valueOf(id)};
+        String[] data = getObjectByParameters(parameterNumbers, parameters, path);
         if(data == null)
-            return null;
-        return parseToObjectHotel(getDataById(id, path));
+            throw  new DAOException("User with id:"+id+" was not found");
+        return parseToObjectHotel(data);
     }
 
     private User parseToObjectHotel(String[] input) throws DAOException {

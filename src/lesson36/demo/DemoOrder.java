@@ -6,9 +6,11 @@ public class DemoOrder {
     public static void main(String[] args) throws Exception{
         OrderController orderController = new OrderController();
 
-        //orderController.bookRoom(7900478796213393240L, 6000243897891939466L, 108);
+        //orderController.bookRoom(4277792471638039861L, 6000243897891939466L, 2000);
 
         //orderController.cancelReservation(2574534873704133041L, 6000243897891939466L);
 
+
+        int[] i = {0};
     }
 }

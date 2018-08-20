@@ -3,6 +3,7 @@ package lesson36.demo;
 import lesson36.controller.RoomController;
 import lesson36.model.Filter;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class DemoRoom {
@@ -35,6 +36,31 @@ public class DemoRoom {
 //        System.out.println(date);
 //
 //        System.out.println(new SimpleDateFormat("dd-MM-yyyy").parse("18-08-2018"));
+
+
+        int[] parameterNumbers = {0,1};
+        String[] parameters = {"101","test"};
+        ArrayList<String> sb = new ArrayList<>();
+        sb.add("100,test1");
+        sb.add("101,test2");
+        sb.add("102,test3");
+        sb.add("103,test4");
+
+
+        for(String line : sb){
+            boolean mapped = false;
+            String[] dataLine = line.split(",");
+
+            for(int col : parameterNumbers)
+                mapped = dataLine[col].equals(parameters[col]);
+
+            if(mapped) {
+                System.out.println(line);
+                break;
+            }
+        }
+
+
 
     }
 }
