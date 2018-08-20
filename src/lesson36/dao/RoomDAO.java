@@ -45,7 +45,7 @@ public class RoomDAO extends GeneralDAO<Room>{
         return result;
     }
 
-    public static Room getRoomById(long id) throws DAOException{
+    public Room getRoomById(long id) throws DAOException{
         String[] data = getObjectByParameters(new LinkedHashMap<Integer, String>(){{put(0, String.valueOf(id));}}, path);
         if(data == null)
             return null;
@@ -56,7 +56,7 @@ public class RoomDAO extends GeneralDAO<Room>{
         replaceDataById(id, newRoom, path);
     }
 
-    private static Room parseToObject(String[] input) throws DAOException {
+    private Room parseToObject(String[] input) throws DAOException {
         try{
             return new Room(
                 Long.valueOf(input[0]),

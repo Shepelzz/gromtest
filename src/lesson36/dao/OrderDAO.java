@@ -13,40 +13,40 @@ public class OrderDAO extends GeneralDAO<Order>{
     private static final String path = "src/lesson36/files/OrderDb.txt";
 
     public void bookRoom(long roomId, long userId, double moneyPaid) throws DAOException {
+        RoomDAO roomDAO = new RoomDAO();
+        UserDAO userDAO = new UserDAO();
+
         Calendar c = Calendar.getInstance();
         Date currentDate = new Date();
         c.setTime(currentDate);
         c.add(Calendar.DATE, 3);
 
-        RoomDAO roomDAO = new RoomDAO();
-        UserDAO userDAO = new UserDAO();
-
         writeToFile(new Order(
-            UserDAO.getUserById(userId),
-            RoomDAO.getRoomById(roomId),
+            userDAO.getUserById(userId),
+            roomDAO.getRoomById(roomId),
             new Date(),
             c.getTime(),
             moneyPaid
         ), path);
 
-        Room updatedRoom = RoomDAO.getRoomById(roomId);
+        Room updatedRoom = roomDAO.getRoomById(roomId);
         updatedRoom.setDateAvailableFrom(c.getTime());
 
         roomDAO.replaceRoomById(roomId, updatedRoom);
     }
 
     public void cancelReservation(long roomId, long userId) throws DAOException{
+        RoomDAO roomDAO = new RoomDAO();
         String[] data = getOrderByParameters(roomId, userId);
         if(data == null)
             throw new DAOException("Cancel reservation error: no order with room (id:"+roomId+") and user (id:"+userId+") was found");
 
         deleteFromFileById(parseToObject(data).getId(), path);
 
-        //TODO static???
-        Room updatedRoom = new RoomDAO().getRoomById(roomId);
+        Room updatedRoom = roomDAO.getRoomById(roomId);
         updatedRoom.setDateAvailableFrom(new Date());
-        //TODO static???
-        new RoomDAO().replaceRoomById(roomId, updatedRoom);
+
+        roomDAO.replaceRoomById(roomId, updatedRoom);
     }
 
     public String[] getOrderByParameters(long roomId, long userId) throws DAOException{

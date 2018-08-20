@@ -2,7 +2,10 @@ package lesson36.demo;
 
 import lesson36.controller.RoomController;
 import lesson36.model.Filter;
+import lesson36.model.User;
+import lesson36.model.types.UserType;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 public class DemoRoom {
@@ -41,32 +44,57 @@ public class DemoRoom {
 
         ArrayList<String> sb = new ArrayList<>();
 
-        Map<Integer, String> parametersMap = new LinkedHashMap<>();
-        parametersMap.put(0, "101");
-        parametersMap.put(1, "test2");
+        Map<String, String> parametersMap = new LinkedHashMap<>();
+        parametersMap.put("id", "101");
+        parametersMap.put("userName", "test2");
 
 
-        sb.add("100,test1");
-        sb.add("101,test2");
-        sb.add("102,test3");
-        sb.add("103,test4");
+        sb.add("1001,admin,admin,UA,ADMIN");
+        sb.add("1002,admin,admin,UA,ADMIN");
+        sb.add("1003,Vasya,1111,RU,USER");
+        sb.add("1004,Vasya1,1111,RU,USER");
 
 
+        Class c = User.class;
+
+        for(String userData : sb){
+            boolean mapped = false;
+            String[] dataLine = userData.split(",");
 
 
-        for(String line : sb){
-            String[] dataLine = line.split(",");
-            System.out.println(line);
-            for(Integer index : parametersMap.keySet()) {
-                System.out.println(parametersMap.values().toArray()[index]+" = "+dataLine[index]);
-                if(!parametersMap.values().toArray()[index].equals(dataLine[index]))
-                    break;
+            for(String field : parametersMap.keySet()) {
+                int index = getFieldIndex(c, field);
+                System.out.println(parametersMap.get(field));
+                mapped = parametersMap.get(field).equals(dataLine[index]);
             }
-            System.out.println("---------");
+
+            if(mapped)
+                System.out.println(Arrays.toString(dataLine));
+
         }
 
+        System.out.println(Arrays.toString(getObjectByParameters(new LinkedHashMap<Integer, String>(){{put(0, "1003");}}, sb)));
+    }
 
+    static int getFieldIndex(Class c, String fieldName) throws Exception{
+        int index = 0;
+        for(Field f : c.getDeclaredFields())
+            if(f.getName().equals(fieldName))
+                return index;
+        throw new Exception("no field with name "+fieldName+" was found in class "+c.getName());
+    }
 
+    static String[] getObjectByParameters(Map<Integer, String> parametersMap, ArrayList<String> sb) throws Exception{
+        for(String line : sb) {
+            boolean mapped = false;
+            String[] dataLine = line.split(",");
 
+            for (Integer index : parametersMap.keySet())
+                mapped = parametersMap.values().toArray()[index].equals(dataLine[index]);
+
+            if (mapped)
+                return dataLine;
+        }
+        return null;
     }
 }

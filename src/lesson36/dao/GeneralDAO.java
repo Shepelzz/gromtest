@@ -63,7 +63,7 @@ public abstract class GeneralDAO<T>{
     }
 
 
-    static String[] getObjectByParameters(Map<Integer, String> parametersMap, String path) throws DAOException{
+    String[] getObjectByParameters(Map<Integer, String> parametersMap, String path) throws DAOException{
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
             while ((line = br.readLine()) != null) {

@@ -21,14 +21,14 @@ public class UserDAO extends GeneralDAO<User>{
     public void logout(){
     }
 
-    public static User getUserById(long id) throws DAOException{
+    public User getUserById(long id) throws DAOException{
         String[] data = getObjectByParameters(new LinkedHashMap<Integer, String>(){{put(0, String.valueOf(id));}}, path);
         if(data == null)
             throw  new DAOException("User with id:"+id+" was not found");
         return parseToObject(data);
     }
 
-    private static User parseToObject(String[] input) throws DAOException {
+    private User parseToObject(String[] input) throws DAOException {
         try{
             return new User(
                 Long.valueOf(input[0]),
