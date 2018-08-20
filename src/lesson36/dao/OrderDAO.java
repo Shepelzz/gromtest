@@ -7,6 +7,7 @@ import lesson36.model.Room;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
 
 public class OrderDAO extends GeneralDAO<Order>{
     private static final String path = "src/lesson36/files/OrderDb.txt";
@@ -21,49 +22,47 @@ public class OrderDAO extends GeneralDAO<Order>{
         UserDAO userDAO = new UserDAO();
 
         writeToFile(new Order(
-            userDAO.getUserById(userId),
-            roomDAO.getRoomById(roomId),
+            UserDAO.getUserById(userId),
+            RoomDAO.getRoomById(roomId),
             new Date(),
             c.getTime(),
             moneyPaid
         ), path);
 
-        Room updatedRoom = roomDAO.getRoomById(roomId);
+        Room updatedRoom = RoomDAO.getRoomById(roomId);
         updatedRoom.setDateAvailableFrom(c.getTime());
 
         roomDAO.replaceRoomById(roomId, updatedRoom);
     }
 
     public void cancelReservation(long roomId, long userId) throws DAOException{
-        Order order = findOrderByRoomAndUser(roomId, userId);
-        if(order == null)
+        String[] data = getOrderByParameters(roomId, userId);
+        if(data == null)
             throw new DAOException("Cancel reservation error: no order with room (id:"+roomId+") and user (id:"+userId+") was found");
-        deleteFromFileById(order.getId(), path);
 
-        RoomDAO roomDAO = new RoomDAO();
-        Room updatedRoom = roomDAO.getRoomById(roomId);
+        deleteFromFileById(parseToObject(data).getId(), path);
+
+        //TODO static???
+        Room updatedRoom = new RoomDAO().getRoomById(roomId);
         updatedRoom.setDateAvailableFrom(new Date());
-
-        roomDAO.replaceRoomById(roomId, updatedRoom);
+        //TODO static???
+        new RoomDAO().replaceRoomById(roomId, updatedRoom);
     }
 
-    public Order findOrderByRoomAndUser(long roomId, long userId) throws DAOException{
-        for(String[] dataLine : readFromFile(path)){
-            Order order = parseToObjectOrder(dataLine);
-            if(order.getRoom().getId() == roomId && order.getUser().getId() == userId)
-                return order;
-        }
-        return null;
+    public String[] getOrderByParameters(long roomId, long userId) throws DAOException{
+        return getObjectByParameters(new LinkedHashMap<Integer, String>(){{
+            put(2, String.valueOf(roomId)); put(1, String.valueOf(userId));
+        }}, path);
     }
 
     public Order getOrderById(long id) throws DAOException {
-        String[] data = getDataById(id, path);
+        String[] data = getObjectByParameters(new LinkedHashMap<Integer, String>(){{put(0, String.valueOf(id));}}, path);
         if(data == null)
             return null;
-        return parseToObjectOrder(getDataById(id, path));
+        return parseToObject(data);
     }
 
-    private Order parseToObjectOrder(String[] input) throws DAOException {
+    private Order parseToObject(String[] input) throws DAOException {
         try{
             return new Order(
                 Long.valueOf(input[0]),

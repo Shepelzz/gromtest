@@ -6,6 +6,7 @@ import lesson36.model.Room;
 
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 public class RoomDAO extends GeneralDAO<Room>{
@@ -25,7 +26,7 @@ public class RoomDAO extends GeneralDAO<Room>{
         Set<Room> result = new HashSet<>();
 
         for(String[] dataLine : readFromFile(path)){
-            Room room = parseToObjectRoom(dataLine);
+            Room room = parseToObject(dataLine);
 
             boolean numberOfGuests = (filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests() == room.getNumberOfGuests());
             boolean price = (filter.getPrice() == 0 || filter.getPrice() >= room.getPrice());
@@ -44,18 +45,18 @@ public class RoomDAO extends GeneralDAO<Room>{
         return result;
     }
 
-    public Room getRoomById(long id) throws DAOException{
-        String[] data = getDataById(id, path);
+    public static Room getRoomById(long id) throws DAOException{
+        String[] data = getObjectByParameters(new LinkedHashMap<Integer, String>(){{put(0, String.valueOf(id));}}, path);
         if(data == null)
             return null;
-        return parseToObjectRoom(data);
+        return parseToObject(data);
     }
 
     public void replaceRoomById(long id, Room newRoom) throws DAOException{
         replaceDataById(id, newRoom, path);
     }
 
-    private Room parseToObjectRoom(String[] input) throws DAOException {
+    private static Room parseToObject(String[] input) throws DAOException {
         try{
             return new Room(
                 Long.valueOf(input[0]),

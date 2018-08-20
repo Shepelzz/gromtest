@@ -4,7 +4,11 @@ import lesson36.exception.DAOException;
 import lesson36.model.Hotel;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
+
+import static javax.swing.UIManager.put;
 
 public class HotelDAO extends GeneralDAO<Hotel>{
     private static final String path = "src/lesson36/files/HotelDb.txt";
@@ -21,26 +25,26 @@ public class HotelDAO extends GeneralDAO<Hotel>{
 
     public Set<Hotel> findHotelByName(String name) throws DAOException{
         Set<Hotel> result = new HashSet<>();
-        for(String[] lineElements : getDataByElement(1, name, path))
-            result.add(parseToObjectHotel(lineElements));
+        for(String[] lineElements : getObjectsByParameters(new LinkedHashMap<Integer, String>(){{put(1, name);}}, path))
+            result.add(parseToObject(lineElements));
         return result;
     }
 
     public Set<Hotel> findHotelByCity(String name) throws DAOException{
         Set<Hotel> result = new HashSet<>();
-        for(String[] lineElements : getDataByElement(3, name, path))
-            result.add(parseToObjectHotel(lineElements));
+        for(String[] lineElements : getObjectsByParameters(new LinkedHashMap<Integer, String>(){{put(3, name);}}, path))
+            result.add(parseToObject(lineElements));
         return result;
     }
 
     public Hotel getHotelById(long id) throws DAOException {
-        String[] data = getDataById(id, path);
+        String[] data = getObjectByParameters(new LinkedHashMap<Integer, String>(){{put(0, String.valueOf(id));}}, path);
         if(data == null)
             return null;
-        return parseToObjectHotel(getDataById(id, path));
+        return parseToObject(data);
     }
 
-    private Hotel parseToObjectHotel(String[] input) throws DAOException {
+    private Hotel parseToObject(String[] input) throws DAOException {
         try{
             return new Hotel(
                     Long.valueOf(input[0]),

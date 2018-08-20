@@ -3,8 +3,7 @@ package lesson36.demo;
 import lesson36.controller.RoomController;
 import lesson36.model.Filter;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 public class DemoRoom {
     public static void main(String[] args) throws Exception{
@@ -38,27 +37,34 @@ public class DemoRoom {
 //        System.out.println(new SimpleDateFormat("dd-MM-yyyy").parse("18-08-2018"));
 
 
-        int[] parameterNumbers = {0,1};
-        String[] parameters = {"101","test"};
+
+
         ArrayList<String> sb = new ArrayList<>();
+
+        Map<Integer, String> parametersMap = new LinkedHashMap<>();
+        parametersMap.put(0, "101");
+        parametersMap.put(1, "test2");
+
+
         sb.add("100,test1");
         sb.add("101,test2");
         sb.add("102,test3");
         sb.add("103,test4");
 
 
+
+
         for(String line : sb){
-            boolean mapped = false;
             String[] dataLine = line.split(",");
-
-            for(int col : parameterNumbers)
-                mapped = dataLine[col].equals(parameters[col]);
-
-            if(mapped) {
-                System.out.println(line);
-                break;
+            System.out.println(line);
+            for(Integer index : parametersMap.keySet()) {
+                System.out.println(parametersMap.values().toArray()[index]+" = "+dataLine[index]);
+                if(!parametersMap.values().toArray()[index].equals(dataLine[index]))
+                    break;
             }
+            System.out.println("---------");
         }
+
 
 
 
