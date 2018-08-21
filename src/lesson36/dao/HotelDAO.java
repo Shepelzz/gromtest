@@ -1,14 +1,13 @@
 package lesson36.dao;
 
 import lesson36.exception.DAOException;
+import lesson36.exception.ObjectNotFoundException;
+import lesson36.exception.ParsingException;
 import lesson36.model.Hotel;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
-
-import static javax.swing.UIManager.put;
 
 public class HotelDAO extends GeneralDAO<Hotel>{
     private static final String path = "src/lesson36/files/HotelDb.txt";
@@ -25,26 +24,34 @@ public class HotelDAO extends GeneralDAO<Hotel>{
 
     public Set<Hotel> findHotelByName(String name) throws DAOException{
         Set<Hotel> result = new HashSet<>();
-        for(String[] lineElements : getObjectsByParameters(new LinkedHashMap<Integer, String>(){{put(1, name);}}, path))
-            result.add(parseToObject(lineElements));
+        Set<String[]> data = getObjectsByParameters(new LinkedHashMap<String, String>(){{put("name", name);}}, Hotel.class, path);
+//        if(data.isEmpty())
+//            throw new ObjectNotFoundException("Hotel with name "+name+" was not found");
+
+        for(String[] dataElement : data)
+            result.add(parseToObject(dataElement));
         return result;
     }
 
     public Set<Hotel> findHotelByCity(String name) throws DAOException{
         Set<Hotel> result = new HashSet<>();
-        for(String[] lineElements : getObjectsByParameters(new LinkedHashMap<Integer, String>(){{put(3, name);}}, path))
+        Set<String[]> data = getObjectsByParameters(new LinkedHashMap<String, String>(){{put("city", name);}}, Hotel.class, path);
+//        if(data.isEmpty())
+//            throw new ObjectNotFoundException("Hotel with city "+name+" was not found");
+
+        for(String[] lineElements : data)
             result.add(parseToObject(lineElements));
         return result;
     }
 
     public Hotel getHotelById(long id) throws DAOException {
-        String[] data = getObjectByParameters(new LinkedHashMap<Integer, String>(){{put(0, String.valueOf(id));}}, path);
+        String[] data = getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}}, Hotel.class, path);
         if(data == null)
-            return null;
+            throw new ObjectNotFoundException("Hotel with id: "+id+" was not found");
         return parseToObject(data);
     }
 
-    private Hotel parseToObject(String[] input) throws DAOException {
+    private Hotel parseToObject(String[] input) throws ParsingException {
         try{
             return new Hotel(
                     Long.valueOf(input[0]),
@@ -54,7 +61,7 @@ public class HotelDAO extends GeneralDAO<Hotel>{
                     input[4]
             );
         }catch (Exception e){
-            throw new DAOException(e.getMessage());
+            throw new ParsingException(e.getMessage());
         }
     }
 }

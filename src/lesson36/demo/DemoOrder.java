@@ -1,16 +1,33 @@
 package lesson36.demo;
 
 import lesson36.controller.OrderController;
+import lesson36.controller.UserController;
+import lesson36.dao.UserDAO;
 
 public class DemoOrder {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args){
         OrderController orderController = new OrderController();
 
-        //orderController.bookRoom(4277792471638039861L, 6000243897891939466L, 2000);
+        //резервация
+        try{
+            UserController userController = new UserController();
+            userController.login("Vasya", "1111");
 
-        //orderController.cancelReservation(2574534873704133041L, 6000243897891939466L);
+            orderController.bookRoom(7713581945862736410L, UserDAO.getLoggedUser().getId(), 5800);
 
+        }catch (Exception e){
+            System.err.println(e.toString());
+        }
 
+        //отмена резервации
+        try{
+            UserController userController = new UserController();
+            userController.login("Vasya", "1111");
 
+            orderController.cancelReservation(7713581945862736410L, UserDAO.getLoggedUser().getId());
+
+        }catch (Exception e){
+            System.err.println(e.toString());
+        }
     }
 }

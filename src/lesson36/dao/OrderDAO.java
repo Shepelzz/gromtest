@@ -1,6 +1,7 @@
 package lesson36.dao;
 
 import lesson36.exception.DAOException;
+import lesson36.exception.ObjectNotFoundException;
 import lesson36.model.Order;
 import lesson36.model.Room;
 
@@ -37,11 +38,9 @@ public class OrderDAO extends GeneralDAO<Order>{
 
     public void cancelReservation(long roomId, long userId) throws DAOException{
         RoomDAO roomDAO = new RoomDAO();
-        String[] data = getOrderByParameters(roomId, userId);
-        if(data == null)
-            throw new DAOException("Cancel reservation error: no order with room (id:"+roomId+") and user (id:"+userId+") was found");
 
-        deleteFromFileById(parseToObject(data).getId(), path);
+        Order order = getOrderByRoomAndUser(roomId, userId);
+        deleteFromFileById(order.getId(), path);
 
         Room updatedRoom = roomDAO.getRoomById(roomId);
         updatedRoom.setDateAvailableFrom(new Date());
@@ -49,16 +48,20 @@ public class OrderDAO extends GeneralDAO<Order>{
         roomDAO.replaceRoomById(roomId, updatedRoom);
     }
 
-    public String[] getOrderByParameters(long roomId, long userId) throws DAOException{
-        return getObjectByParameters(new LinkedHashMap<Integer, String>(){{
-            put(2, String.valueOf(roomId)); put(1, String.valueOf(userId));
-        }}, path);
+    public Order getOrderById(long id) throws DAOException {
+        String[] data = getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}}, Order.class, path);
+        if(data == null)
+            throw new ObjectNotFoundException("Order with id: "+id+" was not found");
+        return parseToObject(data);
     }
 
-    public Order getOrderById(long id) throws DAOException {
-        String[] data = getObjectByParameters(new LinkedHashMap<Integer, String>(){{put(0, String.valueOf(id));}}, path);
+    public Order getOrderByRoomAndUser(long roomId, long userId) throws DAOException{
+        String[] data = getObjectByParameters(new LinkedHashMap<String, String>(){{
+            put("room", String.valueOf(roomId)); put("user", String.valueOf(userId));
+        }}, Order.class, path);
+
         if(data == null)
-            return null;
+            throw new ObjectNotFoundException("Order with room id: "+roomId+" and user id: "+userId+" was not found");
         return parseToObject(data);
     }
 

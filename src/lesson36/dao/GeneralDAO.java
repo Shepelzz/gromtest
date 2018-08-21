@@ -3,6 +3,7 @@ package lesson36.dao;
 import lesson36.exception.DAOException;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +29,7 @@ public abstract class GeneralDAO<T>{
         try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
             if(br.readLine() != null)
                 bw.append("\r\n");
-            bw.append(String.valueOf(randomId())).append(",").append(object.toString());
+            bw.append(String.valueOf(generateRandomId())).append(",").append(object.toString());
         } catch (FileNotFoundException e) {
             throw new DAOException("Writing to file error: file "+path+" does not exist");
         } catch (IOException e){
@@ -62,50 +63,6 @@ public abstract class GeneralDAO<T>{
         }
     }
 
-
-    String[] getObjectByParameters(Map<Integer, String> parametersMap, String path) throws DAOException{
-        try(BufferedReader br = new BufferedReader(new FileReader(path))){
-            String line;
-            while ((line = br.readLine()) != null) {
-                boolean mapped = false;
-                String[] dataLine = line.split(",");
-
-                for(Integer index : parametersMap.keySet())
-                    mapped = parametersMap.values().toArray()[index].equals(dataLine[index]);
-
-                if(mapped)
-                    return dataLine;
-            }
-            return null;
-        } catch (FileNotFoundException e){
-            throw new DAOException("Reading from file error: file "+path+" does not exist");
-        } catch (IOException e){
-            throw new DAOException("Reading from file "+path+" failed");
-        }
-    }
-
-    Set<String[]> getObjectsByParameters(Map<Integer, String> parametersMap, String path) throws DAOException{
-        try(BufferedReader br = new BufferedReader(new FileReader(path))){
-            Set<String[]> result = new HashSet<>();
-            String line;
-            while ((line = br.readLine()) != null) {
-                boolean mapped = false;
-                String[] dataLine = line.split(",");
-
-                for(Integer index : parametersMap.keySet())
-                    mapped = parametersMap.values().toArray()[index].equals(dataLine[index]);
-
-                if(mapped)
-                    result.add(dataLine);
-            }
-            return result;
-        } catch (FileNotFoundException e){
-            throw new DAOException("Reading from file error: file "+path+" does not exist");
-        } catch (IOException e){
-            throw new DAOException("Reading from file "+path+" failed");
-        }
-    }
-
     void replaceDataById(long oldObjectId, T newObject, String path) throws DAOException{
         deleteFromFileById(oldObjectId, path);
 
@@ -121,7 +78,64 @@ public abstract class GeneralDAO<T>{
 
     }
 
-    private long randomId(){
+    String[] getObjectByParameters(Map<String, String> parametersMap, Class c, String path) throws DAOException{
+        try(BufferedReader br = new BufferedReader(new FileReader(path))){
+            String line;
+            while ((line = br.readLine()) != null) {
+                boolean mapped = false;
+                String[] dataLine = line.split(",");
+
+                for(String field : parametersMap.keySet()) {
+                    int index = getClassFieldIndex(c, field);
+                    mapped = parametersMap.get(field).equals(dataLine[index]);
+                }
+
+                if(mapped)
+                    return dataLine;
+            }
+            return null;
+        } catch (FileNotFoundException e){
+            throw new DAOException("Reading from file error: file "+path+" does not exist");
+        } catch (IOException e){
+            throw new DAOException("Reading from file "+path+" failed");
+        }
+    }
+
+    Set<String[]> getObjectsByParameters(Map<String, String> parametersMap, Class c, String path) throws DAOException{
+        try(BufferedReader br = new BufferedReader(new FileReader(path))){
+            Set<String[]> result = new HashSet<>();
+            String line;
+            while ((line = br.readLine()) != null) {
+                boolean mapped = false;
+                String[] dataLine = line.split(",");
+
+                for(String field : parametersMap.keySet()) {
+                    int index = getClassFieldIndex(c, field);
+                    mapped = parametersMap.get(field).equals(dataLine[index]);
+                }
+
+                if(mapped)
+                    result.add(dataLine);
+            }
+            return result;
+        } catch (FileNotFoundException e){
+            throw new DAOException("Reading from file error: file "+path+" does not exist");
+        } catch (IOException e){
+            throw new DAOException("Reading from file "+path+" failed");
+        }
+    }
+
+    private int getClassFieldIndex(Class c, String fieldName) throws DAOException{
+        int index = 0;
+        for(Field f : c.getDeclaredFields()){
+            if(f.getName().equals(fieldName))
+                return index;
+            index++;
+        }
+        throw new DAOException("no field with name "+fieldName+" was found in class "+c.getName());
+    }
+
+    private long generateRandomId(){
         return ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
     }
 

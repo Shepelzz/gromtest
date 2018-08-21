@@ -1,28 +1,49 @@
 package lesson36.demo;
 
 import lesson36.controller.HotelController;
-import lesson36.dao.HotelDAO;
-import lesson36.model.Hotel;
-import lesson36.model.User;
-
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Date;
+import lesson36.controller.UserController;
 
 public class DemoHotel {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args){
         HotelController hotelController = new HotelController();
-//        System.out.println(hotelController.findHotelByCity("Odessa"));
-//
-//        System.out.println(hotelController.findHotelByName("Hotel 3"));
 
-        test(User.class);
+        //добавление отеля
+        UserController userController = new UserController();
+
+        try{
+            userController.login("admin", "admin");
+            //hotelController.addHotel(new Hotel("Mot", "Russia", "Moscow", "testStreet"));
+
+        }catch (Exception e){
+            System.err.println(e.toString());
+        }
+
+
+        //удаление отеля
+        try{
+            userController.login("admin", "admin");
+            //hotelController.deleteHotel(26540059603440722L);
+
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+
+        //поиск отеля по имени
+        try{
+            System.out.println(hotelController.findHotelByName("Mot"));
+
+
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+
+
+        //поиск отелей по городу
+        try{
+            //System.out.println(hotelController.findHotelByCity("Odessa"));
+
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
     }
-
-    static void test(Class o){
-        for(Field f : o.getDeclaredFields())
-            System.out.println(f.getName());
-    }
-
-
 }
