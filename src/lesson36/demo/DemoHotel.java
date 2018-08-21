@@ -30,7 +30,7 @@ public class DemoHotel {
 
         //поиск отеля по имени
         try{
-            System.out.println(hotelController.findHotelByName("Mot"));
+            //System.out.println(hotelController.findHotelByName("Mot"));
 
 
         }catch (Exception e){

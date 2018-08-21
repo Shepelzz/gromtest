@@ -38,7 +38,7 @@ public class DemoRoom {
         //поиск по фильтру
         try{
             Filter filter = new Filter(2, 900, true, true, new Date(), "", "", "Odessa");
-            System.out.println(roomController.findRooms(filter));
+            //System.out.println(roomController.findRooms(filter));
 
         }catch (Exception e){
             System.err.println(e.toString());

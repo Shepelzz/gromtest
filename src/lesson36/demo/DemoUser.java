@@ -12,14 +12,14 @@ public class DemoUser {
         //регистрация юзера
         try{
             User user = new User("Zhenya", "qwer1111", "Ukraine", UserType.ADMIN);
-            System.out.println(userController.registerUser(user));
+            //System.out.println(userController.registerUser(user));
         }catch (Exception e){
             System.err.println(e.toString());
         }
 
         //логин
         try{
-            userController.login("Zhenya", "qwer1111");
+            //userController.login("Zhenya", "qwer1111");
         }catch (Exception e){
             System.err.println(e.getMessage());
         }
@@ -27,7 +27,7 @@ public class DemoUser {
         System.out.println(UserDAO.getLoggedUser());
 
         //логаут
-        userController.logout();
+        //userController.logout();
         System.out.println(UserDAO.getLoggedUser());
     }
 }
