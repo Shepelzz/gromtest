@@ -1,7 +1,6 @@
 package lesson36.dao;
 
-import lesson36.exception.DAOException;
-import lesson36.exception.ObjectNotFoundException;
+import lesson36.exception.UnexpectedException;
 import lesson36.model.Order;
 import lesson36.model.Room;
 
@@ -13,7 +12,11 @@ import java.util.LinkedHashMap;
 public class OrderDAO extends GeneralDAO<Order>{
     private static final String path = "src/lesson36/files/OrderDb.txt";
 
-    public void bookRoom(long roomId, long userId, double moneyPaid) throws DAOException {
+    public OrderDAO() {
+        super(Order.class, path);
+    }
+
+    public void bookRoom(long roomId, long userId, double moneyPaid) throws UnexpectedException {
         RoomDAO roomDAO = new RoomDAO();
         UserDAO userDAO = new UserDAO();
 
@@ -28,7 +31,7 @@ public class OrderDAO extends GeneralDAO<Order>{
             new Date(),
             c.getTime(),
             moneyPaid
-        ), path);
+        ));
 
         Room updatedRoom = roomDAO.getRoomById(roomId);
         updatedRoom.setDateAvailableFrom(c.getTime());
@@ -36,11 +39,11 @@ public class OrderDAO extends GeneralDAO<Order>{
         roomDAO.replaceRoomById(roomId, updatedRoom);
     }
 
-    public void cancelReservation(long roomId, long userId) throws DAOException{
+    public void cancelReservation(long roomId, long userId) throws UnexpectedException{
         RoomDAO roomDAO = new RoomDAO();
 
         Order order = getOrderByRoomAndUser(roomId, userId);
-        deleteFromFileById(order.getId(), path);
+        deleteFromFileById(order.getId());
 
         Room updatedRoom = roomDAO.getRoomById(roomId);
         updatedRoom.setDateAvailableFrom(new Date());
@@ -48,24 +51,24 @@ public class OrderDAO extends GeneralDAO<Order>{
         roomDAO.replaceRoomById(roomId, updatedRoom);
     }
 
-    public Order getOrderById(long id) throws DAOException {
-        String[] data = getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}}, Order.class, path);
+    public Order getOrderById(long id) throws UnexpectedException {
+        String[] data = getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}});
         if(data == null)
-            throw new ObjectNotFoundException("Order with id: "+id+" was not found");
+            return null;
         return parseToObject(data);
     }
 
-    public Order getOrderByRoomAndUser(long roomId, long userId) throws DAOException{
+    public Order getOrderByRoomAndUser(long roomId, long userId) throws UnexpectedException{
         String[] data = getObjectByParameters(new LinkedHashMap<String, String>(){{
             put("room", String.valueOf(roomId)); put("user", String.valueOf(userId));
-        }}, Order.class, path);
+        }});
 
         if(data == null)
-            throw new ObjectNotFoundException("Order with room id: "+roomId+" and user id: "+userId+" was not found");
+            return null;
         return parseToObject(data);
     }
 
-    private Order parseToObject(String[] input) throws DAOException {
+    private Order parseToObject(String[] input) throws UnexpectedException {
         try{
             return new Order(
                 Long.valueOf(input[0]),
@@ -76,7 +79,7 @@ public class OrderDAO extends GeneralDAO<Order>{
                 Double.valueOf(input[5])
             );
         }catch (Exception e){
-            throw new DAOException(e.getMessage());
+            throw new UnexpectedException(e.getMessage());
         }
     }
 

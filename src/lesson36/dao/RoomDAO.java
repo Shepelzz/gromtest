@@ -1,7 +1,6 @@
 package lesson36.dao;
 
-import lesson36.exception.DAOException;
-import lesson36.exception.ObjectNotFoundException;
+import lesson36.exception.UnexpectedException;
 import lesson36.model.Filter;
 import lesson36.model.Room;
 
@@ -13,20 +12,24 @@ import java.util.Set;
 public class RoomDAO extends GeneralDAO<Room>{
     private static final String path = "src/lesson36/files/RoomDb.txt";
 
-    //ADMIN
-    public Room addRoom(Room room) throws DAOException{
-        return writeToFile(room, path);
+    public RoomDAO() {
+        super(Room.class, path);
     }
 
     //ADMIN
-    public void deleteRoom(long roomId) throws DAOException{
-        deleteFromFileById(roomId, path);
+    public Room addRoom(Room room) throws UnexpectedException {
+        return writeToFile(room);
     }
 
-    public Set<Room> findRooms(Filter filter) throws DAOException{
+    //ADMIN
+    public void deleteRoom(long roomId) throws UnexpectedException{
+        deleteFromFileById(roomId);
+    }
+
+    public Set<Room> findRooms(Filter filter) throws UnexpectedException{
         Set<Room> result = new HashSet<>();
 
-        for(String[] dataLine : readFromFile(path)){
+        for(String[] dataLine : readFromFile()){
             Room room = parseToObject(dataLine);
 
             boolean numberOfGuests = (filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests() == room.getNumberOfGuests());
@@ -54,18 +57,18 @@ public class RoomDAO extends GeneralDAO<Room>{
         return result;
     }
 
-    public Room getRoomById(long id) throws DAOException{
-        String[] data = getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}}, Room.class, path);
+    public Room getRoomById(long id) throws UnexpectedException{
+        String[] data = getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}});
         if(data == null)
-            throw new ObjectNotFoundException("Room with id: "+id+" was not found");
+            return null;
         return parseToObject(data);
     }
 
-    public void replaceRoomById(long id, Room newRoom) throws DAOException{
-        replaceDataById(id, newRoom, path);
+    public void replaceRoomById(long id, Room newRoom) throws UnexpectedException{
+        replaceDataById(id, newRoom);
     }
 
-    private static Room parseToObject(String[] input) throws DAOException {
+    private static Room parseToObject(String[] input) throws UnexpectedException {
         try{
             return new Room(
                 Long.valueOf(input[0]),
@@ -77,7 +80,7 @@ public class RoomDAO extends GeneralDAO<Room>{
                 new HotelDAO().getHotelById(Long.valueOf(input[6]))
             );
         }catch (Exception e){
-            throw new DAOException(e.getMessage());
+            throw new UnexpectedException(e.getMessage());
         }
     }
 

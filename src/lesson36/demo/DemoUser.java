@@ -1,12 +1,12 @@
 package lesson36.demo;
 
 import lesson36.controller.UserController;
-import lesson36.dao.UserDAO;
+import lesson36.model.GeneralModel;
 import lesson36.model.User;
 import lesson36.model.types.UserType;
 
 public class DemoUser {
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
         UserController userController = new UserController();
 
         //регистрация юзера
@@ -24,10 +24,14 @@ public class DemoUser {
             System.err.println(e.getMessage());
         }
 
-        System.out.println(UserDAO.getLoggedUser());
+        //System.out.println(UserDAO.getLoggedUser());
 
         //логаут
         //userController.logout();
-        System.out.println(UserDAO.getLoggedUser());
+        //System.out.println(UserDAO.getLoggedUser());
+
+        GeneralModel<User> gm = new GeneralModel<>(User.class);
+        gm.parseStringToObject("");
+
     }
 }

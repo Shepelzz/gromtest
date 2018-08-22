@@ -2,7 +2,7 @@ package lesson36.model;
 
 import lesson36.model.types.UserType;
 
-public class User  implements Comparable<User>{
+public class User implements Comparable<User>{
     private long id;
     private String userName;
     private String password;
