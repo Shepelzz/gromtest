@@ -12,7 +12,7 @@ public class DemoHotel {
 
         try{
             userController.login("admin", "admin");
-            //hotelController.addHotel(new Hotel("Mot", "Russia", "Moscow", "testStreet"));
+            //hotelController.addHotel(new Hotel("", "Russia", "Moscow", "testStreet"));
 
         }catch (Exception e){
             System.err.println(e.toString());
