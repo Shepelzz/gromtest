@@ -1,6 +1,7 @@
 package lesson36.dao;
 
 import lesson36.exception.UnexpectedException;
+import lesson36.model.GeneralModel;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -9,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class GeneralDAO<T>{
+public abstract class GeneralDAO<T extends GeneralModel>{
     private String path;
     private final Class<T> tClass;
 
@@ -18,12 +19,12 @@ public abstract class GeneralDAO<T>{
         this.tClass = tClass;
     }
 
-    Set<String[]> readFromFile() throws UnexpectedException{
-        Set<String[]> result = new HashSet<>();
+    Set<T> readFromFile() throws UnexpectedException{
+        Set<T> result = new HashSet<>();
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
             while ((line = br.readLine()) != null)
-                result.add(splitLine(line));
+                result.add(T.parseStringToObject(line)); //TODO
         } catch (FileNotFoundException e){
             throw new UnexpectedException("Reading from file error: file "+path+" does not exist");
         } catch (IOException e){
@@ -85,7 +86,7 @@ public abstract class GeneralDAO<T>{
 
     }
 
-    String[] getObjectByParameters(Map<String, String> parametersMap) throws UnexpectedException{
+    Set<T> getObjectByParameters(Map<String, String> parametersMap) throws UnexpectedException{
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
             while ((line = br.readLine()) != null) {
@@ -108,7 +109,7 @@ public abstract class GeneralDAO<T>{
         }
     }
 
-    Set<String[]> getObjectsByParameters(Map<String, String> parametersMap) throws UnexpectedException{ //TODO
+    Set<T> getObjectsByParameters(Map<String, String> parametersMap) throws UnexpectedException{ //TODO
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             Set<String[]> result = new HashSet<>();
             String line;

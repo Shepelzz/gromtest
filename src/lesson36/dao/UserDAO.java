@@ -59,18 +59,4 @@ public class UserDAO extends GeneralDAO<User>{
         if(loggedUser == null)
             throw new BadRequestException("Authorization error: You must be logged in system for perform this operation");
     }
-
-    private User parseToObject(String[] input) throws UnexpectedException {
-        try{
-            return new User(
-                Long.valueOf(input[0]),
-                input[1],
-                input[2],
-                input[3],
-                UserType.getTypeByName(input[4])
-            );
-        }catch (Exception e){
-            throw new UnexpectedException(e.getMessage());
-        }
-    }
 }

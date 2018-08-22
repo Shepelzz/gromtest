@@ -1,5 +1,6 @@
 package lesson36.model;
 
+import lesson36.exception.BadRequestException;
 import lesson36.model.types.UserType;
 
 public class User implements Comparable<User>{
@@ -22,6 +23,19 @@ public class User implements Comparable<User>{
         this.password = password;
         this.country = country;
         this.userType = userType;
+    }
+
+    public User(String textData) {
+        String[] data = textData.split(",");
+        try {
+            id = Long.valueOf(data[0]);
+            userName = data[1];
+            password = data[2];
+            country = data[3];
+            userType = UserType.valueOf(data[4]);
+        }catch (Exception e){
+            throw new BadRequestException("Parsing "+getClass().getName()+" error");
+        }
     }
 
     public long getId() {
