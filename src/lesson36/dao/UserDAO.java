@@ -63,7 +63,6 @@ public class UserDAO extends GeneralDAO<User>{
 
     @Override
     public User parseStringToObject(String input){
-        GeneralModel<User> user = new User();
-        return user.parseStringToObject(input);
+        return new User().parseStringToObject(input);
     }
 }
