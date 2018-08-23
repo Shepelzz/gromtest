@@ -3,7 +3,7 @@ package lesson36.model;
 import lesson36.exception.BadRequestException;
 import lesson36.model.types.UserType;
 
-public class User implements Comparable<User>{
+public class User extends GeneralModel implements Comparable<User>{
     private long id;
     private String userName;
     private String password;
@@ -36,6 +36,10 @@ public class User implements Comparable<User>{
         }catch (Exception e){
             throw new BadRequestException("Parsing "+getClass().getName()+" error");
         }
+    }
+
+    public void test(){
+
     }
 
     public long getId() {
@@ -72,4 +76,6 @@ public class User implements Comparable<User>{
     public int compareTo(User user) {
         return (int) (this.id-user.getId());
     }
+
+
 }
