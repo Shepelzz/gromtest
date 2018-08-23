@@ -2,6 +2,7 @@ package lesson36.dao;
 
 import lesson36.exception.BadRequestException;
 import lesson36.exception.UnexpectedException;
+import lesson36.model.GeneralModel;
 import lesson36.model.User;
 import lesson36.model.types.UserType;
 
@@ -58,5 +59,11 @@ public class UserDAO extends GeneralDAO<User>{
     public static void checkAuthorization() throws BadRequestException {
         if(loggedUser == null)
             throw new BadRequestException("Authorization error: You must be logged in system for perform this operation");
+    }
+
+    @Override
+    public User parseStringToObject(String input){
+        GeneralModel<User> user = new User();
+        return user.parseStringToObject(input);
     }
 }

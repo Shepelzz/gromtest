@@ -1,9 +1,8 @@
-package lesson36.model;
+package lesson36.test;
 
 public abstract class GeneralModel<T> {
 
-    public GeneralModel() {
-    }
+    GeneralModel() {}
 
     public abstract T parseStringToObject(String input);
 

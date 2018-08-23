@@ -1,4 +1,4 @@
-package lesson36.model;
+package lesson36.test;
 
 import lesson36.exception.BadRequestException;
 import lesson36.model.types.UserType;
