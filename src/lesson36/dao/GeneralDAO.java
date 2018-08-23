@@ -2,7 +2,6 @@ package lesson36.dao;
 
 import lesson36.exception.UnexpectedException;
 import lesson36.model.GeneralModel;
-import lesson36.model.User;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -105,7 +104,7 @@ public abstract class GeneralDAO<T extends GeneralModel>{
                 }
 
                 if(mapped)
-                    return dataLine;
+                    return null;//dataLine; TODO
             }
             return null;
         } catch (FileNotFoundException e){
@@ -131,7 +130,7 @@ public abstract class GeneralDAO<T extends GeneralModel>{
                 if(mapped)
                     result.add(dataLine);
             }
-            return result;
+            return null; //result; TODO
         } catch (FileNotFoundException e){
             throw new UnexpectedException("Reading from file error: file "+path+" does not exist");
         } catch (IOException e){

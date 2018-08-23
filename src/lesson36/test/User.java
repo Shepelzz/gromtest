@@ -41,10 +41,6 @@ public class User extends GeneralModel<User> implements Comparable<User>{
         }
     }
 
-    public void test(){
-
-    }
-
     public long getId() {
         return id;
     }
@@ -63,16 +59,6 @@ public class User extends GeneralModel<User> implements Comparable<User>{
 
     public UserType getUserType() {
         return userType;
-    }
-
-    @Override
-    public String toString() {
-        return
-                (id == 0 ? "" : id+",")+
-                userName+","+
-                password+","+
-                country+","+
-                userType.toString();
     }
 
     @Override
