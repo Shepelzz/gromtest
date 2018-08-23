@@ -4,7 +4,7 @@ public abstract class GeneralModel<T> {
 
 
 
-    public static <T> T parseStringToObject(String input) throws ClassNotFoundException {
+    public static <T> T parseStringToObject(String input) {
 
         return null;
     }
