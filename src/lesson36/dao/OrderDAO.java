@@ -4,6 +4,7 @@ import lesson36.exception.UnexpectedException;
 import lesson36.model.Order;
 import lesson36.model.Room;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +14,7 @@ public class OrderDAO extends GeneralDAO<Order>{
     private static final String path = "src/lesson36/files/OrderDb.txt";
 
     public OrderDAO() {
-        super(Order.class, path);
+        super(path);
     }
 
     public void bookRoom(long roomId, long userId, double moneyPaid) throws UnexpectedException {
@@ -26,14 +27,14 @@ public class OrderDAO extends GeneralDAO<Order>{
         c.add(Calendar.DATE, 3);
 
         writeToFile(new Order(
-            userDAO.getUserById(userId),
-            roomDAO.getRoomById(roomId),
+            userDAO.getEntityById(userId),
+            roomDAO.getEntityById(roomId),
             new Date(),
             c.getTime(),
             moneyPaid
         ));
 
-        Room updatedRoom = roomDAO.getRoomById(roomId);
+        Room updatedRoom = roomDAO.getEntityById(roomId);
         updatedRoom.setDateAvailableFrom(c.getTime());
 
         roomDAO.replaceRoomById(roomId, updatedRoom);
@@ -42,19 +43,15 @@ public class OrderDAO extends GeneralDAO<Order>{
     public void cancelReservation(long roomId, long userId) throws UnexpectedException{
         RoomDAO roomDAO = new RoomDAO();
 
-        Room updatedRoom = roomDAO.getRoomById(roomId);
+        Room updatedRoom = roomDAO.getEntityById(roomId);
         updatedRoom.setDateAvailableFrom(new Date());
 
         roomDAO.replaceRoomById(roomId, updatedRoom);
         deleteFromFileById(getOrderByRoomAndUser(roomId, userId).getId());
     }
 
-    public Order getOrderById(long id) throws UnexpectedException {
-        return getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}});
-    }
-
     public Order getOrderByRoomAndUser(long roomId, long userId) throws UnexpectedException{
-        return getObjectByParameters(new LinkedHashMap<String, String>(){{
+        return getEntityByParameters(new LinkedHashMap<String, String>(){{
             put("room", String.valueOf(roomId)); put("user", String.valueOf(userId));
         }});
     }
@@ -67,5 +64,10 @@ public class OrderDAO extends GeneralDAO<Order>{
     @Override
     public String parseObjectToString(Order order) {
         return order.toString();
+    }
+
+    @Override
+    public Field[] getDeclaredFields() {
+        return Order.class.getDeclaredFields();
     }
 }

@@ -6,24 +6,23 @@ import lesson36.model.GeneralModel;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class GeneralDAO<T extends GeneralModel>{
     private String path;
-    private Class tClass;
 
-    public GeneralDAO(Class<T> tClass, String path) {
+    public GeneralDAO(String path) {
         this.path = path;
-        this.tClass = tClass;
     }
 
     public abstract T parseStringToObject(String input);
-
     public abstract String parseObjectToString(T t);
+    public abstract Field[] getDeclaredFields();
 
-    Set<T> readFromFile() throws UnexpectedException{
+    public Set<T> readFromFile() throws UnexpectedException{
         Set<T> result = new HashSet<>();
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
@@ -37,7 +36,7 @@ public abstract class GeneralDAO<T extends GeneralModel>{
         return result;
     }
 
-    T writeToFile(T t) throws UnexpectedException{
+    public T writeToFile(T t) throws UnexpectedException{
         t.setId(generateRandomId());
         try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
             if(br.readLine() != null)
@@ -51,7 +50,7 @@ public abstract class GeneralDAO<T extends GeneralModel>{
         return t;
     }
 
-    void deleteFromFileById(long id) throws UnexpectedException{
+    public void deleteFromFileById(long id) throws UnexpectedException{
         StringBuffer tempData = new StringBuffer();
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
@@ -76,21 +75,16 @@ public abstract class GeneralDAO<T extends GeneralModel>{
         }
     }
 
-    void replaceDataById(long oldObjectId, T newObject) throws UnexpectedException{
+    public void replaceDataById(long oldObjectId, T newObject) throws UnexpectedException{
         deleteFromFileById(oldObjectId);
         writeToFile(newObject);
-//        try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
-//            if(br.readLine() != null)
-//                bw.append("\r\n");
-//            bw.append(parseObjectToString(newObject));
-//        } catch (FileNotFoundException e) {
-//            throw new UnexpectedException("Writing to file error: file "+path+" does not exist");
-//        } catch (IOException e){
-//            throw new UnexpectedException("Writing to file error: can`t save "+newObject.toString()+" to file "+path);
-//        }
     }
 
-    T getObjectByParameters(Map<String, String> parametersMap) throws UnexpectedException{
+    public T getEntityById(long id) throws UnexpectedException{
+        return getEntityByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}});
+    }
+
+    public T getEntityByParameters(Map<String, String> parametersMap) throws UnexpectedException{
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
             while ((line = br.readLine()) != null) {
@@ -113,7 +107,7 @@ public abstract class GeneralDAO<T extends GeneralModel>{
         }
     }
 
-    Set<T> getObjectsByParameters(Map<String, String> parametersMap) throws UnexpectedException{ //TODO
+    public Set<T> getEntitiesByParameters(Map<String, String> parametersMap) throws UnexpectedException{
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             Set<T> result = new HashSet<>();
             String line;
@@ -139,14 +133,13 @@ public abstract class GeneralDAO<T extends GeneralModel>{
 
     private int getClassFieldIndex(String fieldName) throws UnexpectedException{
         int index = 0;
-        for(Field f : tClass.getDeclaredFields()){
+        for(Field f : getDeclaredFields()){
             if(f.getName().equals(fieldName))
                 return index;
             index++;
         }
-        throw new UnexpectedException("no field with name "+fieldName+" was found in class "+tClass.getName());
+        throw new UnexpectedException("Field with name "+fieldName+" was not found");
     }
-
 
     private long generateRandomId(){
         return ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);

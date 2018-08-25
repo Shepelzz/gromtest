@@ -5,6 +5,7 @@ import lesson36.model.Filter;
 import lesson36.model.GeneralModel;
 import lesson36.model.Room;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -14,7 +15,7 @@ public class RoomDAO extends GeneralDAO<Room>{
     private static final String path = "src/lesson36/files/RoomDb.txt";
 
     public RoomDAO() {
-        super(Room.class, path);
+        super(path);
     }
 
     //ADMIN
@@ -56,10 +57,6 @@ public class RoomDAO extends GeneralDAO<Room>{
         return result;
     }
 
-    public Room getRoomById(long id) throws UnexpectedException{
-        return getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}});
-    }
-
     void replaceRoomById(long id, Room newRoom) throws UnexpectedException{
         replaceDataById(id, newRoom);
     }
@@ -72,5 +69,10 @@ public class RoomDAO extends GeneralDAO<Room>{
     @Override
     public String parseObjectToString(Room room) {
         return room.toString();
+    }
+
+    @Override
+    public Field[] getDeclaredFields() {
+        return Room.class.getDeclaredFields();
     }
 }

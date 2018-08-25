@@ -13,10 +13,11 @@ public class OrderService {
     private OrderDAO orderDao = new OrderDAO();
 
     public void bookRoom(long roomId, long userId, double moneyPaid) throws UnexpectedException{
+        UserService.checkAuthorization();
         if(orderDao.getOrderByRoomAndUser(roomId, userId) != null)
             throw new BadRequestException("Book room", "Validation", "Order room id:"+roomId+" is already booked by user id:"+userId+"");
 
-        Room room = new RoomDAO().getRoomById(roomId);
+        Room room = new RoomDAO().getEntityById(roomId);
         if(room == null)
             throw new BadRequestException("Book room", "Validation", "Room with id:"+roomId+" was not found");
         if(room.getDateAvailableFrom().after(new Date()))
@@ -28,6 +29,7 @@ public class OrderService {
     }
 
     public void cancelReservation(long roomId, long userId) throws UnexpectedException{
+        UserService.checkAuthorization();
         if(orderDao.getOrderByRoomAndUser(roomId, userId) == null)
             throw new BadRequestException("Cancel reservation", "Validation", "There is no order for room id:"+roomId+" and user id:"+userId);
 

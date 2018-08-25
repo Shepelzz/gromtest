@@ -16,7 +16,7 @@ public class DemoRoom {
         try{
             UserController userController = new UserController();
             userController.login("admin1", "admin");
-            Room room = new Room(2, 700, true, true, new Date(), new HotelDAO().getHotelById(1376800431651742536L));
+            Room room = new Room(2, 700, true, true, new Date(), new HotelDAO().getEntityById(1376800431651742536L));
 
             //roomController.addRoom(room);
 

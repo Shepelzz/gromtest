@@ -4,8 +4,10 @@ import lesson36.controller.UserController;
 import lesson36.model.User;
 import lesson36.model.types.UserType;
 
+import java.util.Arrays;
+
 public class DemoUser {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args){
         UserController userController = new UserController();
 
         //регистрация юзера
@@ -30,7 +32,7 @@ public class DemoUser {
         //System.out.println(UserDAO.getLoggedUser());
 
         User user = new User("Zhenya", "qwer1111", "Ukraine", UserType.ADMIN);
-
+        //System.out.println(Arrays.toString(user.getParametersList()));
 
 
 
