@@ -2,6 +2,7 @@ package lesson36.dao;
 
 import lesson36.exception.UnexpectedException;
 import lesson36.model.Filter;
+import lesson36.model.GeneralModel;
 import lesson36.model.Room;
 
 import java.text.SimpleDateFormat;
@@ -29,9 +30,7 @@ public class RoomDAO extends GeneralDAO<Room>{
     public Set<Room> findRooms(Filter filter) throws UnexpectedException{
         Set<Room> result = new HashSet<>();
 
-        for(String[] dataLine : readFromFile()){
-            Room room = parseToObject(dataLine);
-
+        for(Room room : readFromFile()){
             boolean numberOfGuests = (filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests() == room.getNumberOfGuests());
             boolean price = (filter.getPrice() == 0 || filter.getPrice() >= room.getPrice());
             //надо ли выбрать оба?
@@ -58,33 +57,20 @@ public class RoomDAO extends GeneralDAO<Room>{
     }
 
     public Room getRoomById(long id) throws UnexpectedException{
-        String[] data = getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}});
-        if(data == null)
-            return null;
-        return parseToObject(data);
+        return getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}});
     }
 
-    public void replaceRoomById(long id, Room newRoom) throws UnexpectedException{
+    void replaceRoomById(long id, Room newRoom) throws UnexpectedException{
         replaceDataById(id, newRoom);
     }
 
-    private static Room parseToObject(String[] input) throws UnexpectedException {
-        try{
-            return new Room(
-                Long.valueOf(input[0]),
-                Integer.valueOf(input[1]),
-                Double.valueOf(input[2]),
-                Boolean.valueOf(input[3]),
-                Boolean.valueOf(input[4]),
-                new SimpleDateFormat("dd-MM-yyyy").parse(input[5]),
-                new HotelDAO().getHotelById(Long.valueOf(input[6]))
-            );
-        }catch (Exception e){
-            throw new UnexpectedException(e.getMessage());
-        }
+    @Override
+    public Room parseStringToObject(String input) {
+        return new Room(input);
     }
 
-
-
-
+    @Override
+    public String parseObjectToString(Room room) {
+        return room.toString();
+    }
 }

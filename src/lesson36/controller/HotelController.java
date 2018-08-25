@@ -11,20 +11,20 @@ public class HotelController {
     private HotelService hotelService = new HotelService();
 
     //ADMIN
-    public Hotel addHotel(Hotel hotel) throws BadRequestException, UnexpectedException {
+    public Hotel addHotel(Hotel hotel) throws UnexpectedException {
         return hotelService.addHotel(hotel);
     }
 
     //ADMIN
-    public void deleteHotel(long hotelId) throws BadRequestException, UnexpectedException {
+    public void deleteHotel(long hotelId) throws UnexpectedException {
         hotelService.deleteHotel(hotelId);
     }
 
-    public Set<Hotel> findHotelByName(String name) throws BadRequestException, UnexpectedException {
+    public Set<Hotel> findHotelByName(String name) throws UnexpectedException {
         return hotelService.findHotelByName(name);
     }
 
-    public Set<Hotel> findHotelByCity(String name) throws BadRequestException, UnexpectedException {
+    public Set<Hotel> findHotelByCity(String name) throws UnexpectedException {
         return hotelService.findHotelByCity(name);
     }
 

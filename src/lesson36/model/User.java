@@ -3,15 +3,13 @@ package lesson36.model;
 import lesson36.exception.BadRequestException;
 import lesson36.model.types.UserType;
 
-public class User extends GeneralModel<User> implements Comparable<User>{
+public class User extends GeneralModel implements Comparable<User>{
     private long id;
     private String userName;
     private String password;
     private String country;
     private UserType userType;
 
-    public User() {
-    }
 
     public User(long id, String userName, String password, String country, UserType userType) {
         this.id = id;
@@ -37,12 +35,8 @@ public class User extends GeneralModel<User> implements Comparable<User>{
             country = data[3];
             userType = UserType.valueOf(data[4]);
         }catch (Exception e){
-            throw new BadRequestException("Parsing "+getClass().getName()+" error");
+            throw new BadRequestException(getClass().getName(), "Parsing", "error parsing text data ["+textData+"]");
         }
-    }
-
-    public void test(){
-
     }
 
     public long getId() {
@@ -65,14 +59,8 @@ public class User extends GeneralModel<User> implements Comparable<User>{
         return userType;
     }
 
-    @Override
-    public String toString() {
-        return
-                (id == 0 ? "" : id+",")+
-                userName+","+
-                password+","+
-                country+","+
-                userType.toString();
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override
@@ -80,20 +68,13 @@ public class User extends GeneralModel<User> implements Comparable<User>{
         return (int) (this.id-user.getId());
     }
 
-
     @Override
-    public User parseStringToObject(String input) {
-        String[] data = input.split(",");
-            id = Long.valueOf(data[0]);
-            userName = data[1];
-            password = data[2];
-            country = data[3];
-            userType = UserType.valueOf(data[4]);
-        return this;
-    }
-
-    @Override
-    public String parseObjectToString(User user) {
-        return null;
+    public String toString() {
+        return
+                (id == 0 ? "" : id+",")+
+                        userName+","+
+                        password+","+
+                        country+","+
+                        userType.toString();
     }
 }

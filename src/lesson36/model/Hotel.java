@@ -1,13 +1,15 @@
 package lesson36.model;
 
-public class Hotel implements Comparable<Hotel> {
+import lesson36.exception.BadRequestException;
+
+public class Hotel extends GeneralModel implements Comparable<Hotel> {
     private long id;
     private String name;
     private String country;
     private String city;
     private String street;
 
-    public Hotel(long id, String name, String country, String city, String street) throws Exception{
+    public Hotel(long id, String name, String country, String city, String street){
         this.id = id;
         this.name = name;
         this.country = country;
@@ -15,11 +17,24 @@ public class Hotel implements Comparable<Hotel> {
         this.street = street;
     }
 
-    public Hotel(String name, String country, String city, String street)  throws Exception{
+    public Hotel(String name, String country, String city, String street){
         this.name = name;
         this.country = country;
         this.city = city;
         this.street = street;
+    }
+
+    public Hotel(String textData) {
+        String[] data = textData.split(",");
+        try {
+            id = Long.valueOf(data[0]);
+            name = data[1];
+            country = data[2];
+            city = data[3];
+            street = data[4];
+        }catch (Exception e){
+            throw new BadRequestException(getClass().getName(), "Parsing", "error parsing text data ["+textData+"]");
+        }
     }
 
     public long getId() {
@@ -40,6 +55,11 @@ public class Hotel implements Comparable<Hotel> {
 
     public String getStreet() {
         return street;
+    }
+
+    @Override
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override

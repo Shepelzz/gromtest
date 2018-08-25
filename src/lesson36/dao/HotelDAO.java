@@ -25,41 +25,24 @@ public class HotelDAO extends GeneralDAO<Hotel>{
     }
 
     public Set<Hotel> findHotelByName(String name) throws UnexpectedException{
-        Set<Hotel> result = new HashSet<>();
-        Set<String[]> data = getObjectsByParameters(new LinkedHashMap<String, String>(){{put("name", name);}});
-
-        for(String[] dataElement : data)
-            result.add(parseToObject(dataElement));
-        return result;
+        return getObjectsByParameters(new LinkedHashMap<String, String>(){{put("name", name);}});
     }
 
     public Set<Hotel> findHotelByCity(String name) throws UnexpectedException{
-        Set<Hotel> result = new HashSet<>();
-        Set<String[]> data = getObjectsByParameters(new LinkedHashMap<String, String>(){{put("city", name);}});
-
-        for(String[] lineElements : data)
-            result.add(parseToObject(lineElements));
-        return result;
+        return getObjectsByParameters(new LinkedHashMap<String, String>(){{put("city", name);}});
     }
 
     public Hotel getHotelById(long id) throws UnexpectedException {
-        String[] data = getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}});
-        if(data == null)
-            return null;
-        return parseToObject(data);
+        return getObjectByParameters(new LinkedHashMap<String, String>(){{put("id", String.valueOf(id));}});
     }
 
-    private Hotel parseToObject(String[] input) throws UnexpectedException {
-        try{
-            return new Hotel(
-                    Long.valueOf(input[0]),
-                    input[1],
-                    input[2],
-                    input[3],
-                    input[4]
-            );
-        }catch (Exception e){
-            throw new UnexpectedException(e.getMessage());
-        }
+    @Override
+    public Hotel parseStringToObject(String input) {
+        return new Hotel(input);
+    }
+
+    @Override
+    public String parseObjectToString(Hotel hotel) {
+        return hotel.toString();
     }
 }

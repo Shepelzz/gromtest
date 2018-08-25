@@ -2,6 +2,8 @@ package lesson36.demo;
 
 import lesson36.controller.OrderController;
 import lesson36.controller.UserController;
+import lesson36.dao.UserDAO;
+import lesson36.service.UserService;
 
 public class DemoOrder {
     public static void main(String[] args){
@@ -12,7 +14,7 @@ public class DemoOrder {
             UserController userController = new UserController();
             userController.login("Vasya", "1111");
 
-            //orderController.bookRoom(7713581945862736410L, UserDAO.getLoggedUser().getId(), 5800);
+            orderController.bookRoom(7713581945862736410L, UserService.getLoggedUser().getId(), 5800);
 
         }catch (Exception e){
             System.err.println(e.toString());

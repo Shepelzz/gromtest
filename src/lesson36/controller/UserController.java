@@ -8,7 +8,7 @@ import lesson36.service.UserService;
 public class UserController {
     private UserService userService = new UserService();
 
-    public User registerUser(User user) throws BadRequestException, UnexpectedException {
+    public User registerUser(User user) throws UnexpectedException {
         return userService.registerUser(user);
     }
 

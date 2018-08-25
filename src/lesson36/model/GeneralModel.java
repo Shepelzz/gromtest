@@ -1,12 +1,9 @@
 package lesson36.model;
 
-public abstract class GeneralModel<T> {
+public abstract class GeneralModel {
 
-    public GeneralModel() {
-    }
+    public abstract void setId(long id);
 
-    public abstract T parseStringToObject(String input);
-
-    public abstract String parseObjectToString(T t);
+    public abstract String toString();
 
 }

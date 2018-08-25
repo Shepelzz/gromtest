@@ -12,24 +12,23 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class GeneralDAO<T extends GeneralModel>{
     private String path;
-    private final Class<T> tClass;
+    private Class tClass;
 
     public GeneralDAO(Class<T> tClass, String path) {
         this.path = path;
         this.tClass = tClass;
     }
 
-    abstract T parseStringToObject(String input);
+    public abstract T parseStringToObject(String input);
 
-    abstract String parseObjectToString(T t);
+    public abstract String parseObjectToString(T t);
 
     Set<T> readFromFile() throws UnexpectedException{
         Set<T> result = new HashSet<>();
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
-            while ((line = br.readLine()) != null) {
-                result.add(parseStringToObject(line)); //TODO
-            }
+            while ((line = br.readLine()) != null)
+                result.add(parseStringToObject(line));
         } catch (FileNotFoundException e){
             throw new UnexpectedException("Reading from file error: file "+path+" does not exist");
         } catch (IOException e){
@@ -38,17 +37,18 @@ public abstract class GeneralDAO<T extends GeneralModel>{
         return result;
     }
 
-    T writeToFile(T object) throws UnexpectedException{
+    T writeToFile(T t) throws UnexpectedException{
+        t.setId(generateRandomId());
         try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
             if(br.readLine() != null)
                 bw.append("\r\n");
-            bw.append(String.valueOf(generateRandomId())).append(",").append(object.toString());
+            bw.append(parseObjectToString(t));
         } catch (FileNotFoundException e) {
             throw new UnexpectedException("Writing to file error: file "+path+" does not exist");
         } catch (IOException e){
-            throw new UnexpectedException("Writing to file error: can`t save "+object.toString()+" to file "+path);
+            throw new UnexpectedException("Writing to file error: can`t save "+t.toString()+" to file "+path);
         }
-        return object;
+        return t;
     }
 
     void deleteFromFileById(long id) throws UnexpectedException{
@@ -78,20 +78,19 @@ public abstract class GeneralDAO<T extends GeneralModel>{
 
     void replaceDataById(long oldObjectId, T newObject) throws UnexpectedException{
         deleteFromFileById(oldObjectId);
-
-        try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
-            if(br.readLine() != null)
-                bw.append("\r\n");
-            bw.append(newObject.toString());
-        } catch (FileNotFoundException e) {
-            throw new UnexpectedException("Writing to file error: file "+path+" does not exist");
-        } catch (IOException e){
-            throw new UnexpectedException("Writing to file error: can`t save "+newObject.toString()+" to file "+path);
-        }
-
+        writeToFile(newObject);
+//        try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
+//            if(br.readLine() != null)
+//                bw.append("\r\n");
+//            bw.append(parseObjectToString(newObject));
+//        } catch (FileNotFoundException e) {
+//            throw new UnexpectedException("Writing to file error: file "+path+" does not exist");
+//        } catch (IOException e){
+//            throw new UnexpectedException("Writing to file error: can`t save "+newObject.toString()+" to file "+path);
+//        }
     }
 
-    Set<T> getObjectByParameters(Map<String, String> parametersMap) throws UnexpectedException{
+    T getObjectByParameters(Map<String, String> parametersMap) throws UnexpectedException{
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
             while ((line = br.readLine()) != null) {
@@ -104,7 +103,7 @@ public abstract class GeneralDAO<T extends GeneralModel>{
                 }
 
                 if(mapped)
-                    return null;//dataLine; TODO
+                    return parseStringToObject(line);
             }
             return null;
         } catch (FileNotFoundException e){
@@ -116,7 +115,7 @@ public abstract class GeneralDAO<T extends GeneralModel>{
 
     Set<T> getObjectsByParameters(Map<String, String> parametersMap) throws UnexpectedException{ //TODO
         try(BufferedReader br = new BufferedReader(new FileReader(path))){
-            Set<String[]> result = new HashSet<>();
+            Set<T> result = new HashSet<>();
             String line;
             while ((line = br.readLine()) != null) {
                 boolean mapped = false;
@@ -128,9 +127,9 @@ public abstract class GeneralDAO<T extends GeneralModel>{
                 }
 
                 if(mapped)
-                    result.add(dataLine);
+                    result.add(parseStringToObject(line));
             }
-            return null; //result; TODO
+            return result;
         } catch (FileNotFoundException e){
             throw new UnexpectedException("Reading from file error: file "+path+" does not exist");
         } catch (IOException e){
@@ -148,13 +147,8 @@ public abstract class GeneralDAO<T extends GeneralModel>{
         throw new UnexpectedException("no field with name "+fieldName+" was found in class "+tClass.getName());
     }
 
+
     private long generateRandomId(){
         return ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
     }
-
-    private String[] splitLine(String line){
-        return line.split(",");
-    }
-
-
 }
