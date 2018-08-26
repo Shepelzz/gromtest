@@ -3,9 +3,6 @@ package lesson36.dao;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.User;
 
-import java.lang.reflect.Field;
-import java.util.LinkedHashMap;
-
 public class UserDAO extends GeneralDAO<User>{
     private static final String path = "src/lesson36/files/UserDb.txt";
 
@@ -18,9 +15,10 @@ public class UserDAO extends GeneralDAO<User>{
     }
 
     public User getUserByLoginAndPassword(String userName, String password) throws UnexpectedException {
-        return getEntityByParameters(new LinkedHashMap<String, String>(){{
-            put("userName", String.valueOf(userName)); put("password", String.valueOf(password));
-        }});
+        for(User user : getAll())
+            if(user.getUserName().equals(userName) && user.getPassword().equals(password))
+                return user;
+        return null;
     }
 
     @Override
@@ -31,10 +29,5 @@ public class UserDAO extends GeneralDAO<User>{
     @Override
     public String parseObjectToString(User user) {
         return user.toString();
-    }
-
-    @Override
-    public Field[] getDeclaredFields() {
-        return User.class.getDeclaredFields();
     }
 }

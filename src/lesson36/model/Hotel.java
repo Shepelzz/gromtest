@@ -2,7 +2,7 @@ package lesson36.model;
 
 import lesson36.exception.BadRequestException;
 
-public class Hotel extends GeneralModel implements Comparable<Hotel> {
+public class Hotel implements Entity{
     private long id;
     private String name;
     private String country;
@@ -70,10 +70,5 @@ public class Hotel extends GeneralModel implements Comparable<Hotel> {
             country+","+
             city+","+
             street;
-    }
-
-    @Override
-    public int compareTo(Hotel hotel) {
-        return (int) (this.id-hotel.getId());
     }
 }

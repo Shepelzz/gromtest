@@ -26,11 +26,19 @@ public class HotelDAO extends GeneralDAO<Hotel>{
     }
 
     public Set<Hotel> findHotelByName(String name) throws UnexpectedException{
-        return getEntitiesByParameters(new LinkedHashMap<String, String>(){{put("name", name);}});
+        Set<Hotel> result = new HashSet<>();
+        for(Hotel hotel : getAll())
+            if(hotel.getName().equals(name))
+                result.add(hotel);
+        return result;
     }
 
     public Set<Hotel> findHotelByCity(String name) throws UnexpectedException{
-        return getEntitiesByParameters(new LinkedHashMap<String, String>(){{put("city", name);}});
+        Set<Hotel> result = new HashSet<>();
+        for(Hotel hotel : getAll())
+            if(hotel.getCity().equals(name))
+                result.add(hotel);
+        return result;
     }
 
     @Override
@@ -41,10 +49,5 @@ public class HotelDAO extends GeneralDAO<Hotel>{
     @Override
     public String parseObjectToString(Hotel hotel) {
         return hotel.toString();
-    }
-
-    @Override
-    public Field[] getDeclaredFields() {
-        return Hotel.class.getDeclaredFields();
     }
 }

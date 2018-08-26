@@ -15,7 +15,7 @@ public class DemoRoom {
         //добавление комнаты
         try{
             UserController userController = new UserController();
-            userController.login("admin1", "admin");
+            //userController.login("admin1", "admin");
             Room room = new Room(2, 700, true, true, new Date(), new HotelDAO().getEntityById(1376800431651742536L));
 
             //roomController.addRoom(room);
@@ -27,7 +27,7 @@ public class DemoRoom {
         //удаление комнаты
         try{
             UserController userController = new UserController();
-            userController.login("admin1", "admin");
+            //userController.login("admin1", "admin");
 
             //roomController.deleteRoom(1410327107726515362L);
 
@@ -37,8 +37,11 @@ public class DemoRoom {
 
         //поиск по фильтру
         try{
+            UserController userController = new UserController();
+            userController.login("user2", "pass2");
+
             Filter filter = new Filter(2, 900, true, true, new Date(), "", "", "Odessa");
-            //System.out.println(roomController.findRooms(filter));
+            System.out.println(roomController.findRooms(filter));
 
         }catch (Exception e){
             System.err.println(e.toString());

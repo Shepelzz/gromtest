@@ -6,7 +6,7 @@ import lesson36.exception.BadRequestException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Room extends GeneralModel {
+public class Room implements Entity {
     private long id;
     private int numberOfGuests;
     private double price;
@@ -43,7 +43,7 @@ public class Room extends GeneralModel {
             breakfastIncluded = Boolean.valueOf(data[3]);
             petsAllowed = Boolean.valueOf(data[4]);
             dateAvailableFrom = new SimpleDateFormat("dd-MM-yyyy").parse(data[5]);
-            hotel = new HotelDAO().getHotelById(Long.valueOf(data[6]));
+            hotel = new HotelDAO().getEntityById(Long.valueOf(data[6]));
         }catch (Exception e){
             throw new BadRequestException(getClass().getName(), "Parsing", "error parsing text data ["+textData+"]");
         }

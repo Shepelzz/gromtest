@@ -4,11 +4,8 @@ import lesson36.exception.UnexpectedException;
 import lesson36.model.Order;
 import lesson36.model.Room;
 
-import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
 
 public class OrderDAO extends GeneralDAO<Order>{
     private static final String path = "src/lesson36/files/OrderDb.txt";
@@ -51,9 +48,10 @@ public class OrderDAO extends GeneralDAO<Order>{
     }
 
     public Order getOrderByRoomAndUser(long roomId, long userId) throws UnexpectedException{
-        return getEntityByParameters(new LinkedHashMap<String, String>(){{
-            put("room", String.valueOf(roomId)); put("user", String.valueOf(userId));
-        }});
+        for(Order order : getAll())
+            if(order.getRoom().getId() == roomId && order.getUser().getId() == userId)
+                return order;
+        return null;
     }
 
     @Override
@@ -64,10 +62,5 @@ public class OrderDAO extends GeneralDAO<Order>{
     @Override
     public String parseObjectToString(Order order) {
         return order.toString();
-    }
-
-    @Override
-    public Field[] getDeclaredFields() {
-        return Order.class.getDeclaredFields();
     }
 }

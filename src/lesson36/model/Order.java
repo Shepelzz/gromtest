@@ -7,7 +7,7 @@ import lesson36.exception.BadRequestException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Order extends GeneralModel{
+public class Order implements Entity {
     private long id;
     private User user;
     private Room room;
@@ -36,8 +36,8 @@ public class Order extends GeneralModel{
         String[] data = textData.split(",");
         try {
             id = Long.valueOf(data[0]);
-            user = new UserDAO().getUserById(Long.valueOf(data[1]));
-            room = new RoomDAO().getRoomById(Long.valueOf(data[2]));
+            user = new UserDAO().getEntityById(Long.valueOf(data[1]));
+            room = new RoomDAO().getEntityById(Long.valueOf(data[2]));
             dateFrom = new SimpleDateFormat("dd-MM-yyyy").parse(data[3]);
             dateTo = new SimpleDateFormat("dd-MM-yyyy").parse(data[4]);
             moneyPaid = Double.valueOf(data[5]);

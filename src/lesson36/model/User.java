@@ -3,7 +3,7 @@ package lesson36.model;
 import lesson36.exception.BadRequestException;
 import lesson36.model.types.UserType;
 
-public class User extends GeneralModel implements Comparable<User>{
+public class User implements Entity{
     private long id;
     private String userName;
     private String password;
@@ -61,11 +61,6 @@ public class User extends GeneralModel implements Comparable<User>{
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    @Override
-    public int compareTo(User user) {
-        return (int) (this.id-user.getId());
     }
 
     @Override
