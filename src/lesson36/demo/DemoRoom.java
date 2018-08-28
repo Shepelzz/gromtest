@@ -10,10 +10,11 @@ import java.util.Date;
 
 public class DemoRoom {
     public static void main(String[] args){
-        RoomController roomController = new RoomController();
+
 
         //добавление комнаты
         try{
+            RoomController roomController = new RoomController();
             UserController userController = new UserController();
             //userController.login("admin1", "admin");
             Room room = new Room(2, 700, true, true, new Date(), new HotelDAO().getEntityById(1376800431651742536L));
@@ -26,6 +27,7 @@ public class DemoRoom {
 
         //удаление комнаты
         try{
+            RoomController roomController = new RoomController();
             UserController userController = new UserController();
             //userController.login("admin1", "admin");
 
@@ -37,6 +39,7 @@ public class DemoRoom {
 
         //поиск по фильтру
         try{
+            RoomController roomController = new RoomController();
             UserController userController = new UserController();
             userController.login("user2", "pass2");
 

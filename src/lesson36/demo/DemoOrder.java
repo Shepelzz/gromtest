@@ -2,15 +2,13 @@ package lesson36.demo;
 
 import lesson36.controller.OrderController;
 import lesson36.controller.UserController;
-import lesson36.dao.UserDAO;
 import lesson36.service.UserService;
 
 public class DemoOrder {
     public static void main(String[] args){
-        OrderController orderController = new OrderController();
-
-        //резервация
+                //резервация
         try{
+            OrderController orderController = new OrderController();
             UserController userController = new UserController();
             userController.login("Vasya", "1111");
 
@@ -22,6 +20,7 @@ public class DemoOrder {
 
         //отмена резервации
         try{
+            OrderController orderController = new OrderController();
             UserController userController = new UserController();
             userController.login("Vasya", "1111");
 

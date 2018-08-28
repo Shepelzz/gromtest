@@ -4,22 +4,24 @@ import lesson36.exception.UnexpectedException;
 import lesson36.model.Entity;
 
 import java.io.*;
-import java.lang.reflect.Field;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class GeneralDAO<T extends Entity>{
     private String path;
+    private FileReader fileReader;
 
-    public GeneralDAO(String path) {
+    public GeneralDAO(String path) throws UnexpectedException {
         this.path = path;
+        try {
+            fileReader = new FileReader(path);
+        }catch (FileNotFoundException e){
+            throw new UnexpectedException("Reading from file error: file "+path+" does not exist");
+        }
     }
 
-    public abstract T parseStringToObject(String input);
-    public abstract String parseObjectToString(T t);
+    public abstract T parseStringToObject(String input) throws UnexpectedException;
 
     public T getEntityById(long id) throws UnexpectedException{
         for(T t : getAll())
@@ -30,12 +32,10 @@ public abstract class GeneralDAO<T extends Entity>{
 
     public Set<T> getAll() throws UnexpectedException{
         Set<T> result = new HashSet<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(path))){
+        try(BufferedReader br = new BufferedReader(fileReader)){
             String line;
             while ((line = br.readLine()) != null)
                 result.add(parseStringToObject(line));
-        } catch (FileNotFoundException e){
-            throw new UnexpectedException("Reading from file error: file "+path+" does not exist");
         } catch (IOException e){
             throw new UnexpectedException("Reading from file "+path+" failed");
         }
@@ -44,12 +44,10 @@ public abstract class GeneralDAO<T extends Entity>{
 
     public T writeToFile(T t) throws UnexpectedException{
         t.setId(generateRandomId());
-        try(BufferedReader br = new BufferedReader(new FileReader(path)); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
+        try(BufferedReader br = new BufferedReader(fileReader); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
             if(br.readLine() != null)
                 bw.append("\r\n");
-            bw.append(parseObjectToString(t));
-        } catch (FileNotFoundException e) {
-            throw new UnexpectedException("Writing to file error: file "+path+" does not exist");
+            bw.append(t.toString());
         } catch (IOException e){
             throw new UnexpectedException("Writing to file error: can`t save "+t.toString()+" to file "+path);
         }
@@ -58,7 +56,7 @@ public abstract class GeneralDAO<T extends Entity>{
 
     public void deleteFromFileById(long id) throws UnexpectedException{
         StringBuffer tempData = new StringBuffer();
-        try(BufferedReader br = new BufferedReader(new FileReader(path))){
+        try(BufferedReader br = new BufferedReader(fileReader)){
             String line;
             while((line = br.readLine()) != null) {
                 if (!Long.valueOf(line.split(",")[0]).equals(id)) {
@@ -68,8 +66,6 @@ public abstract class GeneralDAO<T extends Entity>{
             }
             if(tempData.length()>=2)
                 tempData.replace(tempData.length() - 2, tempData.length(), "");
-        } catch (FileNotFoundException e) {
-            throw new UnexpectedException("Deleting from file error: file "+path+" does not exist");
         } catch (IOException e){
             throw new UnexpectedException("Deleting from file error: can`t delete from file "+path);
         }

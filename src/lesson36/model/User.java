@@ -1,6 +1,6 @@
 package lesson36.model;
 
-import lesson36.exception.BadRequestException;
+import lesson36.exception.UnexpectedException;
 import lesson36.model.types.UserType;
 
 public class User implements Entity{
@@ -10,15 +10,6 @@ public class User implements Entity{
     private String country;
     private UserType userType;
 
-
-    public User(long id, String userName, String password, String country, UserType userType) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-        this.country = country;
-        this.userType = userType;
-    }
-
     public User(String userName, String password, String country, UserType userType) {
         this.userName = userName;
         this.password = password;
@@ -26,7 +17,7 @@ public class User implements Entity{
         this.userType = userType;
     }
 
-    public User(String textData) {
+    public User(String textData) throws  UnexpectedException{
         String[] data = textData.split(",");
         try {
             id = Long.valueOf(data[0]);
@@ -35,7 +26,7 @@ public class User implements Entity{
             country = data[3];
             userType = UserType.valueOf(data[4]);
         }catch (Exception e){
-            throw new BadRequestException(getClass().getName(), "Parsing", "error parsing text data ["+textData+"]");
+            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+textData+"]");
         }
     }
 

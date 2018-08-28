@@ -7,7 +7,11 @@ import lesson36.model.User;
 
 public class UserService {
     private static User loggedUser;
-    private UserDAO userDAO = new UserDAO();
+    private UserDAO userDAO;
+
+    public UserService() throws UnexpectedException {
+        userDAO = new UserDAO();
+    }
 
     public User registerUser(User user) throws UnexpectedException {
         if(userDAO.getUserByLoginAndPassword(user.getUserName(), user.getPassword()) != null)

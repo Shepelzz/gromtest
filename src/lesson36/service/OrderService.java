@@ -2,7 +2,6 @@ package lesson36.service;
 
 import lesson36.dao.OrderDAO;
 import lesson36.dao.RoomDAO;
-import lesson36.dao.UserDAO;
 import lesson36.exception.BadRequestException;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.Room;
@@ -10,7 +9,11 @@ import lesson36.model.Room;
 import java.util.Date;
 
 public class OrderService {
-    private OrderDAO orderDao = new OrderDAO();
+    private OrderDAO orderDao;
+
+    public OrderService() throws UnexpectedException{
+        orderDao = new OrderDAO();
+    }
 
     public void bookRoom(long roomId, long userId, double moneyPaid) throws UnexpectedException{
         UserService.checkAuthorization();

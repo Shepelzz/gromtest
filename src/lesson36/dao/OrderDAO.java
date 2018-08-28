@@ -8,9 +8,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class OrderDAO extends GeneralDAO<Order>{
-    private static final String path = "src/lesson36/files/OrderDb.txt";
+    private static final String path = "files/OrderDb.txt";
 
-    public OrderDAO() {
+    public OrderDAO() throws UnexpectedException{
         super(path);
     }
 
@@ -55,12 +55,7 @@ public class OrderDAO extends GeneralDAO<Order>{
     }
 
     @Override
-    public Order parseStringToObject(String input) {
+    public Order parseStringToObject(String input) throws UnexpectedException {
         return new Order(input);
-    }
-
-    @Override
-    public String parseObjectToString(Order order) {
-        return order.toString();
     }
 }

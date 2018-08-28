@@ -5,12 +5,12 @@ import lesson36.controller.UserController;
 
 public class DemoHotel {
     public static void main(String[] args){
-        HotelController hotelController = new HotelController();
+
 
         //добавление отеля
-        UserController userController = new UserController();
-
         try{
+            HotelController hotelController = new HotelController();
+            UserController userController = new UserController();
             userController.login("admin", "admin");
             //hotelController.addHotel(new Hotel("", "Russia", "Moscow", "testStreet"));
 
@@ -21,6 +21,8 @@ public class DemoHotel {
 
         //удаление отеля
         try{
+            HotelController hotelController = new HotelController();
+            UserController userController = new UserController();
             userController.login("admin", "admin");
             //hotelController.deleteHotel(26540059603440722L);
 
@@ -30,6 +32,7 @@ public class DemoHotel {
 
         //поиск отеля по имени
         try{
+            HotelController hotelController = new HotelController();
             //System.out.println(hotelController.findHotelByName("Mot"));
 
 
@@ -40,6 +43,7 @@ public class DemoHotel {
 
         //поиск отелей по городу
         try{
+            HotelController hotelController = new HotelController();
             //System.out.println(hotelController.findHotelByCity("Odessa"));
 
         }catch (Exception e){

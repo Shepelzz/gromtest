@@ -1,7 +1,6 @@
 package lesson36.service;
 
 import lesson36.dao.HotelDAO;
-import lesson36.dao.UserDAO;
 import lesson36.exception.BadRequestException;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.Hotel;
@@ -10,7 +9,11 @@ import lesson36.model.types.UserType;
 import java.util.Set;
 
 public class HotelService{
-    private HotelDAO hotelDAO = new HotelDAO();
+    private HotelDAO hotelDAO;
+
+    public HotelService() throws UnexpectedException{
+        hotelDAO = new HotelDAO();
+    }
 
     //ADMIN
     public Hotel addHotel(Hotel hotel) throws UnexpectedException {

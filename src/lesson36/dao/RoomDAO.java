@@ -4,14 +4,13 @@ import lesson36.exception.UnexpectedException;
 import lesson36.model.Filter;
 import lesson36.model.Room;
 
-import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
 public class RoomDAO extends GeneralDAO<Room>{
-    private static final String path = "src/lesson36/files/RoomDb.txt";
+    private static final String path = "files/RoomDb.txt";
 
-    public RoomDAO() {
+    public RoomDAO() throws UnexpectedException {
         super(path);
     }
 
@@ -58,12 +57,7 @@ public class RoomDAO extends GeneralDAO<Room>{
     }
 
     @Override
-    public Room parseStringToObject(String input) {
+    public Room parseStringToObject(String input) throws UnexpectedException{
         return new Room(input);
-    }
-
-    @Override
-    public String parseObjectToString(Room room) {
-        return room.toString();
     }
 }

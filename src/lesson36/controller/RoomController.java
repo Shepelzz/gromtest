@@ -1,6 +1,5 @@
 package lesson36.controller;
 
-import lesson36.exception.BadRequestException;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.Filter;
 import lesson36.model.Room;
@@ -9,7 +8,11 @@ import lesson36.service.RoomService;
 import java.util.Set;
 
 public class RoomController {
-    private RoomService roomService = new RoomService();
+    private RoomService roomService;
+
+    public RoomController() throws UnexpectedException{
+        roomService = new RoomService();
+    }
 
     //ADMIN
     public Room addRoom(Room room) throws UnexpectedException {

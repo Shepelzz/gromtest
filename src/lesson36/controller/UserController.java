@@ -1,12 +1,15 @@
 package lesson36.controller;
 
-import lesson36.exception.BadRequestException;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.User;
 import lesson36.service.UserService;
 
 public class UserController {
-    private UserService userService = new UserService();
+    private UserService userService;
+
+    public UserController() throws UnexpectedException{
+        userService = new UserService();
+    }
 
     public User registerUser(User user) throws UnexpectedException {
         return userService.registerUser(user);

@@ -1,6 +1,6 @@
 package lesson36.model;
 
-import lesson36.exception.BadRequestException;
+import lesson36.exception.UnexpectedException;
 
 public class Hotel implements Entity{
     private long id;
@@ -9,14 +9,6 @@ public class Hotel implements Entity{
     private String city;
     private String street;
 
-    public Hotel(long id, String name, String country, String city, String street){
-        this.id = id;
-        this.name = name;
-        this.country = country;
-        this.city = city;
-        this.street = street;
-    }
-
     public Hotel(String name, String country, String city, String street){
         this.name = name;
         this.country = country;
@@ -24,7 +16,7 @@ public class Hotel implements Entity{
         this.street = street;
     }
 
-    public Hotel(String textData) {
+    public Hotel(String textData) throws UnexpectedException{
         String[] data = textData.split(",");
         try {
             id = Long.valueOf(data[0]);
@@ -33,7 +25,7 @@ public class Hotel implements Entity{
             city = data[3];
             street = data[4];
         }catch (Exception e){
-            throw new BadRequestException(getClass().getName(), "Parsing", "error parsing text data ["+textData+"]");
+            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+textData+"]");
         }
     }
 

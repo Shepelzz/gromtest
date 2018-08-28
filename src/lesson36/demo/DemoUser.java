@@ -4,14 +4,11 @@ import lesson36.controller.UserController;
 import lesson36.model.User;
 import lesson36.model.types.UserType;
 
-import java.util.Arrays;
-
 public class DemoUser {
     public static void main(String[] args){
-        UserController userController = new UserController();
-
-        //регистрация юзера
+                //регистрация юзера
         try{
+            UserController userController = new UserController();
             User user = new User("Zhenya", "qwer1111", "Ukraine", UserType.ADMIN);
             //System.out.println(userController.registerUser(user));
         }catch (Exception e){
@@ -20,6 +17,7 @@ public class DemoUser {
 
         //логин
         try{
+            UserController userController = new UserController();
             //userController.login("Zhenya", "qwer1111");
         }catch (Exception e){
             System.err.println(e.getMessage());
@@ -33,9 +31,6 @@ public class DemoUser {
 
         User user = new User("Zhenya", "qwer1111", "Ukraine", UserType.ADMIN);
         //System.out.println(Arrays.toString(user.getParametersList()));
-
-
-
 
 
     }

@@ -2,7 +2,7 @@ package lesson36.model;
 
 import lesson36.dao.RoomDAO;
 import lesson36.dao.UserDAO;
-import lesson36.exception.BadRequestException;
+import lesson36.exception.UnexpectedException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,15 +15,6 @@ public class Order implements Entity {
     private Date dateTo;
     private double moneyPaid;
 
-    public Order(long id, User user, Room room, Date dateFrom, Date dateTo, double moneyPaid) {
-        this.id = id;
-        this.user = user;
-        this.room = room;
-        this.dateFrom = dateFrom;
-        this.dateTo = dateTo;
-        this.moneyPaid = moneyPaid;
-    }
-
     public Order(User user, Room room, Date dateFrom, Date dateTo, double moneyPaid) {
         this.user = user;
         this.room = room;
@@ -32,7 +23,7 @@ public class Order implements Entity {
         this.moneyPaid = moneyPaid;
     }
 
-    public Order(String textData) {
+    public Order(String textData) throws UnexpectedException{
         String[] data = textData.split(",");
         try {
             id = Long.valueOf(data[0]);
@@ -42,7 +33,7 @@ public class Order implements Entity {
             dateTo = new SimpleDateFormat("dd-MM-yyyy").parse(data[4]);
             moneyPaid = Double.valueOf(data[5]);
         }catch (Exception e){
-            throw new BadRequestException(getClass().getName(), "Parsing", "error parsing text data ["+textData+"]");
+            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+textData+"]");
         }
     }
 

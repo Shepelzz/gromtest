@@ -4,9 +4,9 @@ import lesson36.exception.UnexpectedException;
 import lesson36.model.User;
 
 public class UserDAO extends GeneralDAO<User>{
-    private static final String path = "src/lesson36/files/UserDb.txt";
+    private static final String path = "files/UserDb.txt";
 
-    public UserDAO() {
+    public UserDAO() throws UnexpectedException{
         super(path);
     }
 
@@ -22,12 +22,7 @@ public class UserDAO extends GeneralDAO<User>{
     }
 
     @Override
-    public User parseStringToObject(String input) {
+    public User parseStringToObject(String input) throws UnexpectedException {
         return new User(input);
-    }
-
-    @Override
-    public String parseObjectToString(User user) {
-        return user.toString();
     }
 }

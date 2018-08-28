@@ -1,7 +1,6 @@
 package lesson36.service;
 
 import lesson36.dao.RoomDAO;
-import lesson36.dao.UserDAO;
 import lesson36.exception.BadRequestException;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.Filter;
@@ -12,7 +11,11 @@ import java.util.Date;
 import java.util.Set;
 
 public class RoomService {
-    private RoomDAO roomDAO = new RoomDAO();
+    private RoomDAO roomDAO;
+
+    public RoomService() throws UnexpectedException{
+        roomDAO = new RoomDAO();
+    }
 
     //ADMIN
     public Room addRoom(Room room) throws UnexpectedException {
