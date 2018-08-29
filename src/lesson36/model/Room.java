@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Room extends Entity<Room> {
-    private long id;
     private int numberOfGuests;
     private double price;
     private boolean breakfastIncluded;
@@ -16,10 +15,6 @@ public class Room extends Entity<Room> {
     private Hotel hotel;
 
     public Room(){}
-
-    public long getId() {
-        return id;
-    }
 
     public void setDateAvailableFrom(Date dateAvailableFrom) {
         this.dateAvailableFrom = dateAvailableFrom;
@@ -70,14 +65,9 @@ public class Room extends Entity<Room> {
     }
 
     @Override
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @Override
     public String toString() {
         return
-            (id == 0 ? "" : id+",")+
+            (getId() == 0 ? "" : getId()+",")+
             numberOfGuests+","+
             price+","+
             breakfastIncluded+","+
@@ -90,7 +80,7 @@ public class Room extends Entity<Room> {
     public Room parseStringToObject(String input) throws UnexpectedException {
         String[] data = input.split(",");
         try {
-            id = Long.valueOf(data[0]);
+            setId(Long.valueOf(data[0]));
             numberOfGuests = Integer.valueOf(data[1]);
             price = Double.valueOf(data[2]);
             breakfastIncluded = Boolean.valueOf(data[3]);

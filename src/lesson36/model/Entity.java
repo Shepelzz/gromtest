@@ -2,10 +2,21 @@ package lesson36.model;
 
 import lesson36.exception.UnexpectedException;
 
-public abstract class Entity <T>{
+public abstract class Entity{
+    private long id;
 
-    public abstract long getId();
-    public abstract void setId(long id);
-    public abstract T parseStringToObject(String input) throws UnexpectedException;
+    public Entity() {
+        this.id = 0;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public abstract Entity parseStringToObject(String input) throws UnexpectedException;
 
 }

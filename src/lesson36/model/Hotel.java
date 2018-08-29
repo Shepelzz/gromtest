@@ -3,17 +3,12 @@ package lesson36.model;
 import lesson36.exception.UnexpectedException;
 
 public class Hotel extends Entity<Hotel> {
-    private long id;
     private String name;
     private String country;
     private String city;
     private String street;
 
     public Hotel(){}
-
-    public long getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -29,11 +24,6 @@ public class Hotel extends Entity<Hotel> {
 
     public String getStreet() {
         return street;
-    }
-
-    @Override
-    public void setId(long id) {
-        this.id = id;
     }
 
     public void setName(String name) {
@@ -56,7 +46,7 @@ public class Hotel extends Entity<Hotel> {
     public Hotel parseStringToObject(String input) throws UnexpectedException {
         String[] data = input.split(",");
         try {
-            id = Long.valueOf(data[0]);
+            setId(Long.valueOf(data[0]));
             name = data[1];
             country = data[2];
             city = data[3];
@@ -70,7 +60,7 @@ public class Hotel extends Entity<Hotel> {
     @Override
     public String toString() {
         return
-            (id == 0 ? "" : id+",")+
+            (getId() == 0 ? "" : getId()+",")+
             name+","+
             country+","+
             city+","+

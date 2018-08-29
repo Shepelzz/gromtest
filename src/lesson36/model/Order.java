@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Order extends Entity<Order> {
-    private long id;
     private User user;
     private Room room;
     private Date dateFrom;
@@ -16,10 +15,6 @@ public class Order extends Entity<Order> {
     private double moneyPaid;
 
     public Order(){}
-
-    public long getId() {
-        return id;
-    }
 
     public User getUser() {
         return user;
@@ -39,11 +34,6 @@ public class Order extends Entity<Order> {
 
     public double getMoneyPaid() {
         return moneyPaid;
-    }
-
-    @Override
-    public void setId(long id) {
-        this.id = id;
     }
 
     public void setUser(User user) {
@@ -70,7 +60,7 @@ public class Order extends Entity<Order> {
     public Order parseStringToObject(String input) throws UnexpectedException {
         String[] data = input.split(",");
         try {
-            id = Long.valueOf(data[0]);
+            setId(Long.valueOf(data[0]));
             user = new UserDAO().getEntityById(Long.valueOf(data[1]));
             room = new RoomDAO().getEntityById(Long.valueOf(data[2]));
             dateFrom = new SimpleDateFormat("dd-MM-yyyy").parse(data[3]);
@@ -85,7 +75,7 @@ public class Order extends Entity<Order> {
     @Override
     public String toString() {
         return
-            (id == 0 ? "" : id+",")+
+            (getId() == 0 ? "" : getId()+",")+
             user.getId()+","+
             room.getId()+","+
             new SimpleDateFormat("dd-MM-yyyy").format(dateFrom)+","+

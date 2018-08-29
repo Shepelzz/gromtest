@@ -4,17 +4,12 @@ import lesson36.exception.UnexpectedException;
 import lesson36.model.types.UserType;
 
 public class User extends Entity<User>{
-    private long id;
     private String userName;
     private String password;
     private String country;
     private UserType userType;
 
-    public User(){}
-
-    public long getId() {
-        return id;
-    }
+    public User() {}
 
     public String getUserName() {
         return userName;
@@ -30,10 +25,6 @@ public class User extends Entity<User>{
 
     public UserType getUserType() {
         return userType;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public void setUserName(String userName) {
@@ -56,7 +47,7 @@ public class User extends Entity<User>{
     public User parseStringToObject(String input) throws UnexpectedException{
         String[] data = input.split(",");
         try {
-            id = Long.valueOf(data[0]);
+            setId(Long.valueOf(data[0]));
             userName = data[1];
             password = data[2];
             country = data[3];
@@ -70,7 +61,7 @@ public class User extends Entity<User>{
     @Override
     public String toString() {
         return
-            (id == 0 ? "" : id+",")+
+            (getId() == 0 ? "" : getId()+",")+
             userName+","+
             password+","+
             country+","+
