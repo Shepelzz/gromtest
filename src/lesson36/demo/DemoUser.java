@@ -9,7 +9,7 @@ public class DemoUser {
                 //регистрация юзера
         try{
             UserController userController = new UserController();
-            User user = new User("Zhenya", "qwer1111", "Ukraine", UserType.ADMIN);
+            //User user = new User("Zhenya", "qwer1111", "Ukraine", UserType.ADMIN);
             //System.out.println(userController.registerUser(user));
         }catch (Exception e){
             System.err.println(e.toString());
@@ -29,7 +29,7 @@ public class DemoUser {
         //userController.logout();
         //System.out.println(UserDAO.getLoggedUser());
 
-        User user = new User("Zhenya", "qwer1111", "Ukraine", UserType.ADMIN);
+        //User user = new User("Zhenya", "qwer1111", "Ukraine", UserType.ADMIN);
         //System.out.println(Arrays.toString(user.getParametersList()));
 
 
