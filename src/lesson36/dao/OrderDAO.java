@@ -23,18 +23,18 @@ public class OrderDAO extends GeneralDAO<Order>{
         c.setTime(currentDate);
         c.add(Calendar.DATE, 3);
 
-        writeToFile(new Order(
-            userDAO.getEntityById(userId),
-            roomDAO.getEntityById(roomId),
-            new Date(),
-            c.getTime(),
-            moneyPaid
-        ));
+        Order order = new Order();
+        order.setUser(userDAO.getEntityById(userId));
+        order.setRoom(roomDAO.getEntityById(roomId));
+        order.setDateFrom(new Date());
+        order.setDateTo(c.getTime());
+        order.setMoneyPaid(moneyPaid);
+
+        writeToFile(order);
 
         Room updatedRoom = roomDAO.getEntityById(roomId);
         updatedRoom.setDateAvailableFrom(c.getTime());
-
-        roomDAO.replaceRoomById(roomId, updatedRoom);
+        roomDAO.updateEntity(updatedRoom);
     }
 
     public void cancelReservation(long roomId, long userId) throws UnexpectedException{
@@ -43,7 +43,7 @@ public class OrderDAO extends GeneralDAO<Order>{
         Room updatedRoom = roomDAO.getEntityById(roomId);
         updatedRoom.setDateAvailableFrom(new Date());
 
-        roomDAO.replaceRoomById(roomId, updatedRoom);
+        roomDAO.updateEntity(updatedRoom);
         deleteFromFileById(getOrderByRoomAndUser(roomId, userId).getId());
     }
 
@@ -56,6 +56,6 @@ public class OrderDAO extends GeneralDAO<Order>{
 
     @Override
     public Order parseStringToObject(String input) throws UnexpectedException {
-        return new Order(input);
+        return new Order().parseStringToObject(input);
     }
 }

@@ -2,32 +2,14 @@ package lesson36.model;
 
 import lesson36.exception.UnexpectedException;
 
-public class Hotel implements Entity{
+public class Hotel extends Entity<Hotel> {
     private long id;
     private String name;
     private String country;
     private String city;
     private String street;
 
-    public Hotel(String name, String country, String city, String street){
-        this.name = name;
-        this.country = country;
-        this.city = city;
-        this.street = street;
-    }
-
-    public Hotel(String textData) throws UnexpectedException{
-        String[] data = textData.split(",");
-        try {
-            id = Long.valueOf(data[0]);
-            name = data[1];
-            country = data[2];
-            city = data[3];
-            street = data[4];
-        }catch (Exception e){
-            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+textData+"]");
-        }
-    }
+    public Hotel(){}
 
     public long getId() {
         return id;
@@ -52,6 +34,37 @@ public class Hotel implements Entity{
     @Override
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    @Override
+    public Hotel parseStringToObject(String input) throws UnexpectedException {
+        String[] data = input.split(",");
+        try {
+            id = Long.valueOf(data[0]);
+            name = data[1];
+            country = data[2];
+            city = data[3];
+            street = data[4];
+            return this;
+        }catch (Exception e){
+            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
+        }
     }
 
     @Override

@@ -26,17 +26,16 @@ public class RoomDAO extends GeneralDAO<Room>{
 
     public Set<Room> findRooms(Filter filter) throws UnexpectedException{
         Set<Room> result = new HashSet<>();
-        boolean numberOfGuests, price, breakfastIncluded, petsAllowed, dateAvailableFrom, name, country, city;
 
         for(Room room : getAll()){
-            numberOfGuests = (filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests() == room.getNumberOfGuests());
-            price = (filter.getPrice() == 0 || filter.getPrice() >= room.getPrice());
-            breakfastIncluded = (filter.isBreakfastIncluded() == room.isBreakfastIncluded());
-            petsAllowed = (filter.isPetsAllowed() == room.isPetsAllowed());
-            dateAvailableFrom = (filter.getDateAvailableFrom().after(room.getDateAvailableFrom()));
-            name = (filter.getName().equals("") || filter.getName().equals(room.getHotel().getName()));
-            country = (filter.getCountry().equals("") || filter.getCountry().equals(room.getHotel().getCountry()));
-            city = (filter.getCity().equals("") || filter.getCity().equals(room.getHotel().getCity()));
+            boolean numberOfGuests = (filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests() == room.getNumberOfGuests());
+            boolean price = (filter.getPrice() == 0 || filter.getPrice() >= room.getPrice());
+            boolean breakfastIncluded = (filter.isBreakfastIncluded() == room.isBreakfastIncluded());
+            boolean petsAllowed = (filter.isPetsAllowed() == room.isPetsAllowed());
+            boolean dateAvailableFrom = (filter.getDateAvailableFrom().after(room.getDateAvailableFrom()));
+            boolean name = (filter.getName().equals("") || filter.getName().equals(room.getHotel().getName()));
+            boolean country = (filter.getCountry().equals("") || filter.getCountry().equals(room.getHotel().getCountry()));
+            boolean city = (filter.getCity().equals("") || filter.getCity().equals(room.getHotel().getCity()));
 
             if( numberOfGuests &&
                 price &&
@@ -52,12 +51,8 @@ public class RoomDAO extends GeneralDAO<Room>{
         return result;
     }
 
-    void replaceRoomById(long id, Room newRoom) throws UnexpectedException{
-        replaceDataById(id, newRoom);
-    }
-
     @Override
     public Room parseStringToObject(String input) throws UnexpectedException{
-        return new Room(input);
+        return new Room().parseStringToObject(input);
     }
 }

@@ -3,32 +3,14 @@ package lesson36.model;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.types.UserType;
 
-public class User implements Entity{
+public class User extends Entity<User>{
     private long id;
     private String userName;
     private String password;
     private String country;
     private UserType userType;
 
-    public User(String userName, String password, String country, UserType userType) {
-        this.userName = userName;
-        this.password = password;
-        this.country = country;
-        this.userType = userType;
-    }
-
-    public User(String textData) throws  UnexpectedException{
-        String[] data = textData.split(",");
-        try {
-            id = Long.valueOf(data[0]);
-            userName = data[1];
-            password = data[2];
-            country = data[3];
-            userType = UserType.valueOf(data[4]);
-        }catch (Exception e){
-            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+textData+"]");
-        }
-    }
+    public User(){}
 
     public long getId() {
         return id;
@@ -54,13 +36,44 @@ public class User implements Entity{
         this.id = id;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    @Override
+    public User parseStringToObject(String input) throws UnexpectedException{
+        String[] data = input.split(",");
+        try {
+            id = Long.valueOf(data[0]);
+            userName = data[1];
+            password = data[2];
+            country = data[3];
+            userType = UserType.valueOf(data[4]);
+            return this;
+        }catch (Exception e){
+            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
+        }
+    }
+
     @Override
     public String toString() {
         return
-                (id == 0 ? "" : id+",")+
-                        userName+","+
-                        password+","+
-                        country+","+
-                        userType.toString();
+            (id == 0 ? "" : id+",")+
+            userName+","+
+            password+","+
+            country+","+
+            userType.toString();
     }
 }

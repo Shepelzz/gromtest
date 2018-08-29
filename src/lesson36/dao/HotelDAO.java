@@ -41,6 +41,6 @@ public class HotelDAO extends GeneralDAO<Hotel>{
 
     @Override
     public Hotel parseStringToObject(String input) throws UnexpectedException {
-        return new Hotel(input);
+        return new Hotel().parseStringToObject(input);
     }
 }

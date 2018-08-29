@@ -6,7 +6,7 @@ import lesson36.exception.UnexpectedException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Room implements Entity {
+public class Room extends Entity<Room> {
     private long id;
     private int numberOfGuests;
     private double price;
@@ -15,29 +15,7 @@ public class Room implements Entity {
     private Date dateAvailableFrom;
     private Hotel hotel;
 
-    public Room(int numberOfGuests, double price, boolean breakfastIncluded, boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
-        this.numberOfGuests = numberOfGuests;
-        this.price = price;
-        this.breakfastIncluded = breakfastIncluded;
-        this.petsAllowed = petsAllowed;
-        this.dateAvailableFrom = dateAvailableFrom;
-        this.hotel = hotel;
-    }
-
-    public Room(String textData) throws UnexpectedException {
-        String[] data = textData.split(",");
-        try {
-            id = Long.valueOf(data[0]);
-            numberOfGuests = Integer.valueOf(data[1]);
-            price = Double.valueOf(data[2]);
-            breakfastIncluded = Boolean.valueOf(data[3]);
-            petsAllowed = Boolean.valueOf(data[4]);
-            dateAvailableFrom = new SimpleDateFormat("dd-MM-yyyy").parse(data[5]);
-            hotel = new HotelDAO().getEntityById(Long.valueOf(data[6]));
-        }catch (Exception e){
-            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+textData+"]");
-        }
-    }
+    public Room(){}
 
     public long getId() {
         return id;
@@ -71,6 +49,26 @@ public class Room implements Entity {
         return hotel;
     }
 
+    public void setNumberOfGuests(int numberOfGuests) {
+        this.numberOfGuests = numberOfGuests;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setBreakfastIncluded(boolean breakfastIncluded) {
+        this.breakfastIncluded = breakfastIncluded;
+    }
+
+    public void setPetsAllowed(boolean petsAllowed) {
+        this.petsAllowed = petsAllowed;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
     @Override
     public void setId(long id) {
         this.id = id;
@@ -88,4 +86,20 @@ public class Room implements Entity {
             hotel.getId();
     }
 
+    @Override
+    public Room parseStringToObject(String input) throws UnexpectedException {
+        String[] data = input.split(",");
+        try {
+            id = Long.valueOf(data[0]);
+            numberOfGuests = Integer.valueOf(data[1]);
+            price = Double.valueOf(data[2]);
+            breakfastIncluded = Boolean.valueOf(data[3]);
+            petsAllowed = Boolean.valueOf(data[4]);
+            dateAvailableFrom = new SimpleDateFormat("dd-MM-yyyy").parse(data[5]);
+            hotel = new HotelDAO().getEntityById(Long.valueOf(data[6]));
+            return this;
+        }catch (Exception e){
+            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
+        }
+    }
 }

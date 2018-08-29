@@ -77,8 +77,8 @@ public abstract class GeneralDAO<T extends Entity>{
         }
     }
 
-    public void replaceDataById(long oldObjectId, T newObject) throws UnexpectedException{
-        deleteFromFileById(oldObjectId);
+    public void updateEntity(T newObject) throws UnexpectedException{
+        deleteFromFileById(newObject.getId());
         writeToFile(newObject);
     }
 

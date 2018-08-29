@@ -23,6 +23,6 @@ public class UserDAO extends GeneralDAO<User>{
 
     @Override
     public User parseStringToObject(String input) throws UnexpectedException {
-        return new User(input);
+        return new User().parseStringToObject(input);
     }
 }
