@@ -21,14 +21,8 @@ public class HotelService{
         if(!UserService.getLoggedUser().getUserType().equals(UserType.ADMIN))
             throw new BadRequestException("Add hotel", "Access", "Only ADMIN can perform this operation");
 
-        if(hotel.getName().equals(""))
-            throw new BadRequestException("Add hotel", "Validation", "Hotel name can not be empty");
-        if(hotel.getCountry().equals(""))
-            throw new BadRequestException("Add hotel", "Validation", "Hotel country can not be empty");
-        if(hotel.getCity().equals(""))
-            throw new BadRequestException("Add hotel", "Validation", "Hotel city can not be empty");
-        if(hotel.getStreet().equals(""))
-            throw new BadRequestException("Add hotel", "Validation", "Hotel street can not be empty");
+        if(hotel.getName().equals("") || hotel.getCountry().equals("") || hotel.getCity().equals("") || hotel.getStreet().equals(""))
+            throw new BadRequestException("Add hotel", "Validation", "Value can not be empty");
 
         return hotelDAO.addHotel(hotel);
     }

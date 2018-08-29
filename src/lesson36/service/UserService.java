@@ -16,12 +16,8 @@ public class UserService {
     public User registerUser(User user) throws UnexpectedException {
         if(userDAO.getUserByLoginAndPassword(user.getUserName(), user.getPassword()) != null)
             throw new BadRequestException("Register User", "Validation", "User with user name: "+user.getUserName()+" is already registered.");
-        if (user.getUserName() == null || user.getUserName().equals(""))
-            throw new BadRequestException("Register User", "Validation", "User register error: user name can not be empty");
-        if (user.getPassword() == null || user.getPassword().equals(""))
-            throw new BadRequestException("Register User", "Validation", "User register error: user password can not be empty");
-        if (user.getCountry() == null || user.getCountry().equals(""))
-            throw new BadRequestException("Register User", "Validation", "User register error: user country can not be empty");
+        if (user.getUserName().equals("") || user.getPassword().equals("") || user.getCountry().equals(""))
+            throw new BadRequestException("Register User", "Validation", "values can not be empty");
 
         return userDAO.registerUser(user);
     }

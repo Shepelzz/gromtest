@@ -23,10 +23,8 @@ public class RoomService {
         if(!UserService.getLoggedUser().getUserType().equals(UserType.ADMIN))
             throw new BadRequestException("Add room", "Access", "Only ADMIN can perform this operation");
 
-        if(room.getNumberOfGuests() <= 0)
-            throw new BadRequestException("Add room", "Validation", "Room numberOfGuests can not be less than 1");
-        if(room.getPrice() <= 0)
-            throw new BadRequestException("Add room", "Validation", "Room price can not be negative or zero");
+        if(room.getNumberOfGuests() <= 0 || room.getPrice() <= 0)
+            throw new BadRequestException("Add room", "Validation", "Room numberOfGuests or price can not be negative or zero");
         if(room.getDateAvailableFrom() == null)
             throw new BadRequestException("Add room", "Validation", "Room date available from can not be empty");
 
