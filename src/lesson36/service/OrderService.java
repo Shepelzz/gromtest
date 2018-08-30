@@ -25,7 +25,7 @@ public class OrderService {
         if(room == null)
             throw new BadRequestException("Book room", "Validation", "Room with id:"+roomId+" was not found");
         if(room.getDateAvailableFrom().after(new Date()))
-            throw new BadRequestException("Book room", "Validation", "Order room id:"+roomId+" is not available from "+room.getDateAvailableFrom());
+            throw new BadRequestException("Book room", "Validation", "Order room id:"+roomId+" is reserved from "+room.getDateAvailableFrom());
         if(room.getPrice() > moneyPaid)
             throw new BadRequestException("Book room", "Validation", "Order money paid is not enough" );
 

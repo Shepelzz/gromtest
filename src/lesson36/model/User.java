@@ -3,7 +3,7 @@ package lesson36.model;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.types.UserType;
 
-public class User extends Entity<User>{
+public class User extends Entity{
     private String userName;
     private String password;
     private String country;

@@ -34,10 +34,8 @@ public class UserService {
     }
 
     public void logout(){
+        if(Session.getLoggedUser() == null)
+            throw new BadRequestException("Login", "Validation", "Nobody is logged in.");
         Session.setLoggedUser(null);
-    }
-
-    public static User getLoggedUser() {
-        return Session.getLoggedUser();
     }
 }

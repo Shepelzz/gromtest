@@ -6,7 +6,7 @@ import lesson36.exception.UnexpectedException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Room extends Entity<Room> {
+public class Room extends Entity {
     private int numberOfGuests;
     private double price;
     private boolean breakfastIncluded;

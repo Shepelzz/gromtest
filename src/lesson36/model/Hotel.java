@@ -2,7 +2,7 @@ package lesson36.model;
 
 import lesson36.exception.UnexpectedException;
 
-public class Hotel extends Entity<Hotel> {
+public class Hotel extends Entity {
     private String name;
     private String country;
     private String city;

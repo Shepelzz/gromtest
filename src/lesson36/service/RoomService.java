@@ -21,7 +21,7 @@ public class RoomService {
     //ADMIN
     public Room addRoom(Room room) throws UnexpectedException {
         Session.checkAuthorization();
-        if(!UserService.getLoggedUser().getUserType().equals(UserType.ADMIN))
+        if(!Session.getLoggedUser().getUserType().equals(UserType.ADMIN))
             throw new BadRequestException("Add room", "Access", "Only ADMIN can perform this operation");
 
         if(room.getNumberOfGuests() <= 0 || room.getPrice() <= 0)
@@ -35,7 +35,7 @@ public class RoomService {
     //ADMIN
     public void deleteRoom(long roomId) throws UnexpectedException {
         Session.checkAuthorization();
-        if(!UserService.getLoggedUser().getUserType().equals(UserType.ADMIN))
+        if(!Session.getLoggedUser().getUserType().equals(UserType.ADMIN))
             throw new BadRequestException("Delete room", "Access", "Only ADMIN can perform this operation");
 
         roomDAO.deleteRoom(roomId);

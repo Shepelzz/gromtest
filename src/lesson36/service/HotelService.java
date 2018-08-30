@@ -19,7 +19,7 @@ public class HotelService{
     //ADMIN
     public Hotel addHotel(Hotel hotel) throws UnexpectedException {
         Session.checkAuthorization();
-        if(!UserService.getLoggedUser().getUserType().equals(UserType.ADMIN))
+        if(!Session.getLoggedUser().getUserType().equals(UserType.ADMIN))
             throw new BadRequestException("Add hotel", "Access", "Only ADMIN can perform this operation");
 
         if(hotel.getName().equals("") || hotel.getCountry().equals("") || hotel.getCity().equals("") || hotel.getStreet().equals(""))
@@ -31,7 +31,7 @@ public class HotelService{
     //ADMIN
     public void deleteHotel(long hotelId) throws UnexpectedException{
         Session.checkAuthorization();
-        if(!UserService.getLoggedUser().getUserType().equals(UserType.ADMIN))
+        if(!Session.getLoggedUser().getUserType().equals(UserType.ADMIN))
             throw new BadRequestException("Delete hotel", "Access", "Only ADMIN can perform this operation");
 
         hotelDAO.deleteHotel(hotelId);

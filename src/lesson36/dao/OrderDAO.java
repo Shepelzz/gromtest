@@ -1,6 +1,7 @@
 package lesson36.dao;
 
 import lesson36.exception.UnexpectedException;
+import lesson36.model.Entity;
 import lesson36.model.Order;
 import lesson36.model.Room;
 import lesson36.model.User;
@@ -23,21 +24,18 @@ public class OrderDAO extends GeneralDAO<Order>{
         c.setTime(currentDate);
         c.add(Calendar.DATE, 3);
 
-        User user = new User();
-        user.setId(userId);
-        Room room = new Room();
-        room.setId(roomId);
+        Entity user = new User().setId(userId);
+        Entity room = new Room().setId(roomId);
+        Room updatedRoom = roomDAO.getEntityById(roomId);
 
         Order order = new Order();
-            order.setUser(user);
-            order.setRoom(room);
+            order.setUser((User) user);
+            order.setRoom((Room) room);
             order.setDateFrom(new Date());
             order.setDateTo(c.getTime());
             order.setMoneyPaid(moneyPaid);
-
         writeToFile(order);
 
-        Room updatedRoom = roomDAO.getEntityById(roomId);
         updatedRoom.setDateAvailableFrom(c.getTime());
         roomDAO.updateEntity(updatedRoom);
     }

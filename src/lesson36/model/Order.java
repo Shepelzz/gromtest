@@ -7,7 +7,7 @@ import lesson36.exception.UnexpectedException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Order extends Entity<Order> {
+public class Order extends Entity {
     private User user;
     private Room room;
     private Date dateFrom;

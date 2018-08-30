@@ -10,8 +10,8 @@ public class Session {
         return loggedUser;
     }
 
-    public static void setLoggedUser(User loggedUser) {
-        Session.loggedUser = loggedUser;
+    public static void setLoggedUser(User user) {
+        Session.loggedUser = user;
     }
 
     public static void checkAuthorization() throws BadRequestException {
