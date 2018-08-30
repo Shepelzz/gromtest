@@ -3,6 +3,7 @@ package lesson36.dao;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.Order;
 import lesson36.model.Room;
+import lesson36.model.User;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,19 +17,23 @@ public class OrderDAO extends GeneralDAO<Order>{
 
     public void bookRoom(long roomId, long userId, double moneyPaid) throws UnexpectedException {
         RoomDAO roomDAO = new RoomDAO();
-        UserDAO userDAO = new UserDAO();
 
         Calendar c = Calendar.getInstance();
         Date currentDate = new Date();
         c.setTime(currentDate);
         c.add(Calendar.DATE, 3);
 
+        User user = new User();
+        user.setId(userId);
+        Room room = new Room();
+        room.setId(roomId);
+
         Order order = new Order();
-        order.setUser(userDAO.getEntityById(userId));
-        order.setRoom(roomDAO.getEntityById(roomId));
-        order.setDateFrom(new Date());
-        order.setDateTo(c.getTime());
-        order.setMoneyPaid(moneyPaid);
+            order.setUser(user);
+            order.setRoom(room);
+            order.setDateFrom(new Date());
+            order.setDateTo(c.getTime());
+            order.setMoneyPaid(moneyPaid);
 
         writeToFile(order);
 

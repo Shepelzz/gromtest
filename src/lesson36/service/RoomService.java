@@ -1,6 +1,7 @@
 package lesson36.service;
 
 import lesson36.dao.RoomDAO;
+import lesson36.dao.Session;
 import lesson36.exception.BadRequestException;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.Filter;
@@ -19,7 +20,7 @@ public class RoomService {
 
     //ADMIN
     public Room addRoom(Room room) throws UnexpectedException {
-        UserService.checkAuthorization();
+        Session.checkAuthorization();
         if(!UserService.getLoggedUser().getUserType().equals(UserType.ADMIN))
             throw new BadRequestException("Add room", "Access", "Only ADMIN can perform this operation");
 
@@ -33,7 +34,7 @@ public class RoomService {
 
     //ADMIN
     public void deleteRoom(long roomId) throws UnexpectedException {
-        UserService.checkAuthorization();
+        Session.checkAuthorization();
         if(!UserService.getLoggedUser().getUserType().equals(UserType.ADMIN))
             throw new BadRequestException("Delete room", "Access", "Only ADMIN can perform this operation");
 
@@ -41,7 +42,7 @@ public class RoomService {
     }
 
     public Set<Room> findRooms(Filter filter) throws UnexpectedException{
-        UserService.checkAuthorization();
+        Session.checkAuthorization();
         if(filter.getDateAvailableFrom().before(new Date()))
             throw new BadRequestException("Find rooms", "Validation", "Date can not be earlier than current");
 

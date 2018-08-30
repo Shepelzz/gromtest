@@ -1,12 +1,12 @@
 package lesson36.service;
 
+import lesson36.dao.Session;
 import lesson36.dao.UserDAO;
 import lesson36.exception.BadRequestException;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.User;
 
 public class UserService {
-    private static User loggedUser;
     private UserDAO userDAO;
 
     public UserService() throws UnexpectedException {
@@ -23,23 +23,21 @@ public class UserService {
     }
 
     public void login(String userName, String password) throws UnexpectedException{
+        if(Session.getLoggedUser() != null)
+            throw new BadRequestException("Login", "Validation", "You are already logged as user: "+Session.getLoggedUser().getUserName());
+
         User user = userDAO.getUserByLoginAndPassword(userName, password);
         if(user == null)
             throw  new BadRequestException("Login", "Validation", "User with name: "+userName+" was not found, or password is incorrect");
 
-        loggedUser = user;
+        Session.setLoggedUser(user);
     }
 
     public void logout(){
-        loggedUser = null;
+        Session.setLoggedUser(null);
     }
 
     public static User getLoggedUser() {
-        return loggedUser;
-    }
-
-    public static void checkAuthorization() throws BadRequestException {
-        if(loggedUser == null)
-            throw new BadRequestException("Authorization", "Validation", "You must be logged in system for perform this operation");
+        return Session.getLoggedUser();
     }
 }

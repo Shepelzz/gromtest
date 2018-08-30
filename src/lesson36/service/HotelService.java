@@ -1,6 +1,7 @@
 package lesson36.service;
 
 import lesson36.dao.HotelDAO;
+import lesson36.dao.Session;
 import lesson36.exception.BadRequestException;
 import lesson36.exception.UnexpectedException;
 import lesson36.model.Hotel;
@@ -17,7 +18,7 @@ public class HotelService{
 
     //ADMIN
     public Hotel addHotel(Hotel hotel) throws UnexpectedException {
-        UserService.checkAuthorization();
+        Session.checkAuthorization();
         if(!UserService.getLoggedUser().getUserType().equals(UserType.ADMIN))
             throw new BadRequestException("Add hotel", "Access", "Only ADMIN can perform this operation");
 
@@ -29,7 +30,7 @@ public class HotelService{
 
     //ADMIN
     public void deleteHotel(long hotelId) throws UnexpectedException{
-        UserService.checkAuthorization();
+        Session.checkAuthorization();
         if(!UserService.getLoggedUser().getUserType().equals(UserType.ADMIN))
             throw new BadRequestException("Delete hotel", "Access", "Only ADMIN can perform this operation");
 
@@ -38,7 +39,7 @@ public class HotelService{
     }
 
     public Set<Hotel> findHotelByName(String name) throws UnexpectedException {
-        UserService.checkAuthorization();
+        Session.checkAuthorization();
         if(name.equals(""))
             throw new BadRequestException("Find hotel by name", "Validation", "Name can not be empty");
 
@@ -46,7 +47,7 @@ public class HotelService{
     }
 
     public Set<Hotel> findHotelByCity(String name) throws UnexpectedException{
-        UserService.checkAuthorization();
+        Session.checkAuthorization();
         if(name.equals(""))
             throw new BadRequestException("Find hotel by city", "Validation", "City can not be empty");
 
