@@ -51,6 +51,12 @@ public class RoomDAO extends GeneralDAO<Room>{
         return result;
     }
 
+//    public Optional<Room> getRooms(Filter filter) throws UnexpectedException{
+//        return getAll().stream()
+//                .filter(room -> room.getNumberOfGuests() == filter.getNumberOfGuests())
+//                .findFirst();
+//    }
+
     @Override
     public Room parseStringToObject(String input) throws UnexpectedException{
         return new Room().parseStringToObject(input);
