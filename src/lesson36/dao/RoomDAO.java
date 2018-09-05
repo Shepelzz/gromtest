@@ -4,8 +4,8 @@ import lesson36.exception.UnexpectedException;
 import lesson36.model.Filter;
 import lesson36.model.Room;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RoomDAO extends GeneralDAO<Room>{
     private static final String path = "files/RoomDb.txt";
@@ -25,38 +25,18 @@ public class RoomDAO extends GeneralDAO<Room>{
     }
 
     public Set<Room> findRooms(Filter filter) throws UnexpectedException{
-        Set<Room> result = new HashSet<>();
-
-        for(Room room : getAll()){
-            boolean numberOfGuests = (filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests() == room.getNumberOfGuests());
-            boolean price = (filter.getPrice() == 0 || filter.getPrice() >= room.getPrice());
-            boolean breakfastIncluded = (filter.isBreakfastIncluded() == room.isBreakfastIncluded());
-            boolean petsAllowed = (filter.isPetsAllowed() == room.isPetsAllowed());
-            boolean dateAvailableFrom = (filter.getDateAvailableFrom().after(room.getDateAvailableFrom()));
-            boolean name = (filter.getName().equals("") || filter.getName().equals(room.getHotel().getName()));
-            boolean country = (filter.getCountry().equals("") || filter.getCountry().equals(room.getHotel().getCountry()));
-            boolean city = (filter.getCity().equals("") || filter.getCity().equals(room.getHotel().getCity()));
-
-            if( numberOfGuests &&
-                price &&
-                breakfastIncluded &&
-                petsAllowed &&
-                dateAvailableFrom &&
-                name &&
-                country &&
-                city
-            )
-                result.add(room);
-        }
-        return result;
+        //https://www.youtube.com/watch?v=nNEMhUQCysA
+        return getAll().stream()
+            .filter(x -> (filter.getNumberOfGuests() == 0 || x.getNumberOfGuests() == filter.getNumberOfGuests()))
+            .filter(x -> (filter.getPrice() == 0 || x.getPrice() <= filter.getPrice()))
+            .filter(x -> x.isBreakfastIncluded() == filter.isBreakfastIncluded())
+            .filter(x -> x.isPetsAllowed() == filter.isPetsAllowed())
+            .filter(x -> x.getDateAvailableFrom().before(filter.getDateAvailableFrom()))
+            .filter(x -> (filter.getName()== null || x.getHotel().getName().equals(filter.getName())))
+            .filter(x -> (filter.getCountry()== null || x.getHotel().getCountry().equals(filter.getCountry())))
+            .filter(x -> (filter.getCity()== null || x.getHotel().getCity().equals(filter.getCity())))
+            .collect(Collectors.toSet());
     }
-
-    //https://habr.com/post/256057/
-//    public Optional<Room> getRooms(Filter filter) throws UnexpectedException{
-//        return getAll().stream()
-//                .filter(room -> room.getNumberOfGuests() == filter.getNumberOfGuests())
-//                .findFirst();
-//    }
 
     @Override
     public Room parseStringToObject(String input) throws UnexpectedException{

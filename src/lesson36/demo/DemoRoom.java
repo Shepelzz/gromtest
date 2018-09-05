@@ -2,9 +2,7 @@ package lesson36.demo;
 
 import lesson36.controller.RoomController;
 import lesson36.controller.UserController;
-import lesson36.dao.HotelDAO;
 import lesson36.model.Filter;
-import lesson36.model.Room;
 
 import java.util.Date;
 
@@ -43,8 +41,8 @@ public class DemoRoom {
             UserController userController = new UserController();
             userController.login("user2", "pass2");
 
-            Filter filter = new Filter(2, 900, true, true, new Date(), "", "", "Odessa");
-            System.out.println(roomController.findRooms(filter));
+            Filter filter = new Filter(2, 900, true, true, new Date(), null, null, null);
+            roomController.findRooms(filter).forEach(x -> System.out.println(x.toString()));
 
         }catch (Exception e){
             System.err.println(e.toString());

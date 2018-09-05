@@ -37,7 +37,7 @@ public abstract class GeneralDAO<T extends Entity>{
     }
 
     public T writeToFile(T t) throws UnexpectedException{
-        t.setId(generateRandomId());
+        t.setId(ThreadLocalRandom.current().nextLong(Long.MAX_VALUE));
         try(BufferedReader br = new BufferedReader(getFileReader()); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
             if(br.readLine() != null)
                 bw.append("\r\n");
@@ -82,9 +82,7 @@ public abstract class GeneralDAO<T extends Entity>{
         }
     }
 
-    private long generateRandomId(){
-        return ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);
-    }
+//    private long generateRandomId(){ return ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);}
 
     private FileReader getFileReader() throws UnexpectedException{
         try {
