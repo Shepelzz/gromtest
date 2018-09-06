@@ -2,7 +2,7 @@ package lesson36.model;
 
 import lesson36.dao.RoomDAO;
 import lesson36.dao.UserDAO;
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -57,7 +57,7 @@ public class Order extends Entity {
     }
 
     @Override
-    public Order parseStringToObject(String input) throws UnexpectedException {
+    public Order parseStringToObject(String input) throws InternalServerError {
         String[] data = input.split(",");
         try {
             setId(Long.valueOf(data[0]));
@@ -68,7 +68,7 @@ public class Order extends Entity {
             moneyPaid = Double.valueOf(data[5]);
             return this;
         }catch (Exception e){
-            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
+            throw new InternalServerError(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
         }
     }
 

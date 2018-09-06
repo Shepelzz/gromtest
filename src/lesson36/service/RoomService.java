@@ -3,7 +3,8 @@ package lesson36.service;
 import lesson36.dao.RoomDAO;
 import lesson36.dao.Session;
 import lesson36.exception.BadRequestException;
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
+import lesson36.exception.PermissionError;
 import lesson36.model.Filter;
 import lesson36.model.Room;
 import lesson36.model.types.UserType;
@@ -14,15 +15,14 @@ import java.util.Set;
 public class RoomService {
     private RoomDAO roomDAO;
 
-    public RoomService() throws UnexpectedException{
+    public RoomService() throws InternalServerError {
         roomDAO = new RoomDAO();
     }
 
     //ADMIN
-    public Room addRoom(Room room) throws UnexpectedException {
-        Session.checkAuthorization();
+    public Room addRoom(Room room) throws InternalServerError {
         if(!Session.getLoggedUser().getUserType().equals(UserType.ADMIN))
-            throw new BadRequestException("Add room", "Access", "Only ADMIN can perform this operation");
+            throw new PermissionError("Add room", "Access", "Only ADMIN can perform this operation");
 
         if(room.getNumberOfGuests() <= 0 || room.getPrice() <= 0)
             throw new BadRequestException("Add room", "Validation", "Room numberOfGuests or price can not be negative or zero");
@@ -33,16 +33,14 @@ public class RoomService {
     }
 
     //ADMIN
-    public void deleteRoom(long roomId) throws UnexpectedException {
-        Session.checkAuthorization();
+    public void deleteRoom(long roomId) throws InternalServerError {
         if(!Session.getLoggedUser().getUserType().equals(UserType.ADMIN))
             throw new BadRequestException("Delete room", "Access", "Only ADMIN can perform this operation");
 
         roomDAO.deleteRoom(roomId);
     }
 
-    public Set<Room> findRooms(Filter filter) throws UnexpectedException{
-        Session.checkAuthorization();
+    public Set<Room> findRooms(Filter filter) throws InternalServerError {
         if(filter.getDateAvailableFrom().before(new Date()))
             throw new BadRequestException("Find rooms", "Validation", "Date can not be earlier than current");
 

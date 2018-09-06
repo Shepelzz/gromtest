@@ -1,6 +1,6 @@
 package lesson36.dao;
 
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
 import lesson36.model.Entity;
 import lesson36.model.Order;
 import lesson36.model.Room;
@@ -12,11 +12,11 @@ import java.util.Date;
 public class OrderDAO extends GeneralDAO<Order>{
     private static final String path = "files/OrderDb.txt";
 
-    public OrderDAO() throws UnexpectedException{
+    public OrderDAO() throws InternalServerError {
         super(path);
     }
 
-    public void bookRoom(long roomId, long userId, double moneyPaid) throws UnexpectedException {
+    public void bookRoom(long roomId, long userId, double moneyPaid) throws InternalServerError {
         RoomDAO roomDAO = new RoomDAO();
 
         Calendar c = Calendar.getInstance();
@@ -40,7 +40,7 @@ public class OrderDAO extends GeneralDAO<Order>{
         roomDAO.updateEntity(updatedRoom);
     }
 
-    public void cancelReservation(long roomId, long userId) throws UnexpectedException{
+    public void cancelReservation(long roomId, long userId) throws InternalServerError {
         RoomDAO roomDAO = new RoomDAO();
 
         Room updatedRoom = roomDAO.getEntityById(roomId);
@@ -50,7 +50,7 @@ public class OrderDAO extends GeneralDAO<Order>{
         deleteFromFileById(getOrderByRoomAndUser(roomId, userId).getId());
     }
 
-    public Order getOrderByRoomAndUser(long roomId, long userId) throws UnexpectedException{
+    public Order getOrderByRoomAndUser(long roomId, long userId) throws InternalServerError {
         for(Order order : getAll())
             if(order.getRoom().getId() == roomId && order.getUser().getId() == userId)
                 return order;
@@ -58,7 +58,7 @@ public class OrderDAO extends GeneralDAO<Order>{
     }
 
     @Override
-    public Order parseStringToObject(String input) throws UnexpectedException {
+    public Order parseStringToObject(String input) throws InternalServerError {
         return new Order().parseStringToObject(input);
     }
 }

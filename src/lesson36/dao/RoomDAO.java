@@ -1,6 +1,6 @@
 package lesson36.dao;
 
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
 import lesson36.model.Filter;
 import lesson36.model.Room;
 
@@ -10,22 +10,21 @@ import java.util.stream.Collectors;
 public class RoomDAO extends GeneralDAO<Room>{
     private static final String path = "files/RoomDb.txt";
 
-    public RoomDAO() throws UnexpectedException {
+    public RoomDAO() throws InternalServerError {
         super(path);
     }
 
     //ADMIN
-    public Room addRoom(Room room) throws UnexpectedException {
+    public Room addRoom(Room room) throws InternalServerError {
         return writeToFile(room);
     }
 
     //ADMIN
-    public void deleteRoom(long roomId) throws UnexpectedException{
+    public void deleteRoom(long roomId) throws InternalServerError {
         deleteFromFileById(roomId);
     }
 
-    public Set<Room> findRooms(Filter filter) throws UnexpectedException{
-        //https://www.youtube.com/watch?v=nNEMhUQCysA
+    public Set<Room> findRooms(Filter filter) throws InternalServerError {
         return getAll().stream()
             .filter(x -> (filter.getNumberOfGuests() == 0 || x.getNumberOfGuests() == filter.getNumberOfGuests()))
             .filter(x -> (filter.getPrice() == 0 || x.getPrice() <= filter.getPrice()))
@@ -39,7 +38,7 @@ public class RoomDAO extends GeneralDAO<Room>{
     }
 
     @Override
-    public Room parseStringToObject(String input) throws UnexpectedException{
+    public Room parseStringToObject(String input) throws InternalServerError {
         return new Room().parseStringToObject(input);
     }
 }

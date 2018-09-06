@@ -1,6 +1,6 @@
 package lesson36.model;
 
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
 
 public abstract class Entity{
     private long id;
@@ -18,6 +18,6 @@ public abstract class Entity{
         return this;
     }
 
-    public abstract Entity parseStringToObject(String input) throws UnexpectedException;
+    public abstract Entity parseStringToObject(String input) throws InternalServerError;
 
 }

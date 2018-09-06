@@ -1,6 +1,6 @@
 package lesson36.model;
 
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
 
 public class Hotel extends Entity {
     private String name;
@@ -43,7 +43,7 @@ public class Hotel extends Entity {
     }
 
     @Override
-    public Hotel parseStringToObject(String input) throws UnexpectedException {
+    public Hotel parseStringToObject(String input) throws InternalServerError {
         String[] data = input.split(",");
         try {
             setId(Long.valueOf(data[0]));
@@ -53,7 +53,7 @@ public class Hotel extends Entity {
             street = data[4];
             return this;
         }catch (Exception e){
-            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
+            throw new InternalServerError(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
         }
     }
 

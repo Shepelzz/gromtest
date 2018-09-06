@@ -1,6 +1,6 @@
 package lesson36.model;
 
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
 import lesson36.model.types.UserType;
 
 public class User extends Entity{
@@ -44,7 +44,7 @@ public class User extends Entity{
     }
 
     @Override
-    public User parseStringToObject(String input) throws UnexpectedException{
+    public User parseStringToObject(String input) throws InternalServerError {
         String[] data = input.split(",");
         try {
             setId(Long.valueOf(data[0]));
@@ -54,7 +54,7 @@ public class User extends Entity{
             userType = UserType.valueOf(data[4]);
             return this;
         }catch (Exception e){
-            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
+            throw new InternalServerError(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
         }
     }
 

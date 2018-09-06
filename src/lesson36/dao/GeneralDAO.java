@@ -1,6 +1,6 @@
 package lesson36.dao;
 
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
 import lesson36.model.Entity;
 
 import java.io.*;
@@ -15,40 +15,40 @@ public abstract class GeneralDAO<T extends Entity>{
         this.path = path;
     }
 
-    public abstract T parseStringToObject(String input) throws UnexpectedException;
+    public abstract T parseStringToObject(String input) throws InternalServerError;
 
-    public T getEntityById(long id) throws UnexpectedException{
+    public T getEntityById(long id) throws InternalServerError {
         for(T t : getAll())
             if(t.getId() == id)
                 return t;
         return null;
     }
 
-    public Set<T> getAll() throws UnexpectedException{
+    public Set<T> getAll() throws InternalServerError {
         Set<T> result = new HashSet<>();
         try(BufferedReader br = new BufferedReader(getFileReader())){
             String line;
             while ((line = br.readLine()) != null)
                 result.add(parseStringToObject(line));
         } catch (IOException e){
-            throw new UnexpectedException("Reading from file "+path+" failed");
+            throw new InternalServerError("Reading from file "+path+" failed");
         }
         return result;
     }
 
-    public T writeToFile(T t) throws UnexpectedException{
+    public T writeToFile(T t) throws InternalServerError {
         t.setId(ThreadLocalRandom.current().nextLong(Long.MAX_VALUE));
         try(BufferedReader br = new BufferedReader(getFileReader()); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
             if(br.readLine() != null)
                 bw.append("\r\n");
             bw.append(t.toString());
         } catch (IOException e){
-            throw new UnexpectedException("Writing to file error: can`t save "+t.toString()+" to file "+path+" "+e.getMessage());
+            throw new InternalServerError("Writing to file error: can`t save "+t.toString()+" to file "+path+" "+e.getMessage());
         }
         return t;
     }
 
-    public void deleteFromFileById(long id) throws UnexpectedException{
+    public void deleteFromFileById(long id) throws InternalServerError {
         StringBuffer tempData = new StringBuffer();
         try(BufferedReader br = new BufferedReader(getFileReader())){
             String line;
@@ -61,34 +61,34 @@ public abstract class GeneralDAO<T extends Entity>{
             if(tempData.length()>=2)
                 tempData.replace(tempData.length() - 2, tempData.length(), "");
         } catch (IOException e){
-            throw new UnexpectedException("Deleting from file error: can`t delete from file "+path);
+            throw new InternalServerError("Deleting from file error: can`t delete from file "+path);
         }
 
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path), false))){
             bw.append(tempData);
         } catch (IOException e){
-            throw new UnexpectedException("Deleting from file "+path+" failed");
+            throw new InternalServerError("Deleting from file "+path+" failed");
         }
     }
 
-    public void updateEntity(T newObject) throws UnexpectedException{
+    public void updateEntity(T newObject) throws InternalServerError {
         deleteFromFileById(newObject.getId());
         try(BufferedReader br = new BufferedReader(getFileReader()); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
             if(br.readLine() != null)
                 bw.append("\r\n");
             bw.append(newObject.toString());
         } catch (IOException e){
-            throw new UnexpectedException("Writing to file error: can`t save "+newObject.toString()+" to file "+path);
+            throw new InternalServerError("Writing to file error: can`t save "+newObject.toString()+" to file "+path);
         }
     }
 
 //    private long generateRandomId(){ return ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);}
 
-    private FileReader getFileReader() throws UnexpectedException{
+    private FileReader getFileReader() throws InternalServerError {
         try {
             return new FileReader(path);
         }catch (FileNotFoundException e){
-            throw new UnexpectedException("Reading from file error: file "+path+" does not exist");
+            throw new InternalServerError("Reading from file error: file "+path+" does not exist");
         }
     }
 }

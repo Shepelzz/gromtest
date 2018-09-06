@@ -1,6 +1,7 @@
 package lesson36.controller;
 
-import lesson36.exception.UnexpectedException;
+import lesson36.dao.Session;
+import lesson36.exception.InternalServerError;
 import lesson36.model.Filter;
 import lesson36.model.Room;
 import lesson36.service.RoomService;
@@ -10,21 +11,25 @@ import java.util.Set;
 public class RoomController {
     private RoomService roomService;
 
-    public RoomController() throws UnexpectedException{
+    public RoomController() throws InternalServerError {
+        Session.checkAuthorization();
         roomService = new RoomService();
     }
 
     //ADMIN
-    public Room addRoom(Room room) throws UnexpectedException {
+    public Room addRoom(Room room) throws InternalServerError {
+        Session.checkAuthorization();
         return roomService.addRoom(room);
     }
 
     //ADMIN
-    public void deleteRoom(long roomId) throws UnexpectedException {
+    public void deleteRoom(long roomId) throws InternalServerError {
+        Session.checkAuthorization();
         roomService.deleteRoom(roomId);
     }
 
-    public Set<Room> findRooms(Filter filter) throws UnexpectedException {
+    public Set<Room> findRooms(Filter filter) throws InternalServerError {
+        Session.checkAuthorization();
         return roomService.findRooms(filter);
     }
 

@@ -1,6 +1,6 @@
 package lesson36.dao;
 
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
 import lesson36.model.Hotel;
 
 import java.util.HashSet;
@@ -9,21 +9,21 @@ import java.util.Set;
 public class HotelDAO extends GeneralDAO<Hotel>{
     private static final String path = "files/HotelDb.txt";
 
-    public HotelDAO() throws UnexpectedException {
+    public HotelDAO() throws InternalServerError {
         super(path);
     }
 
     //ADMIN
-    public Hotel addHotel(Hotel hotel) throws UnexpectedException {
+    public Hotel addHotel(Hotel hotel) throws InternalServerError {
         return writeToFile(hotel);
     }
 
     //ADMIN
-    public void deleteHotel(long hotelId) throws UnexpectedException{
+    public void deleteHotel(long hotelId) throws InternalServerError {
         deleteFromFileById(hotelId);
     }
 
-    public Set<Hotel> findHotelByName(String name) throws UnexpectedException{
+    public Set<Hotel> findHotelByName(String name) throws InternalServerError {
         Set<Hotel> result = new HashSet<>();
         for(Hotel hotel : getAll())
             if(hotel.getName().equals(name))
@@ -31,7 +31,7 @@ public class HotelDAO extends GeneralDAO<Hotel>{
         return result;
     }
 
-    public Set<Hotel> findHotelByCity(String name) throws UnexpectedException{
+    public Set<Hotel> findHotelByCity(String name) throws InternalServerError {
         Set<Hotel> result = new HashSet<>();
         for(Hotel hotel : getAll())
             if(hotel.getCity().equals(name))
@@ -40,7 +40,7 @@ public class HotelDAO extends GeneralDAO<Hotel>{
     }
 
     @Override
-    public Hotel parseStringToObject(String input) throws UnexpectedException {
+    public Hotel parseStringToObject(String input) throws InternalServerError {
         return new Hotel().parseStringToObject(input);
     }
 }

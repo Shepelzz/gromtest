@@ -1,7 +1,7 @@
 package lesson36.model;
 
 import lesson36.dao.HotelDAO;
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -77,7 +77,7 @@ public class Room extends Entity {
     }
 
     @Override
-    public Room parseStringToObject(String input) throws UnexpectedException {
+    public Room parseStringToObject(String input) throws InternalServerError {
         String[] data = input.split(",");
         try {
             setId(Long.valueOf(data[0]));
@@ -89,7 +89,7 @@ public class Room extends Entity {
             hotel = new HotelDAO().getEntityById(Long.valueOf(data[6]));
             return this;
         }catch (Exception e){
-            throw new UnexpectedException(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
+            throw new InternalServerError(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
         }
     }
 }

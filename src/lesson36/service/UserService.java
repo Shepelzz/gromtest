@@ -3,17 +3,17 @@ package lesson36.service;
 import lesson36.dao.Session;
 import lesson36.dao.UserDAO;
 import lesson36.exception.BadRequestException;
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
 import lesson36.model.User;
 
 public class UserService {
     private UserDAO userDAO;
 
-    public UserService() throws UnexpectedException {
+    public UserService() throws InternalServerError {
         userDAO = new UserDAO();
     }
 
-    public User registerUser(User user) throws UnexpectedException {
+    public User registerUser(User user) throws InternalServerError {
         if(userDAO.getUserByLoginAndPassword(user.getUserName(), user.getPassword()) != null)
             throw new BadRequestException("Register User", "Validation", "User with user name: "+user.getUserName()+" is already registered.");
         if (user.getUserName().equals("") || user.getPassword().equals("") || user.getCountry().equals(""))
@@ -22,7 +22,7 @@ public class UserService {
         return userDAO.registerUser(user);
     }
 
-    public void login(String userName, String password) throws UnexpectedException{
+    public void login(String userName, String password) throws InternalServerError {
         if(Session.getLoggedUser() != null)
             throw new BadRequestException("Login", "Validation", "You are already logged as user: "+Session.getLoggedUser().getUserName());
 

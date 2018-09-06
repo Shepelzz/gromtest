@@ -2,9 +2,8 @@ package lesson36.service;
 
 import lesson36.dao.OrderDAO;
 import lesson36.dao.RoomDAO;
-import lesson36.dao.Session;
 import lesson36.exception.BadRequestException;
-import lesson36.exception.UnexpectedException;
+import lesson36.exception.InternalServerError;
 import lesson36.model.Room;
 
 import java.util.Date;
@@ -12,12 +11,11 @@ import java.util.Date;
 public class OrderService {
     private OrderDAO orderDao;
 
-    public OrderService() throws UnexpectedException{
+    public OrderService() throws InternalServerError {
         orderDao = new OrderDAO();
     }
 
-    public void bookRoom(long roomId, long userId, double moneyPaid) throws UnexpectedException{
-        Session.checkAuthorization();
+    public void bookRoom(long roomId, long userId, double moneyPaid) throws InternalServerError {
         if(orderDao.getOrderByRoomAndUser(roomId, userId) != null)
             throw new BadRequestException("Book room", "Validation", "Order room id:"+roomId+" is already booked by user id:"+userId+"");
 
@@ -32,8 +30,7 @@ public class OrderService {
         orderDao.bookRoom(roomId, userId, moneyPaid);
     }
 
-    public void cancelReservation(long roomId, long userId) throws UnexpectedException{
-        Session.checkAuthorization();
+    public void cancelReservation(long roomId, long userId) throws InternalServerError {
         if(orderDao.getOrderByRoomAndUser(roomId, userId) == null)
             throw new BadRequestException("Cancel reservation", "Validation", "There is no order for room id:"+roomId+" and user id:"+userId);
 
