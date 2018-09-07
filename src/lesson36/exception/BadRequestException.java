@@ -1,7 +1,14 @@
 package lesson36.exception;
 
 public class BadRequestException extends RuntimeException {
-    public BadRequestException(String method, String place, String message) {
-        super(method+". "+place+" error: "+message);
+    private String methodLoc;
+
+    public BadRequestException(String methodLoc, String message) {
+        super(message);
+        this.methodLoc = methodLoc;
+    }
+
+    public String getMethodLoc() {
+        return methodLoc;
     }
 }

@@ -31,24 +31,24 @@ public abstract class GeneralDAO<T extends Entity>{
             while ((line = br.readLine()) != null)
                 result.add(parseStringToObject(line));
         } catch (IOException e){
-            throw new InternalServerError("Reading from file "+path+" failed");
+            throw new InternalServerError(getClass().getName(), "getAll","Reading from file "+path+" failed", e.getMessage());
         }
         return result;
     }
 
-    public T writeToFile(T t) throws InternalServerError {
+    T writeToFile(T t) throws InternalServerError {
         t.setId(ThreadLocalRandom.current().nextLong(Long.MAX_VALUE));
         try(BufferedReader br = new BufferedReader(getFileReader()); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
             if(br.readLine() != null)
                 bw.append("\r\n");
             bw.append(t.toString());
         } catch (IOException e){
-            throw new InternalServerError("Writing to file error: can`t save "+t.toString()+" to file "+path+" "+e.getMessage());
+            throw new InternalServerError(getClass().getName(), "writeToFile","Writing to file error: can`t save "+t.toString()+" to file "+path+" "+e.getMessage(), e.getMessage());
         }
         return t;
     }
 
-    public void deleteFromFileById(long id) throws InternalServerError {
+    void deleteFromFileById(long id) throws InternalServerError {
         StringBuffer tempData = new StringBuffer();
         try(BufferedReader br = new BufferedReader(getFileReader())){
             String line;
@@ -61,24 +61,24 @@ public abstract class GeneralDAO<T extends Entity>{
             if(tempData.length()>=2)
                 tempData.replace(tempData.length() - 2, tempData.length(), "");
         } catch (IOException e){
-            throw new InternalServerError("Deleting from file error: can`t delete from file "+path);
+            throw new InternalServerError(getClass().getName(),"deleteFromFileById","Can`t delete from file "+path, e.getMessage());
         }
 
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path), false))){
             bw.append(tempData);
         } catch (IOException e){
-            throw new InternalServerError("Deleting from file "+path+" failed");
+            throw new InternalServerError(getClass().getName(), "deleteFromFileById","Deleting from file "+path+" failed.", e.getMessage());
         }
     }
 
-    public void updateEntity(T newObject) throws InternalServerError {
+    void updateEntity(T newObject) throws InternalServerError {
         deleteFromFileById(newObject.getId());
         try(BufferedReader br = new BufferedReader(getFileReader()); BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
             if(br.readLine() != null)
                 bw.append("\r\n");
             bw.append(newObject.toString());
         } catch (IOException e){
-            throw new InternalServerError("Writing to file error: can`t save "+newObject.toString()+" to file "+path);
+            throw new InternalServerError(getClass().getName(), "updateEntity","Can`t save "+newObject.toString()+" to file "+path, e.getMessage());
         }
     }
 
@@ -88,7 +88,7 @@ public abstract class GeneralDAO<T extends Entity>{
         try {
             return new FileReader(path);
         }catch (FileNotFoundException e){
-            throw new InternalServerError("Reading from file error: file "+path+" does not exist");
+            throw new InternalServerError(getClass().getName(), "getFileReader","File "+path+" does not exist", e.getMessage());
         }
     }
 }

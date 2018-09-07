@@ -17,22 +17,22 @@ public class OrderService {
 
     public void bookRoom(long roomId, long userId, double moneyPaid) throws InternalServerError {
         if(orderDao.getOrderByRoomAndUser(roomId, userId) != null)
-            throw new BadRequestException("Book room", "Validation", "Order room id:"+roomId+" is already booked by user id:"+userId+"");
+            throw new BadRequestException("bookRoom", "Order room id:"+roomId+" is already booked by user id:"+userId+"");
 
         Room room = new RoomDAO().getEntityById(roomId);
         if(room == null)
-            throw new BadRequestException("Book room", "Validation", "Room with id:"+roomId+" was not found");
+            throw new BadRequestException("bookRoom", "Room with id:"+roomId+" was not found");
         if(room.getDateAvailableFrom().after(new Date()))
-            throw new BadRequestException("Book room", "Validation", "Order room id:"+roomId+" is reserved from "+room.getDateAvailableFrom());
+            throw new BadRequestException("bookRoom", "Order room id:"+roomId+" is reserved from "+room.getDateAvailableFrom());
         if(room.getPrice() > moneyPaid)
-            throw new BadRequestException("Book room", "Validation", "Order money paid is not enough" );
+            throw new BadRequestException("bookRoom", "Order money paid is not enough" );
 
         orderDao.bookRoom(roomId, userId, moneyPaid);
     }
 
     public void cancelReservation(long roomId, long userId) throws InternalServerError {
         if(orderDao.getOrderByRoomAndUser(roomId, userId) == null)
-            throw new BadRequestException("Cancel reservation", "Validation", "There is no order for room id:"+roomId+" and user id:"+userId);
+            throw new BadRequestException("cancelReservation", "There is no order for room id:"+roomId+" and user id:"+userId);
 
         orderDao.cancelReservation(roomId, userId);
     }

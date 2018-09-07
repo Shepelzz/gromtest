@@ -14,28 +14,19 @@ public class UserService {
     }
 
     public User registerUser(User user) throws InternalServerError {
-        if(userDAO.getUserByLoginAndPassword(user.getUserName(), user.getPassword()) != null)
-            throw new BadRequestException("Register User", "Validation", "User with user name: "+user.getUserName()+" is already registered.");
         if (user.getUserName().equals("") || user.getPassword().equals("") || user.getCountry().equals(""))
-            throw new BadRequestException("Register User", "Validation", "values can not be empty");
+            throw new BadRequestException("registerUser", "values can not be empty");
+        if(userDAO.getUserByLoginAndPassword(user.getUserName(), user.getPassword()) != null)
+            throw new BadRequestException("registerUser", "User with user name: "+user.getUserName()+" is already registered.");
 
         return userDAO.registerUser(user);
     }
 
     public void login(String userName, String password) throws InternalServerError {
-        if(Session.getLoggedUser() != null)
-            throw new BadRequestException("Login", "Validation", "You are already logged as user: "+Session.getLoggedUser().getUserName());
-
-        User user = userDAO.getUserByLoginAndPassword(userName, password);
-        if(user == null)
-            throw  new BadRequestException("Login", "Validation", "User with name: "+userName+" was not found, or password is incorrect");
-
-        Session.setLoggedUser(user);
+        Session.login(userName, password);
     }
 
     public void logout(){
-        if(Session.getLoggedUser() == null)
-            throw new BadRequestException("Login", "Validation", "Nobody is logged in.");
-        Session.setLoggedUser(null);
+        Session.logout();
     }
 }
