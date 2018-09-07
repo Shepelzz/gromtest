@@ -53,7 +53,7 @@ public class Hotel extends Entity {
             street = data[4];
             return this;
         }catch (Exception e){
-            throw new InternalServerError(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
+            throw new InternalServerError(getClass().getName(), "parseStringToObject","error parsing text data ["+input+"]", e.getMessage());
         }
     }
 

@@ -68,7 +68,7 @@ public class Order extends Entity {
             moneyPaid = Double.valueOf(data[5]);
             return this;
         }catch (Exception e){
-            throw new InternalServerError(getClass().getName()+". Parsing. error parsing text data ["+input+"]");
+            throw new InternalServerError(getClass().getName(), "parseStringToObject","error parsing text data ["+input+"]", e.getMessage());
         }
     }
 
