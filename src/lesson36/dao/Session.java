@@ -31,7 +31,7 @@ public class Session {
 
     public static void checkAuthorization(String action, UserType userType){
         checkAuthorization(action);
-        if(loggedUser.getUserType().equals(userType))
+        if(!loggedUser.getUserType().equals(userType))
             throw new PermissionError(action, "User must have "+userType.name()+" permissions to perform this operation");
     }
 

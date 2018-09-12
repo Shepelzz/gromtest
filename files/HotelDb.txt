@@ -4,3 +4,4 @@
 7311701335048307043,Hotel 3,Ukraine,Odessa,test
 7311701335048307041,Hotel 4,Ukraine,Odessa,test
 1376800431651742536,Mot,Russia,Moscow,testStreet
+6395916070796492788,tratata,UA,Odessa,unnamed road 2

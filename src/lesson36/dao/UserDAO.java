@@ -6,7 +6,7 @@ import lesson36.model.User;
 public class UserDAO extends GeneralDAO<User>{
     private static final String path = "files/UserDb.txt";
 
-    public UserDAO() throws InternalServerError {
+    public UserDAO() {
         super(path);
     }
 
@@ -23,6 +23,6 @@ public class UserDAO extends GeneralDAO<User>{
 
     @Override
     public User parseStringToObject(String input) throws InternalServerError {
-        return new User().parseStringToObject(input);
+        return User.newUserBuilder().parseStringToObject(input).build();
     }
 }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class RoomDAO extends GeneralDAO<Room>{
     private static final String path = "files/RoomDb.txt";
 
-    public RoomDAO() throws InternalServerError {
+    public RoomDAO() {
         super(path);
     }
 
@@ -39,6 +39,6 @@ public class RoomDAO extends GeneralDAO<Room>{
 
     @Override
     public Room parseStringToObject(String input) throws InternalServerError {
-        return new Room().parseStringToObject(input);
+        return Room.newRoomBuilder().parseStringToObject(input).build();
     }
 }

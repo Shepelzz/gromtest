@@ -41,7 +41,13 @@ public class DemoRoom {
             UserController userController = new UserController();
             userController.login("user2", "pass2");
 
-            Filter filter = new Filter(2, 900, true, true, new Date(), null, null, null);
+            Filter filter = Filter.newFilterBuilder()
+                    .setNumberOfGuests(2)
+                    .setPrice(900)
+                    .setBreakfastIncluded(true)
+                    .setPetsAllowed(true)
+                    .setDateAvailableFrom(new Date())
+                    .build();
             roomController.findRooms(filter).forEach(x -> System.out.println(x.toString()));
 
         }catch (Exception e){

@@ -12,7 +12,7 @@ import java.util.Date;
 public class OrderDAO extends GeneralDAO<Order>{
     private static final String path = "files/OrderDb.txt";
 
-    public OrderDAO() throws InternalServerError {
+    public OrderDAO() {
         super(path);
     }
 
@@ -24,17 +24,18 @@ public class OrderDAO extends GeneralDAO<Order>{
         c.setTime(currentDate);
         c.add(Calendar.DATE, 3);
 
-        Entity user = new User().setId(userId);
-        Entity room = new Room().setId(roomId);
+        Entity user = User.newUserBuilder().setId(userId).build();
+        Entity room = Room.newRoomBuilder().setId(roomId).build();
         Room updatedRoom = roomDAO.getEntityById(roomId);
 
-        Order order = new Order();
-            order.setUser((User) user);
-            order.setRoom((Room) room);
-            order.setDateFrom(new Date());
-            order.setDateTo(c.getTime());
-            order.setMoneyPaid(moneyPaid);
-        writeToFile(order);
+        writeToFile(Order.newOrderBuilder()
+                .setUser((User) user)
+                .setRoom((Room) room)
+                .setDateFrom(new Date())
+                .setDateTo(c.getTime())
+                .setMoneyPaid(moneyPaid)
+                .build()
+        );
 
         updatedRoom.setDateAvailableFrom(c.getTime());
         roomDAO.updateEntity(updatedRoom);
@@ -59,6 +60,6 @@ public class OrderDAO extends GeneralDAO<Order>{
 
     @Override
     public Order parseStringToObject(String input) throws InternalServerError {
-        return new Order().parseStringToObject(input);
+        return Order.newOrderBuilder().parseStringToObject(input).build();
     }
 }

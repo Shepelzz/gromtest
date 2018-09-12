@@ -82,8 +82,6 @@ public abstract class GeneralDAO<T extends Entity>{
         }
     }
 
-//    private long generateRandomId(){ return ThreadLocalRandom.current().nextLong(Long.MAX_VALUE);}
-
     private FileReader getFileReader() throws InternalServerError {
         try {
             return new FileReader(path);

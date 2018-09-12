@@ -8,7 +8,7 @@ public class Hotel extends Entity {
     private String city;
     private String street;
 
-    public Hotel(){}
+    private Hotel(){}
 
     public String getName() {
         return name;
@@ -26,37 +26,6 @@ public class Hotel extends Entity {
         return street;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    @Override
-    public Hotel parseStringToObject(String input) throws InternalServerError {
-        String[] data = input.split(",");
-        try {
-            setId(Long.valueOf(data[0]));
-            name = data[1];
-            country = data[2];
-            city = data[3];
-            street = data[4];
-            return this;
-        }catch (Exception e){
-            throw new InternalServerError(getClass().getName(), "parseStringToObject","error parsing text data ["+input+"]", e.getMessage());
-        }
-    }
-
     @Override
     public String toString() {
         return
@@ -65,5 +34,56 @@ public class Hotel extends Entity {
             country+","+
             city+","+
             street;
+    }
+
+    public static HotelBuilder newHotelBuilder(){
+        return new Hotel().new HotelBuilder();
+    }
+
+    public class HotelBuilder {
+        private HotelBuilder() {}
+
+        public HotelBuilder setId(long id){
+            Hotel.this.setId(id);
+            return this;
+        }
+
+        public HotelBuilder setName(String name) {
+            Hotel.this.name = name;
+            return this;
+        }
+
+        public HotelBuilder setCountry(String country) {
+            Hotel.this.country = country;
+            return this;
+        }
+
+        public HotelBuilder setCity(String city) {
+            Hotel.this.city = city;
+            return this;
+        }
+
+        public HotelBuilder setStreet(String street) {
+            Hotel.this.street = street;
+            return this;
+        }
+
+        public HotelBuilder parseStringToObject(String input) throws InternalServerError{
+            String[] data = input.split(",");
+            try {
+                setId(Long.valueOf(data[0]));
+                name = data[1];
+                country = data[2];
+                city = data[3];
+                street = data[4];
+                return this;
+            }catch (Exception e){
+                throw new InternalServerError(getClass().getName(), "parseStringToObject","error parsing text data ["+input+"]", e.getMessage());
+            }
+        }
+
+        public Hotel build(){
+            return Hotel.this;
+        }
     }
 }
