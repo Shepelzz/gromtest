@@ -47,55 +47,55 @@ public class Filter {
         return city;
     }
 
-    public static FilterBuilder newFilterBuilder(){
-        return new Filter().new FilterBuilder();
-    }
-
-    public class FilterBuilder{
-        private FilterBuilder(){}
-
-        public FilterBuilder setNumberOfGuests(int numberOfGuests) {
-            Filter.this.numberOfGuests = numberOfGuests;
-            return this;
-        }
-
-        public FilterBuilder setPrice(double price) {
-            Filter.this.price = price;
-            return this;
-        }
-
-        public FilterBuilder setBreakfastIncluded(boolean breakfastIncluded) {
-            Filter.this.breakfastIncluded = breakfastIncluded;
-            return this;
-        }
-
-        public FilterBuilder setPetsAllowed(boolean petsAllowed) {
-            Filter.this.petsAllowed = petsAllowed;
-            return this;
-        }
-
-        public FilterBuilder setDateAvailableFrom(Date dateAvailableFrom) {
-            Filter.this.dateAvailableFrom = dateAvailableFrom;
-            return this;
-        }
-
-        public FilterBuilder setName(String name) {
-            Filter.this.name = name;
-            return this;
-        }
-
-        public FilterBuilder setCountry(String country) {
-            Filter.this.country = country;
-            return this;
-        }
-
-        public FilterBuilder setCity(String city) {
-            Filter.this.city = city;
-            return this;
-        }
-
-        public Filter build(){
-            return Filter.this;
-        }
-    }
+//    public static FilterBuilder newFilterBuilder(){
+//        return new Filter().new FilterBuilder();
+//    }
+//
+//    public class FilterBuilder{
+//        private FilterBuilder(){}
+//
+//        public FilterBuilder setNumberOfGuests(int numberOfGuests) {
+//            Filter.this.numberOfGuests = numberOfGuests;
+//            return this;
+//        }
+//
+//        public FilterBuilder setPrice(double price) {
+//            Filter.this.price = price;
+//            return this;
+//        }
+//
+//        public FilterBuilder setBreakfastIncluded(boolean breakfastIncluded) {
+//            Filter.this.breakfastIncluded = breakfastIncluded;
+//            return this;
+//        }
+//
+//        public FilterBuilder setPetsAllowed(boolean petsAllowed) {
+//            Filter.this.petsAllowed = petsAllowed;
+//            return this;
+//        }
+//
+//        public FilterBuilder setDateAvailableFrom(Date dateAvailableFrom) {
+//            Filter.this.dateAvailableFrom = dateAvailableFrom;
+//            return this;
+//        }
+//
+//        public FilterBuilder setName(String name) {
+//            Filter.this.name = name;
+//            return this;
+//        }
+//
+//        public FilterBuilder setCountry(String country) {
+//            Filter.this.country = country;
+//            return this;
+//        }
+//
+//        public FilterBuilder setCity(String city) {
+//            Filter.this.city = city;
+//            return this;
+//        }
+//
+//        public Filter build(){
+//            return Filter.this;
+//        }
+//    }
 }

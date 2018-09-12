@@ -15,7 +15,4 @@ public abstract class Entity{
         this.id = id;
         return this;
     }
-
-    //public abstract Entity parseStringToObject(String input) throws InternalServerError;
-
 }

@@ -39,6 +39,6 @@ public class RoomDAO extends GeneralDAO<Room>{
 
     @Override
     public Room parseStringToObject(String input) throws InternalServerError {
-        return Room.newRoomBuilder().parseStringToObject(input).build();
+        return null;//Room.newRoomBuilder().parseStringToObject(input).build();
     }
 }

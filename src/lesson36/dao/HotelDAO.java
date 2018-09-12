@@ -41,6 +41,6 @@ public class HotelDAO extends GeneralDAO<Hotel>{
 
     @Override
     public Hotel parseStringToObject(String input) throws InternalServerError {
-        return Hotel.newHotelBuilder().parseStringToObject(input).build();
+        return null;//Hotel.newHotelBuilder().parseStringToObject(input).build();
     }
 }

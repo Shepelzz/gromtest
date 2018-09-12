@@ -4,7 +4,6 @@ import lesson36.exception.InternalServerError;
 import lesson36.model.Entity;
 import lesson36.model.Order;
 import lesson36.model.Room;
-import lesson36.model.User;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -24,18 +23,18 @@ public class OrderDAO extends GeneralDAO<Order>{
         c.setTime(currentDate);
         c.add(Calendar.DATE, 3);
 
-        Entity user = User.newUserBuilder().setId(userId).build();
-        Entity room = Room.newRoomBuilder().setId(roomId).build();
+        Entity user = null;//User.newUserBuilder().setId(userId).build();
+        Entity room = null;//Room.newRoomBuilder().setId(roomId).build();
         Room updatedRoom = roomDAO.getEntityById(roomId);
 
-        writeToFile(Order.newOrderBuilder()
-                .setUser((User) user)
-                .setRoom((Room) room)
-                .setDateFrom(new Date())
-                .setDateTo(c.getTime())
-                .setMoneyPaid(moneyPaid)
-                .build()
-        );
+//        writeToFile(Order.newOrderBuilder()
+//                .setUser((User) user)
+//                .setRoom((Room) room)
+//                .setDateFrom(new Date())
+//                .setDateTo(c.getTime())
+//                .setMoneyPaid(moneyPaid)
+//                .build()
+//        );
 
         updatedRoom.setDateAvailableFrom(c.getTime());
         roomDAO.updateEntity(updatedRoom);
@@ -60,6 +59,6 @@ public class OrderDAO extends GeneralDAO<Order>{
 
     @Override
     public Order parseStringToObject(String input) throws InternalServerError {
-        return Order.newOrderBuilder().parseStringToObject(input).build();
+        return null;//Order.newOrderBuilder().parseStringToObject(input).build();
     }
 }

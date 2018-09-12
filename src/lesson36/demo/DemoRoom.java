@@ -2,9 +2,6 @@ package lesson36.demo;
 
 import lesson36.controller.RoomController;
 import lesson36.controller.UserController;
-import lesson36.model.Filter;
-
-import java.util.Date;
 
 public class DemoRoom {
     public static void main(String[] args){
@@ -41,14 +38,14 @@ public class DemoRoom {
             UserController userController = new UserController();
             userController.login("user2", "pass2");
 
-            Filter filter = Filter.newFilterBuilder()
-                    .setNumberOfGuests(2)
-                    .setPrice(900)
-                    .setBreakfastIncluded(true)
-                    .setPetsAllowed(true)
-                    .setDateAvailableFrom(new Date())
-                    .build();
-            roomController.findRooms(filter).forEach(x -> System.out.println(x.toString()));
+//            Filter filter = Filter.newFilterBuilder()
+//                    .setNumberOfGuests(2)
+//                    .setPrice(900)
+//                    .setBreakfastIncluded(true)
+//                    .setPetsAllowed(true)
+//                    .setDateAvailableFrom(new Date())
+//                    .build();
+//            roomController.findRooms(filter).forEach(x -> System.out.println(x.toString()));
 
         }catch (Exception e){
             System.err.println(e.toString());

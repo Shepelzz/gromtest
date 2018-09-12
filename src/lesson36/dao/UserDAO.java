@@ -23,6 +23,6 @@ public class UserDAO extends GeneralDAO<User>{
 
     @Override
     public User parseStringToObject(String input) throws InternalServerError {
-        return User.newUserBuilder().parseStringToObject(input).build();
+        return null;//User.newUserBuilder().parseStringToObject(input).build();
     }
 }
