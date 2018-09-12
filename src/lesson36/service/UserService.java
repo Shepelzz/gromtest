@@ -9,7 +9,7 @@ import lesson36.model.User;
 public class UserService {
     private UserDAO userDAO;
 
-    public UserService() {
+    public UserService() throws InternalServerError{
         userDAO = new UserDAO();
     }
 

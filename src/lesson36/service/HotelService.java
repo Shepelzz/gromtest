@@ -10,7 +10,7 @@ import java.util.Set;
 public class HotelService{
     private HotelDAO hotelDAO;
 
-    public HotelService() {
+    public HotelService() throws InternalServerError{
         hotelDAO = new HotelDAO();
     }
 

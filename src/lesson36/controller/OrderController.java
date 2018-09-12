@@ -7,7 +7,7 @@ import lesson36.service.OrderService;
 public class OrderController {
     private OrderService orderService;
 
-    public OrderController() {
+    public OrderController() throws InternalServerError{
         orderService = new OrderService();
     }
 

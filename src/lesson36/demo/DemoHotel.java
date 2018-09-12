@@ -1,7 +1,6 @@
 package lesson36.demo;
 
 import lesson36.controller.HotelController;
-import lesson36.controller.UserController;
 
 public class DemoHotel {
     public static void main(String[] args){
@@ -10,16 +9,9 @@ public class DemoHotel {
         //добавление отеля
         try{
 //            HotelController hotelController = new HotelController();
-            UserController userController = new UserController();
-
-            userController.login("Zhenya", "qwer1111");
-//            hotelController.addHotel(Hotel.newHotelBuilder()
-//                    .setName("tratata")
-//                    .setCountry("UA")
-//                    .setCity("Odessa")
-//                    .setStreet("unnamed road 2")
-//                    .build()
-//            );
+//            UserController userController = new UserController();
+//            userController.login("admin", "admin");
+            //hotelController.addHotel(new Hotel("", "Russia", "Moscow", "testStreet"));
 
         }catch (Exception e){
             System.err.println(e.toString());
@@ -40,7 +32,7 @@ public class DemoHotel {
         //поиск отеля по имени
         try{
             HotelController hotelController = new HotelController();
-            System.out.println(hotelController.findHotelByName("tratata"));
+            System.out.println(hotelController.findHotelByName("Mot"));
         }catch (Exception e){
             System.err.println(e.getMessage());
         }

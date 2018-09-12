@@ -7,7 +7,7 @@ import lesson36.service.UserService;
 public class UserController {
     private UserService userService;
 
-    public UserController() {
+    public UserController() throws InternalServerError{
         userService = new UserService();
     }
 

@@ -1,5 +1,7 @@
 package lesson36.model;
 
+import lesson36.exception.InternalServerError;
+
 public abstract class Entity{
     private long id;
 
@@ -15,4 +17,7 @@ public abstract class Entity{
         this.id = id;
         return this;
     }
+
+    public abstract Entity parseStringToObject(String input) throws InternalServerError;
+
 }

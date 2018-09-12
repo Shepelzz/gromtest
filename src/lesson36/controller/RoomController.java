@@ -12,7 +12,7 @@ import java.util.Set;
 public class RoomController {
     private RoomService roomService;
 
-    public RoomController() {
+    public RoomController() throws InternalServerError{
         roomService = new RoomService();
     }
 

@@ -4,6 +4,7 @@ import lesson36.exception.InternalServerError;
 import lesson36.model.Entity;
 import lesson36.model.Order;
 import lesson36.model.Room;
+import lesson36.model.User;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,7 +12,7 @@ import java.util.Date;
 public class OrderDAO extends GeneralDAO<Order>{
     private static final String path = "files/OrderDb.txt";
 
-    public OrderDAO() {
+    public OrderDAO() throws InternalServerError {
         super(path);
     }
 
@@ -23,18 +24,17 @@ public class OrderDAO extends GeneralDAO<Order>{
         c.setTime(currentDate);
         c.add(Calendar.DATE, 3);
 
-        Entity user = null;//User.newUserBuilder().setId(userId).build();
-        Entity room = null;//Room.newRoomBuilder().setId(roomId).build();
+        Entity user = new User().setId(userId);
+        Entity room = new Room().setId(roomId);
         Room updatedRoom = roomDAO.getEntityById(roomId);
 
-//        writeToFile(Order.newOrderBuilder()
-//                .setUser((User) user)
-//                .setRoom((Room) room)
-//                .setDateFrom(new Date())
-//                .setDateTo(c.getTime())
-//                .setMoneyPaid(moneyPaid)
-//                .build()
-//        );
+        Order order = new Order();
+        order.setUser((User) user);
+        order.setRoom((Room) room);
+        order.setDateFrom(new Date());
+        order.setDateTo(c.getTime());
+        order.setMoneyPaid(moneyPaid);
+        writeToFile(order);
 
         updatedRoom.setDateAvailableFrom(c.getTime());
         roomDAO.updateEntity(updatedRoom);
@@ -59,6 +59,6 @@ public class OrderDAO extends GeneralDAO<Order>{
 
     @Override
     public Order parseStringToObject(String input) throws InternalServerError {
-        return null;//Order.newOrderBuilder().parseStringToObject(input).build();
+        return new Order().parseStringToObject(input);
     }
 }

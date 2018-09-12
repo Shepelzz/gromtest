@@ -9,7 +9,7 @@ import java.util.Set;
 public class HotelDAO extends GeneralDAO<Hotel>{
     private static final String path = "files/HotelDb.txt";
 
-    public HotelDAO() {
+    public HotelDAO() throws InternalServerError {
         super(path);
     }
 
@@ -41,6 +41,6 @@ public class HotelDAO extends GeneralDAO<Hotel>{
 
     @Override
     public Hotel parseStringToObject(String input) throws InternalServerError {
-        return null;//Hotel.newHotelBuilder().parseStringToObject(input).build();
+        return new Hotel().parseStringToObject(input);
     }
 }
