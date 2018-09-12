@@ -12,7 +12,7 @@ import java.util.Set;
 public class RoomService {
     private RoomDAO roomDAO;
 
-    public RoomService() throws InternalServerError {
+    public RoomService() {
         roomDAO = new RoomDAO();
     }
 

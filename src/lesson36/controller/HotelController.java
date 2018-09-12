@@ -11,7 +11,7 @@ import java.util.Set;
 public class HotelController {
     private HotelService hotelService;
 
-    public HotelController() throws InternalServerError {
+    public HotelController() {
         hotelService = new HotelService();
     }
 

@@ -11,7 +11,7 @@ import java.util.Date;
 public class OrderService {
     private OrderDAO orderDao;
 
-    public OrderService() throws InternalServerError {
+    public OrderService() {
         orderDao = new OrderDAO();
     }
 

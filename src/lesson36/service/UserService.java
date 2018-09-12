@@ -9,7 +9,7 @@ import lesson36.model.User;
 public class UserService {
     private UserDAO userDAO;
 
-    public UserService() throws InternalServerError {
+    public UserService() {
         userDAO = new UserDAO();
     }
 
@@ -29,4 +29,5 @@ public class UserService {
     public void logout(){
         Session.logout();
     }
+
 }
